@@ -1,0 +1,8 @@
+.card-width{
+    width:245px;
+}
+$mat-card-border-radius: 10px !default;
+
+.mat-card {
+    display: block;
+    border-radius: $mat-card-border-radius;}

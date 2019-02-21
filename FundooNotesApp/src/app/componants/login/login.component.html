@@ -1,0 +1,40 @@
+<html>
+    <body>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div fxLayout="column" fxLayoutAlign="space-around center" >
+  <mat-card class="example-card">
+    <mat-card-header class="example-header">
+      
+      <mat-card-title class="example-name-main">Fundoo</mat-card-title>
+      <mat-card-subtitle class="example-name">Login</mat-card-subtitle>
+    
+    </mat-card-header>
+            <div class="example-container">
+            
+            <mat-form-field appearance="outline">
+            <mat-label class="example-label">Username</mat-label>
+            <input type="text" formControlName="username" matInput placeholder="username" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+            <mat-label class="example-label">Password</mat-label>
+            <input type="password" formControlName="password" matInput placeholder="password" required>
+            </mat-form-field>
+
+            <mat-card-actions class="example-button">
+                <button mat-button class="name-link" routerLink="/forgotpassword">Forgot Password ?</button>
+              </mat-card-actions>
+            
+    <mat-card-actions class="example-button">
+
+      <button mat-button class="name-link" routerLink="/register"><b>Create account</b></button>
+      <button mat-button aria-label="Show an example snack-bar" mat-raised-button class="button-colour">Login</button>
+    
+    </mat-card-actions>
+    </div>
+    
+  </mat-card>
+</div>
+</form>
+</body>
+  </html>

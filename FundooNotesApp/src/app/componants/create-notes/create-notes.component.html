@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="space-around center" >
+  <mat-card class="card-width" [ngStyle]="{'backgroundColor': color}" [class.mat-elevation-z3]="!isActive">
+  <input matInput placeholder="Title.." [style.fontSize.px]=17>
+  <input matInput placeholder="Title.." [style.fontSize.px]=14 style="margin:0em; padding-top: 10px">
+  <app-menubar></app-menubar>
+  <button mat-button class="button-align" (click)="getNoteData()">Close</button>
+  </mat-card>
+  </div> 

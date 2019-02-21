@@ -1,0 +1,26 @@
+<html>
+    <body>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <div fxLayout="column" fxLayoutAlign="space-around center" >
+    <mat-card class="example-card">
+    <mat-card-header class="example-header">
+      <mat-card-title class="example-name-main">Fundoo</mat-card-title>
+      <mat-card-subtitle class="example-name">Profile</mat-card-subtitle>
+    
+    </mat-card-header>
+            <div class="example-container">
+              <!-- <mat-form-field appearance="outline">
+              <mat-label class="example-label">Username</mat-label>
+              <input type="text" formControlName="username" matInput placeholder="username" required>
+              </mat-form-field> -->
+              <mat-label class="example-label">photo</mat-label>
+              <input type="file" formControlName="photo" required>
+              <mat-card-actions class="example-button">
+              <button mat-button aria-label="Show an example snack-bar" mat-raised-button class="button-colour">Upload</button>
+              </mat-card-actions>
+            </div>
+    </mat-card>
+            </div>
+      </form>
+    </body>
+</html>
