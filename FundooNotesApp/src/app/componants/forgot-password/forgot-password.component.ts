@@ -29,12 +29,12 @@ export class ForgotPasswordComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.ForgotPasswordForm.value);
-    // this.service.forgotPassword(this.ForgotPasswordForm.value).subscribe(
-    //   (response) => {console.log('succsess', response);
-    //                  console.log('go to your mail');
-    //                 },
-    //   (error) => {console.log('error', error);
-    //   }
-    //   );
+    this.service.forgotPassword(this.ForgotPasswordForm.value).subscribe(
+      (response) => {console.log('succsess', response);
+                     console.log('go to your mail');
+                    },
+      (error) => {console.log('error', error);
+      }
+      );
   }
 }

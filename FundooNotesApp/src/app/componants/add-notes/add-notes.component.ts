@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/UserServices/user.service';
+
 @Component({
   selector: 'app-add-notes',
   templateUrl: './add-notes.component.html',
@@ -31,7 +32,7 @@ export class AddNotesComponent implements OnInit {
     { name: 'brown', colorCode: '#e9c7a9' },
     { name: 'gray', colorCode: '#e7e9ec' }
   ];
-  color: any = '#ffcee6';
+  color: any = '#fffff';
   notificationIcon = '../../assets/Icons/notification.svg';
   noteData: any;
   // note : CreateNote =new CreateNote;

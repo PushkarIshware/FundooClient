@@ -20,10 +20,10 @@ baseUrl = environment.baseUrl;
   register(userData) {
   return this.http.post(this.baseUrl + 'registration', userData, {responseType: 'json'});
 }
-  // forgotPassword(userData) {
-  //   console.log(userData);
-  //   return this.http.options<any>('http://127.0.0.1:8000/password_reset');
-  // }
+  forgotPassword(userData) {
+    console.log(userData);
+    return this.http.get('http://127.0.0.1:8000/password_reset/done/');
+  }
   // Calling profile API
   profile(userData) {
     return this.http.post(this.baseUrl + 'profile', userData, {responseType: 'json'});
