@@ -17,9 +17,6 @@
           
       </div>
     </mat-card>
- 
-
-   
       <mat-card class="new-card" *ngIf="flag===true" style="margin:2em;"  [class.mat-elevation-z8]="!isActive" [ngStyle]="{'backgroundColor': color}">
           <div fxLayout="column" fxLayoutAlign="space-around">
         <div fxLayout="row" fxLayoutAlign="space-around center" >
@@ -33,7 +30,6 @@
             </ng-container>
           </button>
         </div>
-          
                 <input matInput placeholder="Take a note..." [formControl]="description" [style.fontSize.px]=13 style="margin:0em; padding-top: 10px">
                 <!-- <app-footermenu></app-footermenu> -->
                 <div class="alignment">

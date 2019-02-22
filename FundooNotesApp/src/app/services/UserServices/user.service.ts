@@ -28,4 +28,10 @@ baseUrl = environment.baseUrl;
   profile(userData) {
     return this.http.post(this.baseUrl + 'profile', userData, {responseType: 'json'});
   }
+  createnotes(userData) {
+    return this.http.post(this.baseUrl + 'note', userData, {responseType: 'json'});
+  }
+  getNotes() {
+    return this.http.get(this.baseUrl + 'shownotes');
+  }
 }

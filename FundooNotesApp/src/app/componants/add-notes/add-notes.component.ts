@@ -5,6 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/UserServices/user.service';
+import { CreateNoteModel } from 'src/app/model/CreateNote.model';
+// import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-add-notes',
@@ -12,10 +14,6 @@ import { UserService } from 'src/app/services/UserServices/user.service';
   styleUrls: ['./add-notes.component.scss']
 })
 export class AddNotesComponent implements OnInit {
-  flag = false;
-  isActive = false;
-  pinValue = false;
-  archiveValue = false;
   pinnedIconSrc = '../../assets/Icons/pinIcon.svg';
   unpinnedIconSrc = '../../assets/Icons/unpinIcon.svg';
   colorCode: Array<Object> = [
@@ -32,14 +30,17 @@ export class AddNotesComponent implements OnInit {
     { name: 'brown', colorCode: '#e9c7a9' },
     { name: 'gray', colorCode: '#e7e9ec' }
   ];
-  color: any = '#fffff';
+  color = '#ffffff';
   notificationIcon = '../../assets/Icons/notification.svg';
+  flag = false;
+  isActive = false;
+  pinValue = false;
+  archiveValue = false;
   noteData: any;
-  // note : CreateNote =new CreateNote;
-// title = new FormControl(this.note.title)
-// description = new FormControl(this.note.description)
-title = new FormControl('');
-description = new FormControl('');
+  note: CreateNoteModel = new CreateNoteModel;
+title = new FormControl(this.note.title);
+description = new FormControl(this.note.description);
+// color1 = this.note.color;
   constructor(private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer, private snackBar: MatSnackBar, private service: UserService
     ) {
@@ -60,12 +61,33 @@ description = new FormControl('');
     this.flag = ! this.flag;
   }
   pin() {
+    console.log('called pin');
+    this.pinValue = ! this.pinValue;
   }
+  // archive note
   archive() {
+    console.log('called archive');
+    this.archiveValue = ! this.archiveValue;
   }
   CreateNotes() {
   }
-  Color(color) {
+  changeColor(color) {
     this.color = color;
+  }
+  createNote() {
+    console.log('close clicked');
+    this.noteData = {
+      'title': this.title.value,
+      'description': this.description.value,
+      'pin': this.pin ,
+      'color': this.color,
+      // 'archiveValue': this.archiveValue = false,
+    };
+    console.log(this.noteData);
+    this.service.createnotes(this.noteData).subscribe(
+      (response) => {console.log('success', response);
+      },
+      (error) => {console.log('error', error); }
+    );
   }
 }

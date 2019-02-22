@@ -1,8 +1,16 @@
 .card-width{
-    width:245px;
+    width:225px;
+    margin-left: 15px;
+    margin-top: 15px;
 }
-$mat-card-border-radius: 10px !default;
+$mat-card-border-radius: 0px !default;
 
 .mat-card {
+
     display: block;
     border-radius: $mat-card-border-radius;}
+.title {
+    margin-top: 6px;
+    margin-bottom: 6px;
+   
+}
