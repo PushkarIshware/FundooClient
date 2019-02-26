@@ -1,15 +1,19 @@
 <div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
   <div *ngFor="let note of data">
+          <!-- <div *ngIf="note.user_id===uid"> -->
           <div fxLayout="column" fxLayoutAlign="space-between start" >
                   <mat-card class="card-width" [ngStyle]="{'backgroundColor': note.color}"  >
           <div fxLayout="column" >
 
      <div class="title" [style.fontSize.px]=21> {{note.title}}</div>
      <div class="description">{{note.description}}</div> 
-     <div class="description">{{note.id}}</div> 
-     <div class="description">{{note.color}}</div> 
+     <div class="id">{{note.id}}</div> 
+     <div class="color">{{note.color}}</div>
+     <div class="color">{{note.user_id}}</div> 
      
 <app-menubar></app-menubar></div>
 </mat-card>
 </div>
-</div></div>
+</div>
+<!-- </div> -->
+</div>

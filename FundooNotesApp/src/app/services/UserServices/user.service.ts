@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { LoginModel } from 'src/app/model/Login.model';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-user: LoginModel = new LoginModel();
+// user: LoginModel = new LoginModel();
 // Importing BaseUrl from environment file
 baseUrl = environment.baseUrl;
   constructor(private http: HttpClient) { }
@@ -22,16 +22,42 @@ baseUrl = environment.baseUrl;
 }
   forgotPassword(userData) {
     console.log(userData);
-    return this.http.get('http://127.0.0.1:8000/password_reset/done/');
+    return this.http.get('http://127.0.0.1:8000/password_reset/');
   }
   // Calling profile API
   profile(userData) {
     return this.http.post(this.baseUrl + 'profile', userData, {responseType: 'json'});
   }
-  createnotes(userData) {
-    return this.http.post(this.baseUrl + 'note', userData, {responseType: 'json'});
+  // Calling Notes API
+  public PostForm(url: any, data: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        'Authorization': localStorage.getItem('data')
+      })
+    };
+    return this.http.post(url, data, httpOptions);
   }
+  createnotes(userData) {
+    const httpOptions = {
+    headers: new HttpHeaders({
+
+    // 'Authorization': localStorage.getItem('user_id')
+    'Authorization': localStorage.getItem('token')
+  })
+};
+    return this.http.post(this.baseUrl + 'note', userData, httpOptions);
+  }
+  // Display All Notes API
   getNotes() {
-    return this.http.get(this.baseUrl + 'shownotes');
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        // 'Authorization': localStorage.getItem('user_id');
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    console.log(httpOptions);
+    return this.http.get(this.baseUrl + 'shownotes', httpOptions);
   }
 }

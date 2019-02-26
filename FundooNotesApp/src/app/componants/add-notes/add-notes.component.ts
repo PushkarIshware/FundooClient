@@ -37,6 +37,8 @@ export class AddNotesComponent implements OnInit {
   pinValue = false;
   archiveValue = false;
   noteData: any;
+  user = localStorage.getItem('token');
+  // delete = localStorage.removeItem('token');
   note: CreateNoteModel = new CreateNoteModel;
 title = new FormControl(this.note.title);
 description = new FormControl(this.note.description);
@@ -63,27 +65,31 @@ description = new FormControl(this.note.description);
   pin() {
     console.log('called pin');
     this.pinValue = ! this.pinValue;
+    console.log(this.pinValue);
   }
   // archive note
   archive() {
     console.log('called archive');
     this.archiveValue = ! this.archiveValue;
+    console.log(this.archiveValue);
   }
-  CreateNotes() {
-  }
+
   changeColor(color) {
     this.color = color;
   }
+
   createNote() {
+    //let username = localStorage.getItem('user_id');
+    // let token = localStorage.getItem('token');
     console.log('close clicked');
     this.noteData = {
       'title': this.title.value,
       'description': this.description.value,
-      'pin': this.pin ,
+      'is_pinned': this.pinValue ,
       'color': this.color,
-      // 'archiveValue': this.archiveValue = false,
+      // 'user': token
     };
-    console.log(this.noteData);
+     console.log(this.noteData);
     this.service.createnotes(this.noteData).subscribe(
       (response) => {console.log('success', response);
       },

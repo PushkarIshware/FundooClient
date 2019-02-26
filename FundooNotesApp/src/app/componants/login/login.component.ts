@@ -17,6 +17,7 @@ import { UserService } from 'src/app/services/UserServices/user.service';
 export class LoginComponent implements OnInit {
   user: LoginModel = new LoginModel();
   // tslint:disable-next-line:max-line-length
+  id: any;
   constructor(private service: UserService, private snackBar: MatSnackBar, private router: Router, private formBuilder: FormBuilder) {
 
    }
@@ -47,7 +48,17 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log('success', response);
         if (response['success']) {
-      localStorage.setItem('token', response['data']);
+      console.log('tokeeeeeeeen' , response['data']);
+      // localStorage.setItem('token', response['data']);
+      this.id = response['data'];
+      // localStorage.setItem('token', response['message']);
+
+      console.log('token set successfully', this.id);
+      // localStorage.setItem('data', this.id);
+      localStorage.setItem('user_id', response['data']['user_id']);
+      localStorage.setItem('username', response['data']['username']);
+      localStorage.setItem('token', response['data']['token']);
+
       this.openSnackBar();
       this.router.navigate(['/dashboard']);
         }

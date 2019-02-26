@@ -29,9 +29,9 @@
                 <mat-icon class="mat-18">notifications_none</mat-icon>
               </button>
             </div>
-            <button [matMenuTriggerFor]="menu" class="accountButton" >{{nameFirstLetter}}</button>
+            <button [matMenuTriggerFor]="menu" class="accountButton" ></button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item type="submit" name="submit" routerLink="/login">logout</button>
+                <button mat-menu-item type="submit" name="submit" routerLink="">logout</button>
                 <button mat-menu-item type="submit" name="submit" routerLink="#">Add Account</button>
                 <button mat-menu-item type="submit" name="submit" routerLink="/profile">Profile</button>
                 
