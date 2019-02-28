@@ -50,13 +50,10 @@ export class LoginComponent implements OnInit {
         if (response['success']) {
       console.log('tokeeeeeeeen' , response['data']);
       // localStorage.setItem('token', response['data']);
-      this.id = response['data'];
+      // this.id = response['data'];
       // localStorage.setItem('token', response['message']);
 
-      console.log('token set successfully', this.id);
-      // localStorage.setItem('data', this.id);
-      localStorage.setItem('user_id', response['data']['user_id']);
-      localStorage.setItem('username', response['data']['username']);
+      // console.log('token set successfully', this.id);
       localStorage.setItem('token', response['data']['token']);
 
       this.openSnackBar();

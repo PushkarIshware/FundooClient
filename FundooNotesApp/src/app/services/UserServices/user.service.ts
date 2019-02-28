@@ -60,4 +60,15 @@ baseUrl = environment.baseUrl;
     console.log(httpOptions);
     return this.http.get(this.baseUrl + 'shownotes', httpOptions);
   }
+
+  colornote(userData) {
+    const httpOptions = {
+    headers: new HttpHeaders({
+
+    // 'Authorization': localStorage.getItem('user_id')
+    'Authorization': localStorage.getItem('token')
+  })
+};
+    return this.http.put(this.baseUrl + 'updatenote', userData);
+  }
 }

@@ -18,6 +18,7 @@ import { MenubarComponent } from './componants/menubar/menubar.component';
 import { CreateNotesComponent } from './componants/create-notes/create-notes.component';
 import { NewPasswordComponent } from './componants/new-password/new-password.component';
 import { ProfileComponent } from './componants/profile/profile.component';
+import { DialogboxComponent } from './componants/dialogbox/dialogbox.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ProfileComponent } from './componants/profile/profile.component';
     CreateNotesComponent,
     NewPasswordComponent,
     ProfileComponent,
+    DialogboxComponent,
   ],
   imports: [
     HttpClientModule,
@@ -42,6 +44,9 @@ import { ProfileComponent } from './componants/profile/profile.component';
     ReactiveFormsModule,
     RouterModule,
     FlexLayoutModule
+  ],
+  entryComponents: [
+    DialogboxComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

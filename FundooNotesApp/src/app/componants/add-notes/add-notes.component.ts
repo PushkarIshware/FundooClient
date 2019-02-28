@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { CreateNote } from 'src/app/models/createnote.model';
@@ -30,6 +30,7 @@ export class AddNotesComponent implements OnInit {
     { name: 'brown', colorCode: '#e9c7a9' },
     { name: 'gray', colorCode: '#e7e9ec' }
   ];
+
   color = '#ffffff';
   notificationIcon = '../../assets/Icons/notification.svg';
   flag = false;
@@ -37,6 +38,7 @@ export class AddNotesComponent implements OnInit {
   pinValue = false;
   archiveValue = false;
   noteData: any;
+  data: any;
   user = localStorage.getItem('token');
   // delete = localStorage.removeItem('token');
   note: CreateNoteModel = new CreateNoteModel;
@@ -77,9 +79,10 @@ description = new FormControl(this.note.description);
   changeColor(color) {
     this.color = color;
   }
-
+  // tslint:disable-next-line:member-ordering
+  @Output() change = new EventEmitter();
   createNote() {
-    //let username = localStorage.getItem('user_id');
+    // let username = localStorage.getItem('user_id');
     // let token = localStorage.getItem('token');
     console.log('close clicked');
     this.noteData = {
@@ -92,8 +95,14 @@ description = new FormControl(this.note.description);
      console.log(this.noteData);
     this.service.createnotes(this.noteData).subscribe(
       (response) => {console.log('success', response);
+      this.data = response;
+      console.log('dataa', this.data);
+      this.change.emit();
       },
       (error) => {console.log('error', error); }
     );
+  }
+  addnotesevent() {
+    console.log('event emitter add note event');
   }
 }

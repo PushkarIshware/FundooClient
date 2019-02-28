@@ -1,0 +1,68 @@
+<div  [ngStyle]="{'backgroundColor': data.color}" class="width-dialog">
+  <div fxLayout="column" fxLayoutAlign="space-between start" >
+     
+          <div fxLayout="row" fxLayoutAlign="end" >
+      <input matInput value={{data.title}} [formControl]="title" [style.fontSize.px]=20 class="dialog">
+      
+      <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin(data.id)">
+          
+              <mat-icon style="font-size: 20px" class="mat-18 changeColor" svgIcon="unpinIcon"></mat-icon></button>
+    </div>
+              <input matInput value= {{data.description}} [formControl]="description" [style.fontSize.px]=20 class="dialog">
+              <div fxLayout="row" fxLayoutAlign="start" >
+     
+              <input matInput class="dialog"  [formControl]="labels">   
+                      <button mat-icon-button matTooltip="add label" (click)="addLabel(data)">
+                          <mat-icon style="font-size: 15px" class="mat-18 changeColor">add
+                                 </mat-icon></button></div>
+              <div class="alignment">
+                            
+                          <div fxLayout="row" fxLayoutAlign="space-around center" >
+  
+                          <button mat-icon-button matTooltip="Remind me">
+                              <mat-icon style="font-size: 20px" class="mat-18 changeColor">add_alert</mat-icon></button>
+                              <button mat-icon-button matTooltip="Collaborator">
+                                  <mat-icon style="font-size: 20px" class="mat-18 changeColor">person_add
+                                    </mat-icon></button>
+                                    <button mat-icon-button matTooltip="Change color" [matMenuTriggerFor]="colorMenu" (click)="getcolorid(data.id)">
+                                        <mat-icon style="font-size: 20px" class="mat-18 changeColor">color_lens</mat-icon></button>
+                                        <mat-menu #colorMenu="matMenu"  class="colorMenu" [overlapTrigger]="false">
+  
+                                          <ng-template matMenuContent let-note="note">
+                                              <div fxLayout="row wrap" fxLayoutAlign="end
+                                               center" fxFlex="60">
+                                            <div *ngFor="let color of colorCode">
+                                             
+                                              <button mat-icon-button [ngStyle]="{'color': color.colorCode}" (click)="changeColor(color.colorCode)">
+                                        
+                                                <mat-icon  style="font-size: 40px"  class="colorIcons">fiber_manual_record</mat-icon>
+                                        
+                                              </button>
+                                            
+                                            </div>
+                                        </div>
+                                          </ng-template>
+                                        
+                                        </mat-menu>
+                                        <button mat-icon-button matTooltip="Archive" (click)="archive(data.id)">
+                                            
+                                          <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon>
+                                  </button>
+      
+                                  <button mat-icon-button matTooltip="Delete" (click)="delete(data.id)">
+                                          <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
+                                            </mat-icon></button>
+                                               <button mat-icon-button matTooltip="more" >
+                                                  <mat-icon style="font-size: 20px" class="mat-18 changeColor">more_vert
+                                              </mat-icon></button>
+                                              <button mat-icon-button matTooltip="Undo" >
+                           <mat-icon style="font-size: 20px" class="mat-18 changeColor">undo
+                                      </mat-icon></button>
+                 <button mat-icon-button matTooltip="Redo" >
+          <mat-icon style="font-size: 20px" class="mat-18 changeColor">redo
+             </mat-icon></button>
+     <div class="button-padding" >
+  <button mat-button class="button-align" (click)="updateNotes(data.id)">Close</button></div>
+  </div></div></div>
+                                  
+  </div>
