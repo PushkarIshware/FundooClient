@@ -11,10 +11,7 @@
               <input matInput value= {{data.description}} [formControl]="description" [style.fontSize.px]=20 class="dialog">
               <div fxLayout="row" fxLayoutAlign="start" >
      
-              <input matInput class="dialog"  [formControl]="labels">   
-                      <button mat-icon-button matTooltip="add label" (click)="addLabel(data)">
-                          <mat-icon style="font-size: 15px" class="mat-18 changeColor">add
-                                 </mat-icon></button></div>
+             </div>
               <div class="alignment">
                             
                           <div fxLayout="row" fxLayoutAlign="space-around center" >
@@ -49,7 +46,7 @@
                                           <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon>
                                   </button>
       
-                                  <button mat-icon-button matTooltip="Delete" (click)="delete(data.id)">
+                                  <button mat-icon-button matTooltip="Delete" (click)="delete(data)">
                                           <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
                                             </mat-icon></button>
                                                <button mat-icon-button matTooltip="more" >
@@ -62,7 +59,7 @@
           <mat-icon style="font-size: 20px" class="mat-18 changeColor">redo
              </mat-icon></button>
      <div class="button-padding" >
-  <button mat-button class="button-align" (click)="updateNotes(data.id)">Close</button></div>
+  <button mat-button class="button-align" (click)="updateNotes()">Close</button></div>
   </div></div></div>
                                   
   </div>

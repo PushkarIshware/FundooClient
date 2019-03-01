@@ -75,18 +75,21 @@
 <!-- ********************************************** -->
 <div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
   <div *ngFor="let note of data">
+        <div *ngIf="note.is_archived === false">
           <div fxLayout="column" fxLayoutAlign="space-between start" >
                   <mat-card class="card-width" [ngStyle]="{'backgroundColor': note.color}"  >
           <div fxLayout="column" >
               
-     <div class="title" [style.fontSize.px]=21> {{note.title}}</div>
+     <div class="title" (click)="openDialog(note)" [style.fontSize.px]=21> {{note.title}}</div>
      <div class="description">{{note.description}}</div> 
-     <div class="id" (click)="openDialog(note)">{{note.id}}</div> 
-     <div class="color">{{note.color}}</div>
-     <div class="color">{{note.user_id}}</div> 
+     <div class="id" >noteid-{{note.id}}</div> 
+     <div class="color">note color-{{note.color}}</div>
+     <div class="color">userID-{{note.user_id}}</div> 
      
-<app-menubar></app-menubar></div>
+<!-- <app-menubar></app-menubar> -->
+</div>
 </mat-card>
+</div>
 </div>
 </div>
 </div>

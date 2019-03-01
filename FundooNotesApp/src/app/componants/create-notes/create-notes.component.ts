@@ -14,16 +14,27 @@ export class CreateNotesComponent implements OnInit {
   // rewriting code
 
   deletevalue = false;
+
   data: any;
+
   color: any;
+
   footerData: any;
+
   deleteData: { 'isDeleted': boolean; 'noteIdList': any[]; };
+
   archivevalue = false;
+
   archiveData: { 'isArchived': boolean; 'noteIdList': any[]; };
+
   pinValue = false;
+
   id: any;
+
   updateData: any;
+
   pinData: { 'isPined': boolean; 'noteIdList': any[]; };
+
   colorCode: Array<Object> = [
     { name: 'white', colorCode: '#fff' },
     { name: 'red', colorCode: '#fc8981' },
@@ -38,11 +49,14 @@ export class CreateNotesComponent implements OnInit {
     { name: 'brown', colorCode: '#e9c7a9' },
     { name: 'gray', colorCode: '#e7e9ec' }
   ];
+
   ColorData: { 'color': boolean; 'noteIdList': any[]; };
+
   carddata = this.data;
 
   constructor(private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer) {
+
       // constructor body
       this.matIconRegistry.addSvgIcon(
         'unpinIcon',
@@ -119,6 +133,7 @@ delete(card) {
  console.log(card.id);
  console.log('deleted');
  this.deletevalue = ! this.deletevalue;
+ console.log(this.deletevalue);
 
 this.deleteData = {
 'isDeleted': this.deletevalue,
@@ -183,9 +198,12 @@ openDialog(card): void {
      id: card.id,
      title: card.title,
      description: card.description,
-     color: card.color
+     color: card.color,
+     is_pinned: card.is_pinned
    }
-  });
+  }
+  );
+  console.log(card.id);
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
   });

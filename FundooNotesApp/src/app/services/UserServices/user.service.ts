@@ -61,7 +61,7 @@ baseUrl = environment.baseUrl;
     return this.http.get(this.baseUrl + 'shownotes', httpOptions);
   }
 
-  colornote(userData) {
+  update(userData) {
     const httpOptions = {
     headers: new HttpHeaders({
 
@@ -69,6 +69,6 @@ baseUrl = environment.baseUrl;
     'Authorization': localStorage.getItem('token')
   })
 };
-    return this.http.put(this.baseUrl + 'updatenote', userData);
+    return this.http.post(this.baseUrl + 'updatenote', userData, httpOptions);
   }
 }
