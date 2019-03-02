@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 import { notEqual } from 'assert';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-create-notes',
   templateUrl: './create-notes.component.html',
@@ -12,6 +13,7 @@ import { notEqual } from 'assert';
 })
 export class CreateNotesComponent implements OnInit {
   // rewriting code
+  noteData: any;
 
   deletevalue = false;
 
@@ -54,7 +56,7 @@ export class CreateNotesComponent implements OnInit {
 
   carddata = this.data;
 
-  constructor(private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
+  constructor(private http: HttpClient, private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer) {
 
       // constructor body
@@ -86,15 +88,31 @@ export class CreateNotesComponent implements OnInit {
   }
 
 // Methods for all
-pin(card) {
+
+
+
+pin(note) {
   console.log('called pin');
   this.pinValue = ! this.pinValue;
-  console.log(card.id);
-  this.pinData = {
-    'isPined': this.deletevalue,
-    'noteIdList': [card.id]
-  };
-  console.log(this.pinData);
+  console.log(note.id, ' ', this.pinValue);
+
+  this.noteData = {
+    'id': note.id,
+    'is_pinned': this.pinValue,
+};
+this.http.post('http://127.0.0.1:8000/api/pinunpin/' + note.id , this.noteData).subscribe(
+  (response) => {console.log('success', response);
+  // this.data = response;
+  // console.log('dataa', this.data);
+  },
+  (error) => {console.log('error', error); }
+);
+}
+  // this.pinData = {
+  //   'isPined': this.deletevalue,
+  //   'noteIdList': [card.id]
+  // };
+  // console.log(this.pinData);
 
   // this.service.pinnote(this.pinData).subscribe(
   //   (response) => {console.log('success', response);
@@ -102,18 +120,18 @@ pin(card) {
   // },
   //   (error) => {console.log('error', error); }
   // );
-}
+// }
 
 changeColor(color) {
 
   this.color = color;
   // card.color = color;
   console.log(this.color, this.id);
-  this.ColorData = {
-    'color': this.color,
-    'noteIdList': [this.id]
-  };
-  console.log(this.ColorData);
+  // this.ColorData = {
+  //   'color': this.color,
+  //   'noteIdList': [this.id]
+  // };
+  // console.log(this.ColorData);
 
   // this.service.colornote(this.ColorData).subscribe(
   //   (response) => {console.log('success', response);
@@ -129,17 +147,37 @@ getcolorid(card) {
 console.log(this.id);
 }
 
+delete1(note) {
+  console.log('delete 1 fun call', note.id);
+  // this.deletevalue = ! this.deletevalue;
+  this.deletevalue = true;
+  console.log(this.deletevalue);
+  this.noteData = {
+    'id': note.id,
+    'is_deleted': this.deletevalue,
+};
+console.log(this.noteData);
+  // this.service.update(this.noteData).subscribe(
+  this.http.post('http://127.0.0.1:8000/api/deletenote/' + note.id , this.noteData).subscribe(
+  (response) => {console.log('success', response);
+  // this.data = response;
+  // console.log('dataa', this.data);
+  },
+  (error) => {console.log('error', error); }
+);
+}
+
 delete(card) {
  console.log(card.id);
  console.log('deleted');
  this.deletevalue = ! this.deletevalue;
  console.log(this.deletevalue);
 
-this.deleteData = {
-'isDeleted': this.deletevalue,
-'noteIdList': [card.id]
-};
-console.log(this.deleteData);
+// this.deleteData = {
+// 'isDeleted': this.deletevalue,
+// 'noteIdList': [card.id]
+// };
+// console.log(this.deleteData);
 
 // Delete note service method
 // this.service.trashnote(this.deleteData).subscribe(
@@ -156,11 +194,11 @@ archive(card) {
  console.log('archived');
  this.archivevalue = ! this.archivevalue;
 
-this.archiveData = {
-'isArchived': this.archivevalue,
-'noteIdList': [card.id]
-};
-console.log(this.archiveData);
+// this.archiveData = {
+// 'isArchived': this.archivevalue,
+// 'noteIdList': [card.id]
+// };
+// console.log(this.archiveData);
 
 // Archive note service methods
 // this.service.archivednote(this.archiveData).subscribe(
@@ -199,7 +237,8 @@ openDialog(card): void {
      title: card.title,
      description: card.description,
      color: card.color,
-     is_pinned: card.is_pinned
+     is_pinned: card.pinValue,
+     is_archived: card.archivevalue,
    }
   }
   );
@@ -209,4 +248,3 @@ openDialog(card): void {
   });
 }
 }
-

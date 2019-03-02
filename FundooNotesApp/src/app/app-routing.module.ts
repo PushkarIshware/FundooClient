@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './componants/login/login.component';
 import { RegisterComponent } from './componants/register/register.component';
@@ -8,6 +8,8 @@ import { ForgotPasswordComponent } from './componants/forgot-password/forgot-pas
 import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 import { NewPasswordComponent } from './componants/new-password/new-password.component';
 import { ProfileComponent } from './componants/profile/profile.component';
+import { ArchiveComponent } from './componants/archive/archive.component';
+import { TrashComponent } from './componants/trash/trash.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,14 @@ const routes: Routes = [
               {
                 path: 'notes',
                 component: CreateNotesComponent
+              },
+              {
+                path: 'archive',
+                component: ArchiveComponent
+              },
+              {
+                path: 'trash',
+                component: TrashComponent
               },
            ]
            },

@@ -44,7 +44,7 @@
 <mat-sidenav #sidenav mode="side" opened="true" style="min-width:50px;" class="sideNav">
 <mat-nav-list class="sideNavList">       
 <div>
-  <button mat-button  (click)="headerName='Fundoo Notes'" [ngClass]="{'sideNavListItems': headerName!='Fundoo Notes', 'sideNavlistItemsColored': headerName=='Fundoo Notes'}">
+  <button mat-button [routerLink]="['addnotes']" (click)="headerName='Fundoo Notes'" [ngClass]="{'sideNavListItems': headerName!='Fundoo Notes', 'sideNavlistItemsColored': headerName=='Fundoo Notes'}">
     <mat-icon>lightbulb_outline</mat-icon> Notes
   </button>
 </div>
@@ -62,13 +62,13 @@
 </div>
 <mat-divider></mat-divider>
 <div>
-  <button mat-button  (click)="headerName='Archive'" [ngClass]="{'sideNavListItems': headerName!='Archive', 'sideNavlistItemsColored': headerName=='Archive'}">
+  <button mat-button [routerLink]="['archive']" (click)="headerName='Archive'" [ngClass]="{'sideNavListItems': headerName!='Archive', 'sideNavlistItemsColored': headerName=='Archive'}">
     <mat-icon>archive</mat-icon> Archive
   </button>
 </div>
 
 <div>
-  <button mat-button  (click)="headerName='Trash'" [ngClass]="{'sideNavListItems': headerName!='Trash', 'sideNavlistItemsColored': headerName=='Trash'}">
+  <button mat-button [routerLink]="['trash']" (click)="headerName='Trash'" [ngClass]="{'sideNavListItems': headerName!='Trash', 'sideNavlistItemsColored': headerName=='Trash'}">
     <mat-icon>delete</mat-icon> Trash
   </button>
 </div>     
@@ -77,7 +77,9 @@
 <mat-sidenav-content class="sideNavContent">
 
   <!-- <h1>this is where we have to add notes functionality</h1> -->
-  <app-add-notes></app-add-notes>
-  <app-create-notes ></app-create-notes>
+  <!-- <app-add-notes></app-add-notes>
+  <app-create-notes ></app-create-notes> -->
+  <router-outlet></router-outlet>
+  
 </mat-sidenav-content>
 </mat-sidenav-container>

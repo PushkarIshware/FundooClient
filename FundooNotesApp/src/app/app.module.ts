@@ -19,6 +19,8 @@ import { CreateNotesComponent } from './componants/create-notes/create-notes.com
 import { NewPasswordComponent } from './componants/new-password/new-password.component';
 import { ProfileComponent } from './componants/profile/profile.component';
 import { DialogboxComponent } from './componants/dialogbox/dialogbox.component';
+import { ArchiveComponent } from './componants/archive/archive.component';
+import { TrashComponent } from './componants/trash/trash.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { DialogboxComponent } from './componants/dialogbox/dialogbox.component';
     NewPasswordComponent,
     ProfileComponent,
     DialogboxComponent,
+    ArchiveComponent,
+    TrashComponent,
   ],
   imports: [
     HttpClientModule,
