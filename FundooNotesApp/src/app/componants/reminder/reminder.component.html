@@ -1,38 +1,19 @@
-
-<div fxLayout={{message}} fxFlex="90" fxLayoutAlign="center center" >
+ 
+<div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
   <div *ngFor="let note of data">
-        <div *ngIf="note.is_archived === false && note.is_deleted === false">
+        <div *ngIf="note.reminder != null  ">
           <div fxLayout="column" fxLayoutAlign="space-between start" >
-                  <mat-card  class="card-width" [ngStyle]="{'backgroundColor': note.color}"  >
+                  <mat-card class="card-width" [ngStyle]="{'backgroundColor': note.color}"  >
           <div fxLayout="column" >
               
      <div class="title" (click)="openDialog(note)" [style.fontSize.px]=21> {{note.title}}</div>
      <div class="description">{{note.description}}</div> 
      <div class="id" >noteid-{{note.id}}</div> 
      <div class="color">note color-{{note.color}}</div>
-     <div class="color">userID-{{note.user}}</div>
-     <div class="color">reminder-{{note.reminder}}</div>
-
+     <div class="color">userID-{{note.user_id}}</div> 
+     <div class="color">userID-{{note.reminder}}</div> 
      <div class="alignment">
-            
-            <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
-                    <mat-icon style="font-size: 20px"  class="mat-18 changeColor">add_alert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="remainder(note)">
-
-                          <mat-form-field>
-                            <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
-
-                        </button>
-                        <!-- <button mat-menu-item>Item 2</button> -->
-                      </mat-menu>
-        
-        
-                    <button mat-icon-button matTooltip="Delete" (click)="delete1(note)">
+        <button mat-icon-button matTooltip="Delete" (click)="delete1(note)">
             <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
               </mat-icon></button>
 
@@ -57,4 +38,3 @@
 </div>
 </div>
 </div>
-

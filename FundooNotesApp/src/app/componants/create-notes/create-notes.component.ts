@@ -6,6 +6,9 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 import { notEqual } from 'assert';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
+import { ViewService } from 'src/app/services/viewservice/view.service';
+
 @Component({
   selector: 'app-create-notes',
   templateUrl: './create-notes.component.html',
@@ -55,8 +58,10 @@ export class CreateNotesComponent implements OnInit {
   ColorData: { 'color': boolean; 'noteIdList': any[]; };
 
   carddata = this.data;
+  remainderValue: { 'remainder': any; };
 
-  constructor(private http: HttpClient, private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
+  constructor(private view: ViewService, private http: HttpClient,
+    private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer) {
 
       // constructor body
@@ -71,9 +76,11 @@ export class CreateNotesComponent implements OnInit {
      }
   // data: any;
   uid: any;
-
+  date = new FormControl('');
+  message: any;
   ngOnInit() {
     this.getNoteData();
+    this.view.currentMessage.subscribe(message => this.message = message);
   }
 
   // getting data from database calling service method.
@@ -88,7 +95,14 @@ export class CreateNotesComponent implements OnInit {
   }
 
 // Methods for all
-
+remainder(note) {
+  console.log(note.id, '----', this.date.value);
+  this.noteData = {
+    'id': note.id,
+    'reminder': this.date.value,
+};
+  console.log('remainder Valueeeeeeeee', this.noteData);
+}
 
 
 pin(note) {

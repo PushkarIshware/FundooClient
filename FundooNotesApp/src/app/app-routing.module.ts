@@ -10,6 +10,7 @@ import { NewPasswordComponent } from './componants/new-password/new-password.com
 import { ProfileComponent } from './componants/profile/profile.component';
 import { ArchiveComponent } from './componants/archive/archive.component';
 import { TrashComponent } from './componants/trash/trash.component';
+import { ReminderComponent } from './componants/reminder/reminder.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
               {
                 path: 'trash',
                 component: TrashComponent
+              },
+              {
+                path: 'reminder',
+                component: ReminderComponent
               },
            ]
            },

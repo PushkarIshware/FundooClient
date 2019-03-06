@@ -36,8 +36,23 @@
         <input matInput placeholder="Take a note..." [formControl]="description" [style.fontSize.px]=13 style="margin:0em; padding-top: 10px">
         <div class="alignment">
             
-            <button mat-icon-button matTooltip="Remind me">
-            <mat-icon style="font-size: 20px" class="mat-18 changeColor">add_alert</mat-icon></button>
+            <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">add_alert</mat-icon>
+        </button>
+        <!-- new -->
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="remainder(note)">
+
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                </button>
+                <!-- <button mat-menu-item>Item 2</button> -->
+              </mat-menu>
+        <!-- till now  -->
             
             <button mat-icon-button matTooltip="Collaborator">
             <mat-icon style="font-size: 20px" class="mat-18 changeColor">person_add</mat-icon></button>

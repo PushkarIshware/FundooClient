@@ -39,11 +39,14 @@ export class AddNotesComponent implements OnInit {
   archiveValue = false;
   noteData: any;
   data: any;
+  date = new FormControl('');
   user = localStorage.getItem('token');
   // delete = localStorage.removeItem('token');
   note: CreateNoteModel = new CreateNoteModel;
+
 title = new FormControl(this.note.title);
 description = new FormControl(this.note.description);
+
 // color1 = this.note.color;
   constructor(private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer, private snackBar: MatSnackBar, private service: UserService
@@ -90,6 +93,7 @@ description = new FormControl(this.note.description);
       'description': this.description.value,
       'is_pinned': this.pinValue ,
       'color': this.color,
+      // 'reminder': this.date.value,
       // 'user': token
     };
      console.log(this.noteData);

@@ -21,6 +21,7 @@ import { ProfileComponent } from './componants/profile/profile.component';
 import { DialogboxComponent } from './componants/dialogbox/dialogbox.component';
 import { ArchiveComponent } from './componants/archive/archive.component';
 import { TrashComponent } from './componants/trash/trash.component';
+import { ReminderComponent } from './componants/reminder/reminder.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TrashComponent } from './componants/trash/trash.component';
     DialogboxComponent,
     ArchiveComponent,
     TrashComponent,
+    ReminderComponent,
   ],
   imports: [
     HttpClientModule,

@@ -1,4 +1,4 @@
 export class ProfileModel {
-    username: string;
+    // username: string;
     photo: any;
 }

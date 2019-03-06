@@ -3,7 +3,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <img class="fundooIcon" src="../../../assets/fundoo.png">
-    <div class="dashboardTitle">Fundoo Notes</div>
+    <div class="dashboardTitle">{{headerName}}</div>
     <div class="searchToolBar">
           <input class="searchInputBar" type="search" placeholder="search">
           <button mat-icon-button>
@@ -14,8 +14,8 @@
               <button mat-icon-button>
                 <mat-icon class="mat-18">refresh</mat-icon>
               </button>
-              <button mat-icon-button>
-                  <mat-icon class="mat-18">list view</mat-icon>
+              <button mat-icon-button (click)="changeView()">
+                  <mat-icon class="mat-18">{{icon}}</mat-icon>
                 </button>
               <button mat-icon-button>
                 <mat-icon class="mat-18">settings</mat-icon>
@@ -25,16 +25,36 @@
               <button mat-icon-button>
                 <mat-icon class="mat-18">apps</mat-icon>
               </button>
-              <button mat-icon-button>
-                <mat-icon class="mat-18">notifications_none</mat-icon>
-              </button>
+
+              <!-- <button mat-icon-button>
+                <mat-icon class="mat-18" (click)="notify()">notifications_none</mat-icon>
+              </button> -->
+              
+              <button mat-icon-button [matMenuTriggerFor]="menu1">
+                  <mat-icon class="mat-18" (click)="notify()">notifications_none</mat-icon>
+                
+                </button>
+                <mat-menu #menu1="matMenu">
+                    <div class="profile_menu1">
+                      upcoming events
+                      <div *ngFor="let note of data"><br>
+                          <div class="id" >noteid-{{note.id}}</div>
+                          <div class="id" >note Title-{{note.title}}</div>
+                          <div class="color">reminder-{{note.reminder}}</div>
+                      </div>
+                    </div> 
+                    </mat-menu> 
+
             </div>
             <button [matMenuTriggerFor]="menu" class="accountButton" ></button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item type="submit" name="submit" routerLink="">logout</button>
-                <button mat-menu-item type="submit" name="submit" routerLink="#">Add Account</button>
+              <div class="profile_menu">
+                we are the champions
+                </div> 
+                <button mat-menu-item type="submit" name="submit" (click)="logout()">logout</button>
+               
                 <button mat-menu-item type="submit" name="submit" routerLink="/profile">Profile</button>
-                
+              
               </mat-menu> 
 </mat-toolbar>
 <mat-divider>
@@ -50,7 +70,7 @@
 </div>
 
 <div>
-  <button mat-button  (click)="headerName='Reminders'" [ngClass]="{'sideNavListItems': headerName!='Reminders', 'sideNavlistItemsColored': headerName=='Reminders'}">
+  <button mat-button [routerLink]="['reminder']" (click)="headerName='Reminders'" [ngClass]="{'sideNavListItems': headerName!='Reminders', 'sideNavlistItemsColored': headerName=='Reminders'}">
     <mat-icon>notifications_none</mat-icon> Reminders
   </button>
 </div>

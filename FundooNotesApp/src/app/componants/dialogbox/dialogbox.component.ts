@@ -43,6 +43,9 @@ export class DialogboxComponent implements OnInit {
 
 title = new FormControl(this.data.title);
 description = new FormControl(this.data.description);
+
+date = new FormControl(this.data.date);
+
 // color1 = this.note.color;
     constructor(private http: HttpClient, public dialogRef: MatDialogRef<DashboardComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any, private service: UserService,
@@ -91,7 +94,8 @@ description = new FormControl(this.data.description);
         'description': this.description.value,
         // 'is_pinned': this.data.pinValue,
         'color': this.data.color,
-        'is_archived': this.data.archivevalue,
+        'reminder': this.date.value,
+        // 'is_archived': this.data.archivevalue,
         // 'delete': this.data.is_deleted,
         // 'user': token
       };

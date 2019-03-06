@@ -1,3 +1,4 @@
+<!-- 
 <html>
     <body>
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -9,18 +10,72 @@
     
     </mat-card-header>
             <div class="example-container">
-              <!-- <mat-form-field appearance="outline">
-              <mat-label class="example-label">Username</mat-label>
-              <input type="text" formControlName="username" matInput placeholder="username" required>
-              </mat-form-field> -->
+              
+
               <mat-label class="example-label">photo</mat-label>
-              <input type="file" formControlName="photo" required>
+              <input type="file" [formControl]="photo" required>
               <mat-card-actions class="example-button">
-              <button mat-button aria-label="Show an example snack-bar" mat-raised-button class="button-colour">Upload</button>
+              <button mat-button aria-label="Show an example snack-bar" (click)="reminder()" mat-raised-button class="button-colour">Upload</button>
               </mat-card-actions>
             </div>
     </mat-card>
             </div>
       </form>
     </body>
-</html>
+</html> -->
+
+<!-- <form [formGroup]="formGroup" >
+  <input type="file" (change)="onSubmit($event)" />
+  <button type="submit" >Submit</button>
+</form> -->
+
+
+ <!-- working -->
+<!-- <div class="form-group">
+  <label for="file">Choose File</label>
+  <input type="file"
+         id="file"
+         name="pic"
+         (change)="handleFileInput($event.target.files)">
+         <button type="submit" (click)="uploadFileToActivity()">Submit</button>
+</div> -->
+
+<!-- <label class="image-upload-container btn btn-bwm">
+  <span>Select Image</span>
+  <input #imageInput
+         type="file"
+         accept="image/*"
+         (change)="processFile(imageInput)">
+</label> -->
+<!-- ************************************************************************* -->
+<!-- <div>
+<input #inputImage type="file" name="pic" (change)="uploadImage(inputImage)" >
+</div> -->
+<h1>File Upload</h1>
+<div class="row">
+  <div class="col-md-6">
+    <div *ngIf="fileUpload.status==='error'">
+        <div [innerHTML]="fileUpload.message"></div>
+    </div>
+    <div *ngIf="fileUpload.status==='progress'">
+        <div class="progress" style="height: 20px;margin-bottom:20px;">
+          <div class="progress-bar" role="progressbar" [style.width.%]="fileUpload.message" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{fileUpload.message}}%</div>
+        </div>
+    </div>
+    <form [formGroup] = "profileForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="text" formControlName="name" class="form-control" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <input type="file" name="profile" (change)="onSelectedFile($event)" />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Upload</button>
+      </div>
+    </form>
+    <div *ngIf="fileUpload.status==='success'">
+      <img [src]="fileUpload.filePath" height="200px" />
+    </div>
+    <p>{{ error }}</p>
+  </div>
+</div>

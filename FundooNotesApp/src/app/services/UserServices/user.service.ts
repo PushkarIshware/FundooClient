@@ -10,6 +10,7 @@ export class UserService {
 // user: LoginModel = new LoginModel();
 // Importing BaseUrl from environment file
 baseUrl = environment.baseUrl;
+  z: string;
   constructor(private http: HttpClient) { }
   // calling login API
   login(userData) {
@@ -25,9 +26,9 @@ baseUrl = environment.baseUrl;
     return this.http.get('http://127.0.0.1:8000/password_reset/');
   }
   // Calling profile API
-  profile(userData) {
-    return this.http.post(this.baseUrl + 'profile', userData, {responseType: 'json'});
-  }
+  // postFile(userData) {
+  //   return this.http.post(this.baseUrl + 'profile', userData, {responseType: 'json'});
+  // }
   // Calling Notes API
   public PostForm(url: any, data: any) {
     const httpOptions = {
@@ -71,4 +72,50 @@ baseUrl = environment.baseUrl;
 };
     return this.http.post(this.baseUrl + 'updatenote', userData, httpOptions);
   }
+// working
+//   postFile(userData) {
+//     // console.log(fileToUpload);
+//     const endpoint = this.baseUrl + 'profile';
+//     // const formData: FormData = new FormData();
+//     // formData.append('fileKey', fileToUpload, fileToUpload.name);
+//     console.log(userData);
+//     return this.http.post(endpoint, userData);
+// }
+
+postFile(fileToUpload: File) {
+  const endpoint = this.baseUrl + 'profile';
+  const formData: FormData = new FormData();
+  formData.append('fileKey', fileToUpload, fileToUpload.name);
+  console.log({'pic': fileToUpload});
+  this.z = JSON.stringify(formData);
+  return this.http.post(endpoint, this.z);
+}
+
+// uploadImage(image: File) {
+//   const formData = new FormData();
+
+//   formData.append('image', image);
+
+//   return this.http.post(this.baseUrl + 'profile', formData);
+// }
+upload(file: File) {
+  console.log(file);
+  // tslint:disable-next-line:prefer-const
+  let headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+
+  const formData: FormData = new FormData();
+  formData.append('pic', file);
+  // formData.append('size', file.size);
+  console.log(formData.get('pic'), 'formDATA is');
+
+
+  return this.http.post(this.baseUrl + 'profile', formData.get('pic'));
+}
+
+uploadnew(formData) {
+  console.log('formdata....', formData);
+  return this.http.post(this.baseUrl + 'profile', formData);
+}
+
 }
