@@ -109,7 +109,6 @@ date = new FormControl(this.data.date);
         // this.service.update(this.noteData).subscribe(
         this.http.post('http://127.0.0.1:8000/api/updatenote/' + this.data.id , this.noteData, httpOptions).subscribe(
         (response) => {console.log('success', response);
-
         },
         (error) => {console.log('error', error); }
       );

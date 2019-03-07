@@ -8,6 +8,7 @@ import { notEqual } from 'assert';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { ViewService } from 'src/app/services/viewservice/view.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-create-notes',
@@ -181,6 +182,11 @@ console.log(this.noteData);
 );
 }
 
+AddLabel(note) {
+  console.log('label fumnctions', note.id);
+}
+
+
 delete(card) {
  console.log(card.id);
  console.log('deleted');
@@ -261,4 +267,6 @@ openDialog(card): void {
     console.log('The dialog was closed');
   });
 }
+
+
 }
