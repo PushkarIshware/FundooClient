@@ -3,6 +3,7 @@ import { ViewService } from 'src/app/services/viewservice/view.service';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,9 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 icon: any = 'view_stream';
   data: Object;
-  constructor(private router: Router, private http: HttpClient, private view: ViewService, private service: UserService) { }
+  Search: any;
+  constructor(private ser: SearchService, private router: Router, private http: HttpClient,
+     private view: ViewService, private service: UserService) { }
 
   ngOnInit() {
   }
@@ -20,6 +23,12 @@ icon: any = 'view_stream';
   //   localStorage.removeItem('token');
   // }
 
+  openSearch() {
+    this.router.navigate(['dashboard/search']);
+  }
+  lookFor() {
+this.ser.changeMessage(this.Search);
+  }
 changeView() {
   if (this.icon === 'view_stream') {
     this.icon = 'dashboard';

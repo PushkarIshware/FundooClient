@@ -22,6 +22,8 @@ import { DialogboxComponent } from './componants/dialogbox/dialogbox.component';
 import { ArchiveComponent } from './componants/archive/archive.component';
 import { TrashComponent } from './componants/trash/trash.component';
 import { ReminderComponent } from './componants/reminder/reminder.component';
+import { SearchComponent } from './componants/search/search.component';
+import { SearchPipe } from './pipe/search.pipe';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { ReminderComponent } from './componants/reminder/reminder.component';
     ArchiveComponent,
     TrashComponent,
     ReminderComponent,
+    SearchComponent,
+    SearchPipe,
   ],
   imports: [
     HttpClientModule,

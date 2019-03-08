@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-archive',
@@ -8,7 +9,9 @@ import { UserService } from 'src/app/services/UserServices/user.service';
 })
 export class ArchiveComponent implements OnInit {
   data: any;
-  constructor(private service: UserService) { }
+  archivevalue: boolean;
+  noteData: { 'id': any; 'is_archived': boolean; };
+  constructor(private service: UserService, private http: HttpClient) { }
 
   ngOnInit() {
     this.getNoteData();
@@ -21,5 +24,25 @@ export class ArchiveComponent implements OnInit {
     },
       (error) => {console.log('error', error); }
       );
+  }
+
+  archiveNote(note) {
+    console.log(note.id, '----------');
+    this.archivevalue = note.is_archived;
+    console.log(this.archivevalue, 'before');
+    this.archivevalue = ! this.archivevalue;
+    console.log(this.archivevalue, 'after');
+    this.noteData = {
+      'id': note.id,
+      'is_archived': this.archivevalue,
+    };
+    console.log(this.noteData, '----------');
+    this.http.post('http://127.0.0.1:8000/api/archive/' + note.id , this.noteData).subscribe(
+      (response) => {console.log('success', response);
+      // this.data = response;
+      // console.log('dataa', this.data);
+      },
+      (error) => {console.log('error', error); }
+    );
   }
 }

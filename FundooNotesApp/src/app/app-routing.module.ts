@@ -11,6 +11,7 @@ import { ProfileComponent } from './componants/profile/profile.component';
 import { ArchiveComponent } from './componants/archive/archive.component';
 import { TrashComponent } from './componants/trash/trash.component';
 import { ReminderComponent } from './componants/reminder/reminder.component';
+import { SearchComponent } from './componants/search/search.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
               {
                 path: 'notes',
                 component: CreateNotesComponent
+              },
+              {
+                path: 'search',
+                component: SearchComponent
               },
               {
                 path: 'archive',

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { ViewService } from 'src/app/services/viewservice/view.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-create-notes',
@@ -18,6 +19,9 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 export class CreateNotesComponent implements OnInit {
   // rewriting code
   noteData: any;
+
+  @Input() arrayCards;
+  @Input() Search;
 
   deletevalue = false;
 
@@ -29,17 +33,19 @@ export class CreateNotesComponent implements OnInit {
 
   deleteData: { 'isDeleted': boolean; 'noteIdList': any[]; };
 
-  archivevalue = false;
+  archivevalue: boolean;
 
   archiveData: { 'isArchived': boolean; 'noteIdList': any[]; };
 
-  pinValue = false;
+  pinValue: boolean;
 
   id: any;
 
   updateData: any;
 
   pinData: { 'isPined': boolean; 'noteIdList': any[]; };
+
+
 
   colorCode: Array<Object> = [
     { name: 'white', colorCode: '#fff' },
@@ -60,6 +66,9 @@ export class CreateNotesComponent implements OnInit {
 
   carddata = this.data;
   remainderValue: { 'remainder': any; };
+  labelData: any;
+  DataLabels: Object;
+  // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
     private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
@@ -78,6 +87,7 @@ export class CreateNotesComponent implements OnInit {
   // data: any;
   uid: any;
   date = new FormControl('');
+  addlabel = new FormControl('');
   message: any;
   ngOnInit() {
     this.getNoteData();
@@ -105,11 +115,33 @@ remainder(note) {
   console.log('remainder Valueeeeeeeee', this.noteData);
 }
 
+archiveNote(note) {
+  console.log(note.id, '----------');
+  this.archivevalue = note.is_archived;
+  console.log(this.archivevalue, 'before');
+  this.archivevalue = ! this.archivevalue;
+  console.log(this.archivevalue, 'after');
+  this.noteData = {
+    'id': note.id,
+    'is_archived': this.archivevalue,
+  };
+  console.log(this.noteData, '----------');
+  this.http.post('http://127.0.0.1:8000/api/archive/' + note.id , this.noteData).subscribe(
+    (response) => {console.log('success', response);
+    // this.data = response;
+    // console.log('dataa', this.data);
+    },
+    (error) => {console.log('error', error); }
+  );
+}
+
 
 pin(note) {
   console.log('called pin');
+  this.pinValue = note.is_pinned;
+  console.log('before', this.pinValue);
   this.pinValue = ! this.pinValue;
-  console.log(note.id, ' ', this.pinValue);
+  console.log(note.id, ' after', this.pinValue);
 
   this.noteData = {
     'id': note.id,
@@ -247,6 +279,33 @@ updateNotes(card) {
   //   (error) => {console.log('error', error); }
   // );
 }
+
+
+CreateLabel(card) {
+  this.labelData = {
+    'id': card.id,
+    'label_name': this.addlabel.value,
+  };
+  const httpOptions = {
+    headers: new HttpHeaders({
+
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  console.log('label adding functions', this.labelData);
+  this.http.post('http://127.0.0.1:8000/api/createlabel' , this.labelData, httpOptions).subscribe(
+  (response) => {console.log('success', response);
+  this.DataLabels = response;
+  // console.log('dataa', this.data);
+  },
+  (error) => {console.log('error', error); }
+);
+}
+stopPropagation(event) {
+  event.stopPropagation();
+  // console.log("Clicked!");
+  }
+
 // THIS is New Componant for dialog block
 
 openDialog(card): void {
@@ -267,6 +326,5 @@ openDialog(card): void {
     console.log('The dialog was closed');
   });
 }
-
 
 }

@@ -1,6 +1,6 @@
 
 <div fxLayout={{message}} fxFlex="90" fxLayoutAlign="center center" >
-  <div *ngFor="let note of data">
+  <div *ngFor="let note of data | search:Search; let i = index" >
         <div *ngIf="note.is_archived === false && note.is_deleted === false">
           <div fxLayout="column" fxLayoutAlign="space-between start" >
                   <mat-card  class="card-width" [ngStyle]="{'backgroundColor': note.color}" [ngClass]="{'width': message=='column wrap'}">
@@ -30,28 +30,40 @@
                         </button>
                         <!-- <button mat-menu-item>Item 2</button> -->
                       </mat-menu>
-        
+                      <button mat-icon-button matTooltip="Archive" (click)="archiveNote(note)">
+                                            
+                        <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon>
+                </button>
         
                     <button mat-icon-button matTooltip="Delete" (click)="delete1(note)">
             <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
               </mat-icon></button>
                                                                                     <!-- "pin(note)" -->
-              <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin()">
-                <ng-container *ngIf="pinValue===false">
+              <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin(note)">
+                <!-- <ng-container *ngIf="pinValue===false"> -->
                     <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="unpinIcon"></mat-icon>
-                </ng-container>
-                <ng-container *ngIf="pinValue===true">
-                    <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="pinIcon"></mat-icon>
-                </ng-container>
+                <!-- </ng-container> -->
+                <!-- <ng-container *ngIf="pinValue===true"> -->
+                    <!-- <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="pinIcon"></mat-icon> -->
+                <!-- </ng-container> -->
               </button>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Labels" (click)="AddLabel(note)" >
+              <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Labels"  >
                     <mat-icon style="font-size: 17px" class="mat-18 changeColor">label
                       </mat-icon></button>
                       <mat-menu #menu2="matMenu">
                         <div class="profile_menu1">
-                          Add Labels
-                          <input type="text" name="label" placeholder="label">
+                          
+                          <!-- <button mat-icon-button matTooltip="add labels" > -->
+
+                            
+                              <input matInput placeholder="label name" [formControl]="addlabel" (click)="stopPropagation($event)">
+                              <input type="submit" (click)="CreateLabel(note)"> 
+                            
+  
+                          <!-- </button> -->
+                          <!-- <input type="text" [formControl]="NewLabel" name="label" placeholder="label"> -->
+                          <!-- <input type="submit" name="submit"  (click)="CreateLabel()"> -->
                           <!-- <div *ngFor="let note of data"><br> -->
                                         <!-- <div class="id" >noteid-{{note.id}}</div>
                                         <div class="id" >note Title-{{note.title}}</div>
