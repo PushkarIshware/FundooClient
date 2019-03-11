@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
 icon: any = 'view_stream';
   data: Object;
   Search: any;
+  DataLabels: Object;
   constructor(private ser: SearchService, private router: Router, private http: HttpClient,
      private view: ViewService, private service: UserService) { }
 
@@ -24,7 +25,7 @@ icon: any = 'view_stream';
   // }
 
   openSearch() {
-    this.router.navigate(['dashboard/search']);
+    this.router.navigate(['/dashboard/search']);
   }
   lookFor() {
 this.ser.changeMessage(this.Search);
@@ -61,5 +62,20 @@ logout() {
   // this.router.navigateByUrl('');
   this.router.navigate(['']);
 }
+ShowLabels() {
+  console.log('showing labels');
+  const httpOptions = {
+    headers: new HttpHeaders({
 
+      // 'Authorization': localStorage.getItem('user_id');
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+        (response) => {console.log('success', response);
+      this.DataLabels = response;
+      },
+        (error) => {console.log('error', error);
+      });
+}
 }

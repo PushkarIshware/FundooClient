@@ -68,6 +68,7 @@ export class CreateNotesComponent implements OnInit {
   remainderValue: { 'remainder': any; };
   labelData: any;
   DataLabels: Object;
+  setLabels: { 'id': any; 'label_name': any; };
   // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
@@ -125,8 +126,15 @@ archiveNote(note) {
     'id': note.id,
     'is_archived': this.archivevalue,
   };
+  const httpOptions = {
+    headers: new HttpHeaders({
+
+      // 'Authorization': localStorage.getItem('user_id');
+      'Authorization': localStorage.getItem('token')
+    })
+  };
   console.log(this.noteData, '----------');
-  this.http.post('http://127.0.0.1:8000/api/archive/' + note.id , this.noteData).subscribe(
+  this.http.post('http://127.0.0.1:8000/api/archive/' + note.id , this.noteData, httpOptions).subscribe(
     (response) => {console.log('success', response);
     // this.data = response;
     // console.log('dataa', this.data);
@@ -147,7 +155,14 @@ pin(note) {
     'id': note.id,
     'is_pinned': this.pinValue,
 };
-this.http.post('http://127.0.0.1:8000/api/pinunpin/' + note.id , this.noteData).subscribe(
+const httpOptions = {
+  headers: new HttpHeaders({
+
+    // 'Authorization': localStorage.getItem('user_id');
+    'Authorization': localStorage.getItem('token')
+  })
+};
+this.http.post('http://127.0.0.1:8000/api/pinunpin/' + note.id , this.noteData, httpOptions).subscribe(
   (response) => {console.log('success', response);
   // this.data = response;
   // console.log('dataa', this.data);
@@ -204,8 +219,15 @@ delete1(note) {
     'is_deleted': this.deletevalue,
 };
 console.log(this.noteData);
+const httpOptions = {
+  headers: new HttpHeaders({
+
+    // 'Authorization': localStorage.getItem('user_id');
+    'Authorization': localStorage.getItem('token')
+  })
+};
   // this.service.update(this.noteData).subscribe(
-  this.http.post('http://127.0.0.1:8000/api/deletenote/' + note.id , this.noteData).subscribe(
+  this.http.post('http://127.0.0.1:8000/api/deletenote/' + note.id , this.noteData, httpOptions).subscribe(
   (response) => {console.log('success', response);
   // this.data = response;
   // console.log('dataa', this.data);
@@ -300,10 +322,58 @@ CreateLabel(card) {
   },
   (error) => {console.log('error', error); }
 );
+
+
 }
 stopPropagation(event) {
   event.stopPropagation();
   // console.log("Clicked!");
+  }
+
+  showLABELS() {
+    console.log('show');
+    {
+      console.log('showing labels');
+      const httpOptions = {
+        headers: new HttpHeaders({
+
+          // 'Authorization': localStorage.getItem('user_id');
+          'Authorization': localStorage.getItem('token')
+        })
+      };
+      this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+            (response) => {console.log('success', response);
+          this.DataLabels = response;
+          },
+            (error) => {console.log('error', error);
+          });
+    }
+  }
+
+  setLABEL(label, id) {
+    console.log('label name', label.label_name, id);
+
+    this.setLabels = {
+      'id': id,
+      'label_name': label.id,
+    };
+    console.log(this.setLabels);
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+
+    this.http.post('http://127.0.0.1:8000/api/maplabel' , this.setLabels, httpOptions).subscribe(
+    (response) => {console.log('success', response);
+    // this.DataLabels = response;
+    // console.log('dataa', this.data);
+    },
+    (error) => {console.log('error', error); }
+  );
   }
 
 // THIS is New Componant for dialog block

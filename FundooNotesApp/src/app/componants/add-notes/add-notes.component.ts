@@ -90,12 +90,12 @@ description = new FormControl(this.note.description);
     // let token = localStorage.getItem('token');
     console.log('close clicked');
     this.noteData = {
-      'id': this.id.value,
+      // 'id': this.id.value,
       'title': this.title.value,
       'description': this.description.value,
       // 'is_pinned': this.pinValue ,
       'color': this.color,
-      'reminder': this.date.value,
+      // 'reminder': this.date.value,
       // 'user': token
     };
      console.log(this.noteData);

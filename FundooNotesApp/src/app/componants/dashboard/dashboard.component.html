@@ -5,7 +5,7 @@
     <img class="fundooIcon" src="../../../assets/fundoo.png">
     <div class="dashboardTitle">{{headerName}}</div>
     <div class="searchToolBar">
-          <input class="searchInputBar" type="search" placeholder="search" [(ngModel)]="Search"
+          <input class="searchInputBar" type="text" placeholder="search" [(ngModel)]="Search"
           (keyup)="lookFor()" (click)="openSearch()" >
           <button mat-icon-button>
             <mat-icon class="mat-18">search</mat-icon>
@@ -77,13 +77,14 @@
 <mat-divider></mat-divider>
 <div>
   Add labels
-  <button class="sideNavListItems" mat-button>
+  <button class="sideNavListItems" (click)="ShowLabels()" mat-button>
     <mat-icon>edit</mat-icon>Edit Labels
   </button>
   
-  <!-- <div *ngFor="let label of DataLabels">
-  <div class="id" >label name-{{label.label_name}}</div>
-  </div> -->
+  <div *ngFor="let label of DataLabels">
+  <!-- <div class="id" >label name-{{label.label_name}}</div> -->
+  <mat-checkbox>{{label.label_name}}</mat-checkbox>
+  </div>
 </div>
 <mat-divider></mat-divider>
 <div>

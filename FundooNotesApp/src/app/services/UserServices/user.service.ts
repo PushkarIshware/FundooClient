@@ -40,6 +40,7 @@ baseUrl = environment.baseUrl;
     return this.http.post(url, data, httpOptions);
   }
   createnotes(userData) {
+    console.log(userData);
     const httpOptions = {
     headers: new HttpHeaders({
 

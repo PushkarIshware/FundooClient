@@ -55,12 +55,8 @@
                         <div class="profile_menu1">
                           
                           <!-- <button mat-icon-button matTooltip="add labels" > -->
-
-                            
                               <input matInput placeholder="label name" [formControl]="addlabel" (click)="stopPropagation($event)">
                               <input type="submit" (click)="CreateLabel(note)"> 
-                            
-  
                           <!-- </button> -->
                           <!-- <input type="text" [formControl]="NewLabel" name="label" placeholder="label"> -->
                           <!-- <input type="submit" name="submit"  (click)="CreateLabel()"> -->
@@ -70,8 +66,24 @@
                                         <div class="color">reminder-{{note.reminder}}</div> -->
                           <!-- </div> -->
                         </div> 
+                        
                         </mat-menu>
               
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu3" matTooltip="Labels" (click)="showLABELS()"  >
+                            <mat-icon style="font-size: 17px" class="mat-18 changeColor">label
+                              </mat-icon></button>
+                              <mat-menu #menu3="matMenu" >
+                                <div class="profile_menu1">
+                                    
+                                    <div *ngFor="let label of DataLabels">
+                                        <!-- <div class="id" >label name-{{label.label_name}}</div> -->
+                                        <mat-checkbox (click)="setLABEL(label,note.id)">{{label.label_name}}</mat-checkbox>
+                                        </div>
+                                </div> 
+                                
+                                </mat-menu>                       
+
               </div>
 <!-- <app-menubar></app-menubar> -->
 </div>
