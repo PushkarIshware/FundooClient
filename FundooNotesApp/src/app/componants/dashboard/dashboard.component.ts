@@ -4,6 +4,8 @@ import { UserService } from 'src/app/services/UserServices/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
+import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,10 +17,11 @@ icon: any = 'view_stream';
   data: Object;
   Search: any;
   DataLabels: Object;
-  constructor(private ser: SearchService, private router: Router, private http: HttpClient,
+  constructor(public dialog: MatDialog, private ser: SearchService, private router: Router, private http: HttpClient,
      private view: ViewService, private service: UserService) { }
 
   ngOnInit() {
+    this.ShowLabels();
   }
   // logout() {
   //   localStorage.removeItem('token');
@@ -77,5 +80,22 @@ ShowLabels() {
       },
         (error) => {console.log('error', error);
       });
+}
+openDialog(): void {
+  const dialogRef = this.dialog.open(ProfileDialogComponent,
+   {
+  //  data : {
+  //    id: card.id,
+  //    title: card.title,
+  //    description: card.description,
+  //    color: card.color,
+  //    is_pinned: card.pinValue,
+  //    is_archived: card.archivevalue,
+  //  }
+  }
+  );
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+  });
 }
 }

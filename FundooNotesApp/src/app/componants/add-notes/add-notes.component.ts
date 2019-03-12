@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { CreateNote } from 'src/app/models/createnote.model';
@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { CreateNoteModel } from 'src/app/model/CreateNote.model';
+import { CreateNotesComponent } from '../create-notes/create-notes.component';
 // import { timingSafeEqual } from 'crypto';
 
 @Component({
@@ -61,6 +62,7 @@ description = new FormControl(this.note.description);
         this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/Icons/pinIcon.svg'),
       );
    }
+   @ViewChild(CreateNotesComponent) child;
 
   ngOnInit() {
   }
@@ -104,6 +106,7 @@ description = new FormControl(this.note.description);
       this.data = response;
       console.log('dataa', this.data);
       this.change.emit();
+      this.child.getNoteData();
       },
       (error) => {console.log('error', error); }
     );

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { ViewService } from 'src/app/services/viewservice/view.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { SearchComponent } from '../search/search.component';
+import { TrashComponent } from '../trash/trash.component';
 
 @Component({
   selector: 'app-create-notes',
@@ -26,7 +27,7 @@ export class CreateNotesComponent implements OnInit {
   deletevalue = false;
 
   data: any;
-
+  label: any;
   color: any;
 
   footerData: any;
@@ -68,7 +69,7 @@ export class CreateNotesComponent implements OnInit {
   remainderValue: { 'remainder': any; };
   labelData: any;
   DataLabels: Object;
-  setLabels: { 'id': any; 'label_name': any; };
+  setLabels: { 'id': any; 'label_id': any; 'label_name': any; };
   // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
@@ -85,12 +86,14 @@ export class CreateNotesComponent implements OnInit {
         this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/Icons/pinIcon.svg'),
       );
      }
+
   // data: any;
   uid: any;
   date = new FormControl('');
   addlabel = new FormControl('');
   message: any;
   ngOnInit() {
+    this.ShowLabels();
     this.getNoteData();
     this.view.currentMessage.subscribe(message => this.message = message);
   }
@@ -98,8 +101,12 @@ export class CreateNotesComponent implements OnInit {
   // getting data from database calling service method.
   getNoteData() {
     this.service.getNotes().subscribe(
-      (response) => {console.log('success get notes', response);
-  this.data = response;
+      (response) => {
+        // tslint:disable-next-line:forin
+
+        // console.log('success get notes', response['data']);
+        this.data = response;
+        console.log(this.data);
     // this.uid = localStorage.getItem('user_id');
     },
       (error) => {console.log('error', error); }
@@ -115,7 +122,22 @@ remainder(note) {
 };
   console.log('remainder Valueeeeeeeee', this.noteData);
 }
+ShowLabels() {
+  console.log('showing labels');
+  const httpOptions = {
+    headers: new HttpHeaders({
 
+      // 'Authorization': localStorage.getItem('user_id');
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+        (response) => {console.log('success in create notes', response);
+      this.DataLabels = response;
+      },
+        (error) => {console.log('error', error);
+      });
+}
 archiveNote(note) {
   console.log(note.id, '----------');
   this.archivevalue = note.is_archived;
@@ -355,7 +377,8 @@ stopPropagation(event) {
 
     this.setLabels = {
       'id': id,
-      'label_name': label.id,
+      'label_id': label.id,
+      'label_name': label.label_name,
     };
     console.log(this.setLabels);
 

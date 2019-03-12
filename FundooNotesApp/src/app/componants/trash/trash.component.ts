@@ -12,6 +12,7 @@ export class TrashComponent implements OnInit {
 
   ngOnInit() {
     this.getNoteData();
+
   }
   getNoteData() {
     this.service.getNotes().subscribe(
@@ -22,4 +23,5 @@ export class TrashComponent implements OnInit {
       (error) => {console.log('error', error); }
       );
   }
+
 }

@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
+<!-- <div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
   <div *ngFor="let note of data">
         <div *ngIf="note.is_deleted === true ">
           <div fxLayout="column" fxLayoutAlign="space-between start" >
@@ -29,10 +29,15 @@
                       </mat-icon></button>
               
               </div>
-<!-- <app-menubar></app-menubar> -->
+
 </div>
 </mat-card>
 </div>
 </div>
 </div>
+</div> -->
+<div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
+    <!-- <div *ngIf="note.is_deleted === true "> -->
+  <app-create-notes></app-create-notes>
+<!-- </div> -->
 </div>

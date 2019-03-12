@@ -24,6 +24,7 @@ import { TrashComponent } from './componants/trash/trash.component';
 import { ReminderComponent } from './componants/reminder/reminder.component';
 import { SearchComponent } from './componants/search/search.component';
 import { SearchPipe } from './pipe/search.pipe';
+import { ProfileDialogComponent } from './componants/profile-dialog/profile-dialog.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { SearchPipe } from './pipe/search.pipe';
     ReminderComponent,
     SearchComponent,
     SearchPipe,
+    ProfileDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -56,7 +58,8 @@ import { SearchPipe } from './pipe/search.pipe';
     FlexLayoutModule
   ],
   entryComponents: [
-    DialogboxComponent
+    DialogboxComponent,
+    ProfileDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
