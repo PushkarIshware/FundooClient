@@ -70,6 +70,8 @@ export class CreateNotesComponent implements OnInit {
   labelData: any;
   DataLabels: Object;
   setLabels: { 'id': any; 'label_id': any; 'label_name': any; };
+  removeLabel: { 'id': any; };
+  CreateDataLabels: Object;
   // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
@@ -122,6 +124,22 @@ remainder(note) {
 };
   console.log('remainder Valueeeeeeeee', this.noteData);
 }
+// ShowLabels() {
+//   console.log('showing labels');
+//   const httpOptions = {
+//     headers: new HttpHeaders({
+
+//       // 'Authorization': localStorage.getItem('user_id');
+//       'Authorization': localStorage.getItem('token')
+//     })
+//   };
+//   this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+//         (response) => {console.log('success in create notes', response);
+//       this.DataLabels = response;
+//       },
+//         (error) => {console.log('error', error);
+//       });
+// }
 ShowLabels() {
   console.log('showing labels');
   const httpOptions = {
@@ -131,13 +149,14 @@ ShowLabels() {
       'Authorization': localStorage.getItem('token')
     })
   };
-  this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+  this.http.get('http://127.0.0.1:8000/api/getmaplabels', httpOptions).subscribe(
         (response) => {console.log('success in create notes', response);
       this.DataLabels = response;
       },
         (error) => {console.log('error', error);
       });
 }
+
 archiveNote(note) {
   console.log(note.id, '----------');
   this.archivevalue = note.is_archived;
@@ -339,7 +358,7 @@ CreateLabel(card) {
   console.log('label adding functions', this.labelData);
   this.http.post('http://127.0.0.1:8000/api/createlabel' , this.labelData, httpOptions).subscribe(
   (response) => {console.log('success', response);
-  this.DataLabels = response;
+  this.CreateDataLabels = response;
   // console.log('dataa', this.data);
   },
   (error) => {console.log('error', error); }
@@ -381,8 +400,6 @@ stopPropagation(event) {
       'label_name': label.label_name,
     };
     console.log(this.setLabels);
-
-
     const httpOptions = {
       headers: new HttpHeaders({
 
@@ -391,6 +408,23 @@ stopPropagation(event) {
     };
 
     this.http.post('http://127.0.0.1:8000/api/maplabel' , this.setLabels, httpOptions).subscribe(
+    (response) => {console.log('success', response);
+    // this.DataLabels = response;
+    // console.log('dataa', this.data);
+    },
+    (error) => {console.log('error', error); }
+  );
+  }
+
+  RemoveLabel(label) {
+    console.log('remove label called', label);
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.delete('http://127.0.0.1:8000/api/removemaplabel/' + label.id, httpOptions).subscribe(
     (response) => {console.log('success', response);
     // this.DataLabels = response;
     // console.log('dataa', this.data);

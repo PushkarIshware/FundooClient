@@ -5,8 +5,18 @@
           <div fxLayout="column" fxLayoutAlign="space-between start" >
                   <mat-card  class="card-width" [ngStyle]="{'backgroundColor': note.color}" [ngClass]="{'width': message=='column wrap'}">
           <div fxLayout="column" >
-              
+              <div fxLayout="row" fxLayoutAlign="space-between center" >
      <div class="title" (click)="openDialog(note)" [style.fontSize.px]=21> {{note.title}}</div>
+     
+     <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin(note)">
+      <!-- <ng-container *ngIf="pinValue===false"> -->
+          <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="unpinIcon"></mat-icon>
+      <!-- </ng-container> -->
+      <!-- <ng-container *ngIf="pinValue===true"> -->
+          <!-- <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="pinIcon"></mat-icon> -->
+      <!-- </ng-container> -->
+    </button>
+  </div>
      <div class="description">{{note.description}}</div> 
      <div class="id" >noteid-{{note.id}}</div> 
      <div class="color">note color-{{note.color}}</div>
@@ -14,11 +24,17 @@
      <div class="color">reminder-{{note.reminder}}</div>
      <!-- <div class="color">label-{{note.label}}</div> -->
      <div>
-      <!-- <mat-chip-list>
+      <mat-chip-list>
         <div *ngFor="let label of DataLabels">
-        <mat-chip>{{label.label_name}}</mat-chip>
+          <div *ngIf="label.note_id === note.id">
+        <mat-chip >
+          {{label.map_label_name}}
+          <mat-icon matChipRemove (click)="RemoveLabel(label)">cancel</mat-icon>
+        </mat-chip>
+      </div>
         </div>
-      </mat-chip-list> -->
+        
+      </mat-chip-list>
      </div>
 
      <div class="alignment">
@@ -47,35 +63,20 @@
             <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
               </mat-icon></button>
                                                                                     <!-- "pin(note)" -->
-              <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin(note)">
-                <!-- <ng-container *ngIf="pinValue===false"> -->
-                    <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="unpinIcon"></mat-icon>
-                <!-- </ng-container> -->
-                <!-- <ng-container *ngIf="pinValue===true"> -->
-                    <!-- <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="pinIcon"></mat-icon> -->
-                <!-- </ng-container> -->
-              </button>
+              
 
-              <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Labels"  >
+              <!-- <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Labels"  >
                     <mat-icon style="font-size: 17px" class="mat-18 changeColor">label
                       </mat-icon></button>
                       <mat-menu #menu2="matMenu">
                         <div class="profile_menu1">
                           
-                          <!-- <button mat-icon-button matTooltip="add labels" > -->
                               <input matInput placeholder="label name" [formControl]="addlabel" (click)="stopPropagation($event)">
                               <input type="submit" (click)="CreateLabel(note)"> 
-                          <!-- </button> -->
-                          <!-- <input type="text" [formControl]="NewLabel" name="label" placeholder="label"> -->
-                          <!-- <input type="submit" name="submit"  (click)="CreateLabel()"> -->
-                          <!-- <div *ngFor="let note of data"><br> -->
-                                        <!-- <div class="id" >noteid-{{note.id}}</div>
-                                        <div class="id" >note Title-{{note.title}}</div>
-                                        <div class="color">reminder-{{note.reminder}}</div> -->
-                          <!-- </div> -->
+                          
                         </div> 
                         
-                        </mat-menu>
+                        </mat-menu> -->
               
 
                         <button mat-icon-button [matMenuTriggerFor]="menu3" matTooltip="Labels" (click)="showLABELS()"  >
@@ -90,9 +91,25 @@
                                         </div>
                                 </div> 
                                 
-                                </mat-menu>                       
+                                </mat-menu>    
+      <button mat-icon-button matTooltip="Add Label" [matMenuTriggerFor]="menu2" >
+      <mat-icon style="font-size: 20px" class="mat-18 changeColor">more_vert
+      </mat-icon>
+    </button>      
+    <mat-menu #menu2="matMenu">
+        <div class="profile_menu1">
+          
+              <input matInput placeholder="label name" [formControl]="addlabel" (click)="stopPropagation($event)">
+              <input type="submit" (click)="CreateLabel(note)"> 
+          
+        </div> 
+        
+        </mat-menu> 
+                  
 
-              </div>
+      
+    
+    </div>
 <!-- <app-menubar></app-menubar> -->
 </div>
 </mat-card>

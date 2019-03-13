@@ -83,7 +83,10 @@
   
   <div *ngFor="let label of DataLabels">
   <!-- <div class="id" >label name-{{label.label_name}}</div> -->
-  <mat-checkbox>{{label.label_name}}</mat-checkbox>
+  <button mat-button >
+      <mat-icon>label_outline</mat-icon> {{label.label_name}}
+    </button>
+  <!-- <mat-checkbox>{{label.label_name}}</mat-checkbox> -->
   </div>
 </div>
 <mat-divider></mat-divider>

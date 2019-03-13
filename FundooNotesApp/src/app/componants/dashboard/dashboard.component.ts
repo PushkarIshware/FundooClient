@@ -21,7 +21,7 @@ icon: any = 'view_stream';
      private view: ViewService, private service: UserService) { }
 
   ngOnInit() {
-    this.ShowLabels();
+    // this.ShowLabels();
   }
   // logout() {
   //   localStorage.removeItem('token');
