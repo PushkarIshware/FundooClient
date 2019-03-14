@@ -26,6 +26,7 @@ import { SearchComponent } from './componants/search/search.component';
 import { SearchPipe } from './pipe/search.pipe';
 import { ProfileDialogComponent } from './componants/profile-dialog/profile-dialog.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,7 @@ import { ProfileDialogComponent } from './componants/profile-dialog/profile-dial
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   entryComponents: [
     DialogboxComponent,

@@ -64,7 +64,7 @@
 <mat-sidenav #sidenav mode="side" opened="true" style="min-width:50px;" class="sideNav">
 <mat-nav-list class="sideNavList">       
 <div>
-  <button mat-button [routerLink]="['addnotes']" (click)="headerName='Fundoo Notes'" [ngClass]="{'sideNavListItems': headerName!='Fundoo Notes', 'sideNavlistItemsColored': headerName=='Fundoo Notes'}">
+  <button mat-button [routerLink]="['addnotes']" (click)="headerName='fundooNotes'" [ngClass]="{'sideNavListItems': headerName!='Fundoo Notes', 'sideNavlistItemsColored': headerName=='Fundoo Notes'}">
     <mat-icon>lightbulb_outline</mat-icon> Notes
   </button>
 </div>
@@ -85,7 +85,9 @@
   <!-- <div class="id" >label name-{{label.label_name}}</div> -->
   <button mat-button >
       <mat-icon>label_outline</mat-icon> {{label.label_name}}
+      <mat-icon matRemove (click)="deleteLabel(label)">cancel</mat-icon>
     </button>
+    
   <!-- <mat-checkbox>{{label.label_name}}</mat-checkbox> -->
   </div>
 </div>

@@ -81,6 +81,24 @@ ShowLabels() {
         (error) => {console.log('error', error);
       });
 }
+
+deleteLabel(label) {
+  console.log(label.id);
+  const httpOptions = {
+    headers: new HttpHeaders({
+
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  this.http.delete('http://127.0.0.1:8000/api/deletelabel/' + label.id, httpOptions).subscribe(
+  (response) => {console.log('success', response);
+  // this.DataLabels = response;
+  // console.log('dataa', this.data);
+  },
+  (error) => {console.log('error', error); }
+);
+}
+
 openDialog(): void {
   const dialogRef = this.dialog.open(ProfileDialogComponent,
    {

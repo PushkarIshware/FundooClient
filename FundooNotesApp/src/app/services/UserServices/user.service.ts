@@ -115,7 +115,7 @@ upload(file: File) {
 }
 
 uploadnew(formData) {
-  console.log('formdata....', formData);
+  console.log('formdata....', formData.name);
   return this.http.post(this.baseUrl + 'profile', formData);
 }
 
