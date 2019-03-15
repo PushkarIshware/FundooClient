@@ -18,11 +18,11 @@
     </button>
   </div>
      <div class="description">{{note.description}}</div> 
-     <!-- <div class="id" >noteid-{{note.id}}</div>  -->
+     <div class="id" >noteid-{{note.id}}</div> 
      <!-- <div class="color">note color-{{note.color}}</div> -->
-     <!-- <div class="color">userID-{{note.user}}</div> -->
+     <div class="color">userID-{{note.user}}</div>
      <div class="color">reminder-{{note.reminder}}</div>
-     <!-- <div class="color">label-{{note.label}}</div> -->
+     <div class="color">collab-{{note.collaborate}}</div>
      <div>
       <mat-chip-list>
         <div *ngFor="let label of DataLabels">
@@ -106,7 +106,21 @@
         
         </mat-menu> 
                   
-
+<!-- for collab -->
+        <button mat-icon-button matTooltip="Add Collaborator" [matMenuTriggerFor]="menu4" >
+          <mat-icon style="font-size: 20px" class="mat-18 changeColor">person_add
+          </mat-icon>
+        </button>      
+        <mat-menu #menu4="matMenu">
+            <div class="profile_menu1">
+              
+                  <input matInput placeholder="collab_name name" [formControl]="collab_name" (click)="stopPropagation1($event)">
+                  <input type="submit" (click)="AddCollaborator(note)"> 
+              
+            </div> 
+            
+            </mat-menu>
+<!-- till now -->
       
     
     </div>

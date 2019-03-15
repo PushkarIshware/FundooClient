@@ -26,7 +26,7 @@ import { SearchComponent } from './componants/search/search.component';
 import { SearchPipe } from './pipe/search.pipe';
 import { ProfileDialogComponent } from './componants/profile-dialog/profile-dialog.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +57,7 @@ import { ProfileDialogComponent } from './componants/profile-dialog/profile-dial
     ReactiveFormsModule,
     RouterModule,
     FlexLayoutModule,
+    ImageCropperModule,
   ],
   entryComponents: [
     DialogboxComponent,

@@ -72,6 +72,7 @@ export class CreateNotesComponent implements OnInit {
   setLabels: { 'id': any; 'label_id': any; 'label_name': any; };
   removeLabel: { 'id': any; };
   CreateDataLabels: Object;
+  collab_data: { 'id': any; 'new_username': any; };
   // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
@@ -93,6 +94,7 @@ export class CreateNotesComponent implements OnInit {
   uid: any;
   date = new FormControl('');
   addlabel = new FormControl('');
+  collab_name = new FormControl('');
   message: any;
   ngOnInit() {
     this.ShowLabels();
@@ -371,6 +373,11 @@ stopPropagation(event) {
   // console.log("Clicked!");
   }
 
+  stopPropagation1(event) {
+    event.stopPropagation();
+    // console.log("Clicked!");
+    }
+
   showLABELS() {
     console.log('show');
     {
@@ -432,6 +439,31 @@ stopPropagation(event) {
     (error) => {console.log('error', error); }
   );
   }
+
+
+  AddCollaborator(note) {
+    console.log('add collab called', note.id, this.collab_name.value);
+    this.collab_data = {
+      'id': note.id,
+      'new_username': this.collab_name.value
+    };
+    console.log(this.collab_data);
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    console.log('label adding functions', this.collab_data);
+    this.http.post('http://127.0.0.1:8000/api/addcollaborator' , this.collab_data, httpOptions).subscribe(
+    (response) => {console.log('success', response);
+    this.CreateDataLabels = response;
+    // console.log('dataa', this.data);
+    },
+    (error) => {console.log('error', error); }
+  );
+  }
+
 
 // THIS is New Componant for dialog block
 
