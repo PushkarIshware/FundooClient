@@ -18,7 +18,7 @@
               <button mat-icon-button (click)="changeView()">
                   <mat-icon class="mat-18">{{icon}}</mat-icon>
                 </button>
-              <button mat-icon-button>
+              <button mat-icon-button >
                 <mat-icon class="mat-18">settings</mat-icon>
               </button>
             </div>
@@ -43,17 +43,21 @@
                     </mat-menu> 
 
             </div>
-            <button [matMenuTriggerFor]="menu" class="accountButton" ></button>
+            <button [matMenuTriggerFor]="menu" class="accountButton" >
+              <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/pushkar111 " height="30" width="30"  />
+
+            </button>
             <mat-menu #menu="matMenu">
               <div class="profile_menu">
-                we are the champions
+                User Informations
                 <div (click)="openDialog()">
-                  <img src="" class="profile">
+                  <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/pushkar111 " class="profile">
+                  <div>Username</div>
                   </div>
                 </div> 
                 <button mat-menu-item type="submit" name="submit" (click)="logout()">logout</button>
                
-                <button mat-menu-item type="submit" name="submit" routerLink="/profile">Profile</button>
+                <!-- <button mat-menu-item type="submit" name="submit" routerLink="/profile">Profile</button> -->
               
               </mat-menu> 
 </mat-toolbar>

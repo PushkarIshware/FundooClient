@@ -23,6 +23,7 @@ export class ProfileDialogComponent implements OnInit {
   imageChangedEvent: any = '';
 
   croppedImage: any = '';
+
   pic_data: { 'profile1': any; };
 
   // tslint:disable-next-line:max-line-length
