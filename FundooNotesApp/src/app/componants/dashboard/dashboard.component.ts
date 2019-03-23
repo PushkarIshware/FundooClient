@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,11 +15,17 @@ export class DashboardComponent implements OnInit {
 icon: any = 'view_stream';
   data: Object;
   Search: any;
+  profile: any;
   DataLabels: Object;
+  URLdata: Object;
+  Unamedata: any;
   constructor(public dialog: MatDialog, private ser: SearchService, private router: Router, private http: HttpClient,
      private view: ViewService, private service: UserService) { }
 
   ngOnInit() {
+    this.view.currentMessagep.subscribe(message => this.profile = message);
+    console.log(this.profile);
+    this.getUrl();
     // this.ShowLabels();
   }
   // logout() {
@@ -97,6 +102,21 @@ deleteLabel(label) {
   },
   (error) => {console.log('error', error); }
 );
+}
+
+getUrl() {
+  this.service.getUrl().subscribe(
+    (response) => {
+      // tslint:disable-next-line:forin
+
+      // console.log('success get notes', response['data']);
+      this.URLdata = response['data'];
+      this.Unamedata = response['username'];
+      console.log(this.data);
+  // this.uid = localStorage.getItem('user_id');
+  },
+    (error) => {console.log('error', error); }
+    );
 }
 
 openDialog(): void {

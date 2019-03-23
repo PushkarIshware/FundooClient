@@ -63,6 +63,20 @@ baseUrl = environment.baseUrl;
     return this.http.get(this.baseUrl + 'shownotes', httpOptions);
   }
 
+  getUrl() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        // 'Authorization': localStorage.getItem('user_id');
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    console.log(httpOptions);
+    return this.http.get(this.baseUrl + 'get_url', httpOptions);
+  }
+
+
+
   update(userData) {
     const httpOptions = {
     headers: new HttpHeaders({
@@ -117,6 +131,10 @@ upload(file: File) {
 uploadnew(formData) {
   console.log('formdata....', formData.name);
   return this.http.post(this.baseUrl + 'profile', formData);
+}
+
+public loggIn() {
+  return !!localStorage.getItem('token');
 }
 
 }

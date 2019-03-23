@@ -2,11 +2,12 @@ import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { ProfileModel } from 'src/app/model/Profile.model';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ViewService } from 'src/app/services/viewservice/view.service';
 
 @Component({
   selector: 'app-profile-dialog',
@@ -25,9 +26,11 @@ export class ProfileDialogComponent implements OnInit {
   croppedImage: any = '';
 
   pic_data: { 'profile1': any; };
+  usernameData: Object;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private http: HttpClient, private fb: FormBuilder, private cd: ChangeDetectorRef, private service: UserService,
+  constructor(private http: HttpClient, private fb: FormBuilder, private cd: ChangeDetectorRef,
+    private view: ViewService, private service: UserService,
      private snackBar: MatSnackBar, private router: Router, private formBuilder: FormBuilder) {
 
 
@@ -55,6 +58,7 @@ export class ProfileDialogComponent implements OnInit {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
+    // this.croppedImage = event.file;
     // this.pic_data = {
     //   'profile1': this.croppedImage,
     // };
@@ -84,7 +88,17 @@ export class ProfileDialogComponent implements OnInit {
     console.log('label adding functions', this.pic_data);
     this.http.post('http://127.0.0.1:8000/api/RestProfile' , this.pic_data, httpOptions).subscribe(
     (response) => {console.log('success', response);
-    // console.log('dataa', this.data);
+    this.usernameData = response['data'];
+    this.view.changeMessagep(this.usernameData);
+    console.log('responce data from RESTPROFILE---', this.usernameData);
+
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //         'username': this.usernameData
+  //     }
+  // };
+  console.log('nave', this.usernameData);
+  this.router.navigate(['/dashboard'], this.usernameData);
     },
     (error) => {console.log('error', error);
   });

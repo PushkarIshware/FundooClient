@@ -12,6 +12,7 @@ import { ArchiveComponent } from './componants/archive/archive.component';
 import { TrashComponent } from './componants/trash/trash.component';
 import { ReminderComponent } from './componants/reminder/reminder.component';
 import { SearchComponent } from './componants/search/search.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
           {
             path : 'dashboard',
             component: DashboardComponent,
+            canActivate : [AuthGuard],
             children: [
               {
                 path: 'addnotes',

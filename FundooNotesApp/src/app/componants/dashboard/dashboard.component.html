@@ -43,16 +43,23 @@
                     </mat-menu> 
 
             </div>
-            <button [matMenuTriggerFor]="menu" class="accountButton" >
-              <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/pushkar111 " height="30" width="30"  />
-
-            </button>
+            <div [matMenuTriggerFor]="menu" class="account" >
+              <!-- <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/{{profile}} " height="30" width="30"  /> -->
+              <!-- <div class="photo"> -->
+                
+              <img src="{{URLdata}}"  class="accountButton">
+            
+            <!-- </div> -->
+              </div>
             <mat-menu #menu="matMenu">
               <div class="profile_menu">
                 User Informations
                 <div (click)="openDialog()">
-                  <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/pushkar111 " class="profile">
-                  <div>Username</div>
+                  <!-- <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/{{profile}} " class="profile"> -->
+                  <img src="{{URLdata}} " class="profile">
+
+                  <div>Welcome {{Unamedata}}</div>
+                  
                   </div>
                 </div> 
                 <button mat-menu-item type="submit" name="submit" (click)="logout()">logout</button>
