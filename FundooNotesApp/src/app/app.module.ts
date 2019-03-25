@@ -27,6 +27,38 @@ import { SearchPipe } from './pipe/search.pipe';
 import { ProfileDialogComponent } from './componants/profile-dialog/profile-dialog.component';
 // import { AddNotesComponent } from './componants/add-notes/add-notes.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+  LinkedinLoginProvider,
+} from 'angular-6-social-login';
+
+// Configs
+export function getAuthServiceConfigs() {
+  const config = new AuthServiceConfig(
+      [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider('2375513825801070')
+        },
+        // {
+        //   id: GoogleLoginProvider.PROVIDER_ID,
+        //   provider: new GoogleLoginProvider('Your-Google-Client-Id')
+        // },
+          // {
+          //   id: LinkedinLoginProvider.PROVIDER_ID,
+          //   provider: new LinkedinLoginProvider('1098828800522-m2ig6bieilc3tpqvmlcpdvrpvn86q4ks.apps.googleusercontent.com')
+          // },
+      ]
+  );
+  return config;
+}
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,12 +90,18 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     RouterModule,
     FlexLayoutModule,
     ImageCropperModule,
+    SocialLoginModule,
   ],
   entryComponents: [
     DialogboxComponent,
     ProfileDialogComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

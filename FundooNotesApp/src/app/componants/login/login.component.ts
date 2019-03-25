@@ -8,6 +8,14 @@ import { LoginModel } from 'src/app/model/Login.model';
 import { UserService } from 'src/app/services/UserServices/user.service';
 // import { UserServiceService } from 'src/app/services/userServices/user-service.service';
 
+
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  LinkedinLoginProvider
+} from 'angular-6-social-login';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +26,8 @@ export class LoginComponent implements OnInit {
   user: LoginModel = new LoginModel();
   // tslint:disable-next-line:max-line-length
   id: any;
-  constructor(private service: UserService, private snackBar: MatSnackBar, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private socialAuthService: AuthService,
+    private service: UserService, private snackBar: MatSnackBar, private router: Router, private formBuilder: FormBuilder) {
 
    }
     loginForm = this.formBuilder.group({
@@ -27,6 +36,27 @@ export class LoginComponent implements OnInit {
   });
 
   ngOnInit() {
+
+
+    (window as any).fbAsyncInit = function() {
+      FB.init({
+        appId      : '2375513825801070',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.1'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+       // tslint:disable-next-line:prefer-const
+       let js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;
+      }
+       js = d.createElement(s); js.id = id;
+       js.src = 'https://connect.facebook.net/en_US/sdk.js';
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
 
   }
   // tslint:disable-next-line:member-ordering
@@ -66,22 +96,48 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     };
   }
-  //   console.log(this.loginForm.value);
-
-  //   this.service.login(this.loginForm.value).subscribe(
-  //     (response) => {
-
-  //       console.log( response);
-  //       this.openSnackBar();
-  //       if (response['success']) {
-  //       this.router.navigate(['/dashboard']);
-  //                    } else {
-  //   console.log('error', response);
-  //   this.router.navigate(['/register']);
-  //   this.openSnackBarError();
-  // }
-  //                   },
       );
 
+  }
+
+  public socialSignIn(socialPlatform: string) {
+    let socialPlatformProvider;
+    if (socialPlatform === 'facebook') {
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    // } else if (socialPlatform === 'google') {
+    //   socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    // } else if (socialPlatform === 'linkedin') {
+    //   socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+    }
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        console.log(socialPlatform + ' sign in data : ' , userData);
+        // Now sign-in with userData
+        // ...
+      }
+    );
+  }
+
+  FBlogin() {
+    console.log('fb login called');
+    // let socialPlatformProvider;
+    // socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    // this.socialAuthService.signIn(socialPlatformProvider).then(
+    //   (userData) => {
+    //     console.log(' sign in data : ' , userData);
+    //     // Now sign-in with userData
+    //     // ...
+    //   }
+    // );
+    FB.login((response) => {
+              console.log('submitLogin', response);
+              if (response.authResponse) {
+                // login success
+                // login success code here
+                // redirect to home page
+               } else {
+               console.log('User login failed');
+             }
+  });
   }
 }

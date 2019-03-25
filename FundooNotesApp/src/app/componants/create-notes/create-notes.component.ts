@@ -68,11 +68,15 @@ export class CreateNotesComponent implements OnInit {
   carddata = this.data;
   remainderValue: { 'remainder': any; };
   labelData: any;
-  DataLabels: Object;
+  DataLabels: any;
+
   setLabels: { 'id': any; 'label_id': any; 'label_name': any; };
   removeLabel: { 'id': any; };
-  CreateDataLabels: Object;
+  CreateDataLabels: any;
   collab_data: { 'id': any; 'new_username': any; };
+  DataLabels_sidebar: any;
+  DataLabels_map: any;
+  DataLabels_show: Object;
   // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
@@ -153,7 +157,7 @@ ShowLabels() {
   };
   this.http.get('http://127.0.0.1:8000/api/getmaplabels', httpOptions).subscribe(
         (response) => {console.log('success in create notes', response);
-      this.DataLabels = response;
+      this.DataLabels_map = response;
       },
         (error) => {console.log('error', error);
       });
@@ -391,7 +395,7 @@ stopPropagation(event) {
       };
       this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
             (response) => {console.log('success', response);
-          this.DataLabels = response;
+          this.DataLabels_show = response;
           },
             (error) => {console.log('error', error);
           });

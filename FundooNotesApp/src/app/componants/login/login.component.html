@@ -1,5 +1,27 @@
 <html>
     <body>
+        <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : '2375513825801070',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v3.1'
+              });
+                
+              FB.AppEvents.logPageView();   
+                
+            };
+          
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "https://connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+          </script>
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div fxLayout="column" fxLayoutAlign="space-around center" >
   <mat-card class="example-card">
@@ -29,12 +51,22 @@
 
       <button mat-button class="name-link" routerLink="/register"><b>Create account</b></button>
       <button mat-button aria-label="Show an example snack-bar" mat-raised-button class="button-colour">Login</button>
-    
+
     </mat-card-actions>
     </div>
     
   </mat-card>
+
 </div>
 </form>
+<div>
+    <button mat-button aria-label="Show an example snack-bar" mat-raised-button class="button-colour" (click)="FBlogin()">FB-Login</button>
+
+</div>
+
+
+
+
+
 </body>
   </html>
