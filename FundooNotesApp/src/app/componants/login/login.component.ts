@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   user: LoginModel = new LoginModel();
   // tslint:disable-next-line:max-line-length
   id: any;
-  constructor(private socialAuthService: AuthService,
+  constructor(private http: HttpClient, private socialAuthService: AuthService,
     private service: UserService, private snackBar: MatSnackBar, private router: Router, private formBuilder: FormBuilder) {
 
    }
@@ -85,7 +85,6 @@ export class LoginComponent implements OnInit {
 
       // console.log('token set successfully', this.id);
       localStorage.setItem('token', response['data']['token']);
-
       this.openSnackBar();
       this.router.navigate(['/dashboard']);
         }
@@ -113,7 +112,7 @@ export class LoginComponent implements OnInit {
       (userData) => {
         console.log(socialPlatform + ' sign in data : ' , userData);
         // Now sign-in with userData
-        // ...
+       // ...
       }
     );
   }
@@ -135,9 +134,39 @@ export class LoginComponent implements OnInit {
                 // login success
                 // login success code here
                 // redirect to home page
+                console.log('uid------', response.authResponse.userID);
+                this.me(response.authResponse.userID, response.authResponse.accessToken);
+                // console.log('uid------', response.authResponse.);
+
                } else {
                console.log('User login failed');
              }
   });
+  }
+
+  me(userId, accessToken) {
+    FB.api(
+        // tslint:disable-next-line:max-line-length
+        '/' + userId + '?fields=id,name,first_name,picture.width(150).height(150),age_range,friends,email',
+        (result) => {
+          console.log('result===', accessToken);
+            console.log('result===', result);
+            console.log('result===', result['first_name']);
+            console.log('result===', result['id']);
+            console.log('result===', result['picture']['data']['url']);
+            // if (result && !result.error) {
+            // }
+});
+  }
+
+  gitLOG() {
+    console.log('git called');
+    this.http.get('http://localhost:8000/oauth/login/github/').subscribe(
+          (response) => {console.log('success', response);
+        // this.DataCollaborator_show = response['uname'];
+        // console.log(this.DataCollaborator_show, 'this is from backend');
+        },
+          (error) => {console.log('error', error);
+        });
   }
 }

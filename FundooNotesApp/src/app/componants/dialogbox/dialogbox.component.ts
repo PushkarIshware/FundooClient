@@ -94,7 +94,7 @@ date = new FormControl(this.data.date);
         'description': this.description.value,
         // 'is_pinned': this.data.pinValue,
         'color': this.data.color,
-        'reminder': this.date.value,
+        'reminder': this.date.value.toLocaleDateString(),
         // 'is_archived': this.data.archivevalue,
         // 'delete': this.data.is_deleted,
         // 'user': token

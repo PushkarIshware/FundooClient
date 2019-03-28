@@ -23,12 +23,15 @@
      <div class="color">userID-{{note.user}}</div>
      <div class="color">reminder-{{note.reminder}}</div>
      <div class="color">
-       <!-- collab-{{note.collaborate}} -->
-       <div *ngIf="note.collaborate != null">
+       <div *ngFor="let collab of DataCollaborator_show">
+       <div *ngIf="note.id === collab.note_id">
+          
        <mat-chip >
-          {{note.collaborate}}
-          <mat-icon matChipRemove (click)="RemoveLabel(label)">cancel</mat-icon>
+          coll-{{collab.uname}}
+          <mat-icon matChipRemove (click)="RemoveCollab(collab)">cancel</mat-icon>
         </mat-chip>
+        
+      </div>
       </div>
       </div>
      <div>

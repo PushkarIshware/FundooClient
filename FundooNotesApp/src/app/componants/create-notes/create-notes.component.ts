@@ -77,6 +77,9 @@ export class CreateNotesComponent implements OnInit {
   DataLabels_sidebar: any;
   DataLabels_map: any;
   DataLabels_show: Object;
+  DataCollaborator_show: any;
+  collaborator_data: { 'collaborator_name': any; 'note_id': any; };
+  Removecollab_data: { 'collaborator_name': any; 'note_id': any; };
   // labelData: { 'id': any; '': any; };
 
   constructor(private view: ViewService, private http: HttpClient,
@@ -103,6 +106,7 @@ export class CreateNotesComponent implements OnInit {
   ngOnInit() {
     this.ShowLabels();
     this.getNoteData();
+    this.showCollaborators();
     this.view.currentMessage.subscribe(message => this.message = message);
   }
 
@@ -468,6 +472,49 @@ stopPropagation(event) {
   );
   }
 
+// show collaborator
+showCollaborators() {
+  console.log('show collab');
+  {
+    console.log('showing collab');
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        // 'Authorization': localStorage.getItem('user_id');
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.get('http://127.0.0.1:8000/api/sc', httpOptions).subscribe(
+          (response) => {console.log('success', response);
+        this.DataCollaborator_show = response;
+        console.log(this.DataCollaborator_show, 'this is from backend');
+        },
+          (error) => {console.log('error', error);
+        });
+  }
+}
+
+// Remove Collaborators
+RemoveCollab(collab) {
+  console.log('remove called', collab.uname, collab.note_id);
+  // this.Removecollab_data = {
+  //   'collaborator_name': collab.uname,
+  //   'note_id': collab.note_id
+  // };
+  const httpOptions = {
+    headers: new HttpHeaders({
+
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  this.http.delete('http://127.0.0.1:8000/api/removemcollaborator/' + collab.note_id, httpOptions).subscribe(
+  (response) => {console.log('success', response);
+  // this.DataLabels = response;
+  // console.log('dataa', this.data);
+  },
+  (error) => {console.log('error', error); }
+);
+}
 
 // THIS is New Componant for dialog block
 

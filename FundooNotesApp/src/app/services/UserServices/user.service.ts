@@ -16,6 +16,7 @@ baseUrl = environment.baseUrl;
   login(userData) {
     console.log(userData);
     return this.http.post(this.baseUrl + 'login', userData, {responseType: 'json'});
+    // return this.http.post('http://34.230.2.143/api/login', userData, {responseType: 'json'});
 }
   // Calling register API
   register(userData) {
