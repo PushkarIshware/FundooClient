@@ -22,7 +22,7 @@
     <div fxLayout="column" fxLayoutAlign="space-around">
         <div fxLayout="row" fxLayoutAlign="space-around center" >
 
-          <input matInput placeholder="Title.." [formControl]="title" [style.fontSize.px]=20>
+          <input matInput placeholder="Title.." [formControl]="title" [style.fontSize.px]=20 required>
           
           <button class="pinIcon" mat-icon-button matTooltip="Pin Note" (click)="pin()">
                 <ng-container *ngIf="pinValue===false">
@@ -33,7 +33,7 @@
                 </ng-container>
           </button>
         </div>
-        <input matInput placeholder="Take a note..." [formControl]="description" [style.fontSize.px]=13 style="margin:0em; padding-top: 10px">
+        <input matInput placeholder="Take a note..." [formControl]="description" [style.fontSize.px]=13 style="margin:0em; padding-top: 10px" required>
         <div class="alignment">
             
             <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">

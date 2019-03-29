@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/UserServices/user.service';
   styleUrls: ['./dialogbox.component.scss']
 })
 export class DialogboxComponent implements OnInit {
-
+  today: number = Date.now();
   pinnedIconSrc = '../../assets/Icons/pinIcon.svg';
   unpinnedIconSrc = '../../assets/Icons/unpinIcon.svg';
   colorCode: Array<Object> = [
@@ -112,5 +112,13 @@ date = new FormControl(this.data.date);
         },
         (error) => {console.log('error', error); }
       );
+    }
+
+    demo() {
+      const now1 = new Date();
+      now1.setHours(8);
+      now1.setMinutes(0);
+      now1.setSeconds(0);
+      console.log(now1);
     }
 }

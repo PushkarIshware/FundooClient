@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild, Inject } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,7 +11,7 @@ import { ViewService } from 'src/app/services/viewservice/view.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { SearchComponent } from '../search/search.component';
 import { TrashComponent } from '../trash/trash.component';
-
+import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-create-notes',
   templateUrl: './create-notes.component.html',
@@ -80,9 +80,8 @@ export class CreateNotesComponent implements OnInit {
   DataCollaborator_show: any;
   collaborator_data: { 'collaborator_name': any; 'note_id': any; };
   Removecollab_data: { 'collaborator_name': any; 'note_id': any; };
-  // labelData: { 'id': any; '': any; };
 
-  constructor(private view: ViewService, private http: HttpClient,
+  constructor( private snackBar: MatSnackBar, private view: ViewService, private http: HttpClient,
     private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer) {
 
@@ -97,104 +96,102 @@ export class CreateNotesComponent implements OnInit {
       );
      }
 
-  // data: any;
   uid: any;
   date = new FormControl('');
   addlabel = new FormControl('');
   collab_name = new FormControl('');
   message: any;
+
   ngOnInit() {
-    this.ShowLabels();
+    // show all notes
     this.getNoteData();
+
+    // show mapped labels of given notes
+    this.ShowLabels();
+
+    // show collaborator name of given notes
     this.showCollaborators();
     this.view.currentMessage.subscribe(message => this.message = message);
   }
 
   // getting data from database calling service method.
+
+  // show all notes
   getNoteData() {
     this.service.getNotes().subscribe(
       (response) => {
-        // tslint:disable-next-line:forin
-
-        // console.log('success get notes', response['data']);
         this.data = response;
         console.log(this.data);
-    // this.uid = localStorage.getItem('user_id');
     },
       (error) => {console.log('error', error); }
       );
   }
 
 // Methods for all
+
+// set reminder to note
 remainder(note) {
-  console.log(note.id, '----', this.date.value);
   this.noteData = {
     'id': note.id,
-    'reminder': this.date.value,
+    'reminder': this.date.value.toLocaleDateString(),
 };
-  console.log('remainder Valueeeeeeeee', this.noteData);
+  // sending token to backend
+   const httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  this.http.post('http://127.0.0.1:8000/api/set_reminder/' + note.id , this.noteData, httpOptions).subscribe(
+    (response) => {console.log('success', response);
+    this.remind_success();
+    },
+    (error) => {console.log('error', error);
+    this.remind_failed();
+  }
+  );
 }
-// ShowLabels() {
-//   console.log('showing labels');
-//   const httpOptions = {
-//     headers: new HttpHeaders({
 
-//       // 'Authorization': localStorage.getItem('user_id');
-//       'Authorization': localStorage.getItem('token')
-//     })
-//   };
-//   this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
-//         (response) => {console.log('success in create notes', response);
-//       this.DataLabels = response;
-//       },
-//         (error) => {console.log('error', error);
-//       });
-// }
+// show mapped labels of given notes
 ShowLabels() {
-  console.log('showing labels');
   const httpOptions = {
     headers: new HttpHeaders({
-
-      // 'Authorization': localStorage.getItem('user_id');
       'Authorization': localStorage.getItem('token')
     })
   };
   this.http.get('http://127.0.0.1:8000/api/getmaplabels', httpOptions).subscribe(
-        (response) => {console.log('success in create notes', response);
+        (response) => {
       this.DataLabels_map = response;
       },
         (error) => {console.log('error', error);
       });
 }
 
+// set archive value note
 archiveNote(note) {
-  console.log(note.id, '----------');
   this.archivevalue = note.is_archived;
-  console.log(this.archivevalue, 'before');
   this.archivevalue = ! this.archivevalue;
-  console.log(this.archivevalue, 'after');
   this.noteData = {
     'id': note.id,
     'is_archived': this.archivevalue,
   };
   const httpOptions = {
     headers: new HttpHeaders({
-
-      // 'Authorization': localStorage.getItem('user_id');
       'Authorization': localStorage.getItem('token')
     })
   };
   console.log(this.noteData, '----------');
   this.http.post('http://127.0.0.1:8000/api/archive/' + note.id , this.noteData, httpOptions).subscribe(
-    (response) => {console.log('success', response);
-    // this.data = response;
-    // console.log('dataa', this.data);
+    (response) => {
+      this.archive_success();
+      console.log('success', response);
     },
-    (error) => {console.log('error', error); }
+    (error) => {console.log('error', error);
+    this.archive_failed();
+    }
   );
 }
 
-
+// set pin value true/false
 pin(note) {
   console.log('called pin');
   this.pinValue = note.is_pinned;
@@ -206,53 +203,24 @@ pin(note) {
     'id': note.id,
     'is_pinned': this.pinValue,
 };
+
 const httpOptions = {
   headers: new HttpHeaders({
 
-    // 'Authorization': localStorage.getItem('user_id');
     'Authorization': localStorage.getItem('token')
   })
 };
 this.http.post('http://127.0.0.1:8000/api/pinunpin/' + note.id , this.noteData, httpOptions).subscribe(
   (response) => {console.log('success', response);
-  // this.data = response;
-  // console.log('dataa', this.data);
+
   },
   (error) => {console.log('error', error); }
 );
 }
-  // this.pinData = {
-  //   'isPined': this.deletevalue,
-  //   'noteIdList': [card.id]
-  // };
-  // console.log(this.pinData);
-
-  // this.service.pinnote(this.pinData).subscribe(
-  //   (response) => {console.log('success', response);
-  // console.log(this.data);
-  // },
-  //   (error) => {console.log('error', error); }
-  // );
-// }
 
 changeColor(color) {
-
   this.color = color;
-  // card.color = color;
   console.log(this.color, this.id);
-  // this.ColorData = {
-  //   'color': this.color,
-  //   'noteIdList': [this.id]
-  // };
-  // console.log(this.ColorData);
-
-  // this.service.colornote(this.ColorData).subscribe(
-  //   (response) => {console.log('success', response);
-  // console.log(this.data);
-  // },
-  //   (error) => {console.log('error', error); }
-  // );
-
 }
 
 getcolorid(card) {
@@ -260,9 +228,9 @@ getcolorid(card) {
 console.log(this.id);
 }
 
-delete1(note) {
+// set delete value true/false
+delete_note(note) {
   console.log('delete 1 fun call', note.id);
-  // this.deletevalue = ! this.deletevalue;
   this.deletevalue = true;
   console.log(this.deletevalue);
   this.noteData = {
@@ -273,87 +241,20 @@ console.log(this.noteData);
 const httpOptions = {
   headers: new HttpHeaders({
 
-    // 'Authorization': localStorage.getItem('user_id');
     'Authorization': localStorage.getItem('token')
   })
 };
-  // this.service.update(this.noteData).subscribe(
   this.http.post('http://127.0.0.1:8000/api/deletenote/' + note.id , this.noteData, httpOptions).subscribe(
   (response) => {console.log('success', response);
-  // this.data = response;
-  // console.log('dataa', this.data);
+  this.delete_success();
   },
-  (error) => {console.log('error', error); }
+  (error) => {console.log('error', error);
+  this.delete_failed();
+}
 );
 }
 
-AddLabel(note) {
-  console.log('label fumnctions', note.id);
-}
-
-
-delete(card) {
- console.log(card.id);
- console.log('deleted');
- this.deletevalue = ! this.deletevalue;
- console.log(this.deletevalue);
-
-// this.deleteData = {
-// 'isDeleted': this.deletevalue,
-// 'noteIdList': [card.id]
-// };
-// console.log(this.deleteData);
-
-// Delete note service method
-// this.service.trashnote(this.deleteData).subscribe(
-// (response) => {console.log('success', response);
-// console.log(this.data);
-// },
-// (error) => {console.log('error', error); }
-// );
-
-}
-
-archive(card) {
-  console.log(card.id);
- console.log('archived');
- this.archivevalue = ! this.archivevalue;
-
-// this.archiveData = {
-// 'isArchived': this.archivevalue,
-// 'noteIdList': [card.id]
-// };
-// console.log(this.archiveData);
-
-// Archive note service methods
-// this.service.archivednote(this.archiveData).subscribe(
-// (response) => {console.log('success', response);
-// console.log(this.data);
-// },
-// (error) => {console.log('error', error); }
-// );
-// this.updateNotes(card);
-}
-
-updateNotes(card) {
-  this.updateData = {
-    'noteId': card.id,
-    'title': card.title,
-    'description': card.description
-  };
-  console.log('dataaaaa', this.updateData);
-
-  // update note services
-
-  // this.service.updatednote(this.updateData).subscribe(
-  //   (response) => {console.log('success', response);
-  // console.log(this.data);
-  // },
-  //   (error) => {console.log('error', error); }
-  // );
-}
-
-
+// create new label from note
 CreateLabel(card) {
   this.labelData = {
     'id': card.id,
@@ -369,9 +270,11 @@ CreateLabel(card) {
   this.http.post('http://127.0.0.1:8000/api/createlabel' , this.labelData, httpOptions).subscribe(
   (response) => {console.log('success', response);
   this.CreateDataLabels = response;
-  // console.log('dataa', this.data);
+  this.new_label_success();
   },
-  (error) => {console.log('error', error); }
+  (error) => {console.log('error', error);
+  this.new_label_failed();
+}
 );
 
 
@@ -386,27 +289,29 @@ stopPropagation(event) {
     // console.log("Clicked!");
     }
 
-  showLABELS() {
-    console.log('show');
-    {
-      console.log('showing labels');
-      const httpOptions = {
-        headers: new HttpHeaders({
+// show all labels for mapping to given note
+show_labels_forMapping() {
+  console.log('show');
+  {
+    console.log('showing labels');
+    const httpOptions = {
+      headers: new HttpHeaders({
 
-          // 'Authorization': localStorage.getItem('user_id');
-          'Authorization': localStorage.getItem('token')
-        })
-      };
-      this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
-            (response) => {console.log('success', response);
-          this.DataLabels_show = response;
-          },
-            (error) => {console.log('error', error);
-          });
-    }
+        // 'Authorization': localStorage.getItem('user_id');
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+          (response) => {console.log('success', response);
+        this.DataLabels_show = response;
+        },
+          (error) => {console.log('error', error);
+        });
   }
+}
 
-  setLABEL(label, id) {
+// set given label to that note
+set_labels(label, id) {
     console.log('label name', label.label_name, id);
 
     this.setLabels = {
@@ -424,55 +329,60 @@ stopPropagation(event) {
 
     this.http.post('http://127.0.0.1:8000/api/maplabel' , this.setLabels, httpOptions).subscribe(
     (response) => {console.log('success', response);
-    // this.DataLabels = response;
-    // console.log('dataa', this.data);
+    this.map_label_success();
     },
-    (error) => {console.log('error', error); }
+    (error) => {console.log('error', error);
+    this.map_label_failed();
+  }
   );
   }
 
-  RemoveLabel(label) {
-    console.log('remove label called', label);
-    const httpOptions = {
-      headers: new HttpHeaders({
+// remove given mapped label from note
+RemoveLabel(label) {
+  console.log('remove label called', label);
+  const httpOptions = {
+    headers: new HttpHeaders({
 
-        'Authorization': localStorage.getItem('token')
-      })
-    };
-    this.http.delete('http://127.0.0.1:8000/api/removemaplabel/' + label.id, httpOptions).subscribe(
-    (response) => {console.log('success', response);
-    // this.DataLabels = response;
-    // console.log('dataa', this.data);
-    },
-    (error) => {console.log('error', error); }
-  );
-  }
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  this.http.delete('http://127.0.0.1:8000/api/removemaplabel/' + label.id, httpOptions).subscribe(
+  (response) => {console.log('success', response);
+  this.rem_label_success();
+  },
+  (error) => {console.log('error', error);
+  this.rem_label_failed();
+}
+);
+}
 
+// add collaborator to that note
+AddCollaborator(note) {
+  console.log('add collab called', note.id, this.collab_name.value);
+  this.collab_data = {
+    'id': note.id,
+    'new_username': this.collab_name.value
+  };
+  console.log(this.collab_data);
+  const httpOptions = {
+    headers: new HttpHeaders({
 
-  AddCollaborator(note) {
-    console.log('add collab called', note.id, this.collab_name.value);
-    this.collab_data = {
-      'id': note.id,
-      'new_username': this.collab_name.value
-    };
-    console.log(this.collab_data);
-    const httpOptions = {
-      headers: new HttpHeaders({
+      'Authorization': localStorage.getItem('token')
+    })
+  };
+  console.log('label adding functions', this.collab_data);
+  this.http.post('http://127.0.0.1:8000/api/addcollaborator' , this.collab_data, httpOptions).subscribe(
+  (response) => {console.log('success', response);
+  this.CreateDataLabels = response;
+  this.collaborator_success();
+  },
+  (error) => {console.log('error', error);
+  this.collaborator_failed();
+ }
+);
+}
 
-        'Authorization': localStorage.getItem('token')
-      })
-    };
-    console.log('label adding functions', this.collab_data);
-    this.http.post('http://127.0.0.1:8000/api/addcollaborator' , this.collab_data, httpOptions).subscribe(
-    (response) => {console.log('success', response);
-    this.CreateDataLabels = response;
-    // console.log('dataa', this.data);
-    },
-    (error) => {console.log('error', error); }
-  );
-  }
-
-// show collaborator
+// show all collaborator
 showCollaborators() {
   console.log('show collab');
   {
@@ -480,7 +390,6 @@ showCollaborators() {
     const httpOptions = {
       headers: new HttpHeaders({
 
-        // 'Authorization': localStorage.getItem('user_id');
         'Authorization': localStorage.getItem('token')
       })
     };
@@ -497,10 +406,6 @@ showCollaborators() {
 // Remove Collaborators
 RemoveCollab(collab) {
   console.log('remove called', collab.uname, collab.note_id);
-  // this.Removecollab_data = {
-  //   'collaborator_name': collab.uname,
-  //   'note_id': collab.note_id
-  // };
   const httpOptions = {
     headers: new HttpHeaders({
 
@@ -509,11 +414,20 @@ RemoveCollab(collab) {
   };
   this.http.delete('http://127.0.0.1:8000/api/removemcollaborator/' + collab.note_id, httpOptions).subscribe(
   (response) => {console.log('success', response);
-  // this.DataLabels = response;
-  // console.log('dataa', this.data);
+  this.rem_collab_success();
   },
-  (error) => {console.log('error', error); }
+  (error) => {console.log('error', error);
+  this.rem_collab_failed();
+ }
 );
+}
+
+demo() {
+  const now1 = new Date();
+  now1.setHours(8);
+  now1.setMinutes(0);
+  now1.setSeconds(0);
+  console.log(now1);
 }
 
 // THIS is New Componant for dialog block
@@ -536,5 +450,69 @@ openDialog(card): void {
     console.log('The dialog was closed');
   });
 }
-
+// snackbars for message display
+remind_success() {
+  this.snackBar.open('Reminder set successfully.', 'OK',
+  {duration: 3000});
+}
+remind_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+archive_success() {
+  this.snackBar.open('Archieved successfully.', 'OK',
+  {duration: 3000});
+}
+archive_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+delete_success() {
+  this.snackBar.open('Deleted successfully.', 'OK',
+  {duration: 3000});
+}
+delete_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+map_label_success() {
+  this.snackBar.open('Label added successfully.', 'OK',
+  {duration: 3000});
+}
+map_label_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+new_label_success() {
+  this.snackBar.open('New label added successfully.', 'OK',
+  {duration: 3000});
+}
+new_label_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+collaborator_success() {
+  this.snackBar.open('Collaborated successfully.', 'OK',
+  {duration: 3000});
+}
+collaborator_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+rem_collab_success() {
+  this.snackBar.open('Collaborator removed successfully.', 'OK',
+  {duration: 3000});
+}
+rem_collab_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
+rem_label_success() {
+  this.snackBar.open('Label removed successfully.', 'OK',
+  {duration: 3000});
+}
+rem_label_failed() {
+  this.snackBar.open('something bad happed.', 'OK',
+  {duration: 3000});
+}
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/cor
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { CreateNote } from 'src/app/models/createnote.model';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { CreateNoteModel } from 'src/app/model/CreateNote.model';
@@ -45,8 +45,8 @@ export class AddNotesComponent implements OnInit {
   // delete = localStorage.removeItem('token');
   note: CreateNoteModel = new CreateNoteModel;
 
-title = new FormControl(this.note.title);
-description = new FormControl(this.note.description);
+title = new FormControl(this.note.title, [Validators.required]);
+description = new FormControl(this.note.description, [Validators.required]);
   id: any;
 
 // color1 = this.note.color;
@@ -70,10 +70,12 @@ description = new FormControl(this.note.description);
     // console.log('called div');
     this.flag = ! this.flag;
   }
-  pin() {
+  pin(note) {
     console.log('called pin');
+    this.pinValue = note.is_pinned;
+    console.log('before', this.pinValue);
     this.pinValue = ! this.pinValue;
-    console.log(this.pinValue);
+    console.log(note.id, ' after', this.pinValue);
   }
   // archive note
   archive() {
@@ -100,6 +102,9 @@ description = new FormControl(this.note.description);
       // 'reminder': this.date.value,
       // 'user': token
     };
+
+    if (this.title.value != null || this.description.value != null) {
+      console.log('null ahe');
      console.log(this.noteData);
     this.service.createnotes(this.noteData).subscribe(
       (response) => {console.log('success', response);
@@ -107,11 +112,28 @@ description = new FormControl(this.note.description);
       console.log('dataa', this.data);
       this.change.emit();
       this.child.getNoteData();
+      this.NoteAdded();
       },
       (error) => {console.log('error', error); }
     );
+  } else {
+    console.log('title and description empty');
+    this.NoteAdded_failed();
+  }
   }
   addnotesevent() {
     console.log('event emitter add note event');
   }
+
+  NoteAdded() {
+    this.snackBar.open('New note added', 'OK', {
+      duration: 3000
+    });
+  }
+
+  NoteAdded_failed() {
+    this.snackBar.open('Title and Description should not be empty.', 'OK', 
+    {duration: 3000});
+  }
+
 }

@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   user: LoginModel = new LoginModel();
   // tslint:disable-next-line:max-line-length
   id: any;
+  res: any;
   constructor(private http: HttpClient, private socialAuthService: AuthService,
     private service: UserService, private snackBar: MatSnackBar, private router: Router, private formBuilder: FormBuilder) {
 
@@ -71,13 +72,15 @@ export class LoginComponent implements OnInit {
       duration: 3000
     });
   }
-
+// running code
   onSubmit() {
     console.log(this.loginForm.value);
     this.service.login(this.loginForm.value).subscribe(
       (response) => {
         console.log('success', response);
-        if (response['success']) {
+        this.res = response;
+  //      if (response['success']) {
+          if (this.res['success']) {
       console.log('tokeeeeeeeen' , response['data']);
       // localStorage.setItem('token', response['data']);
       // this.id = response['data'];
@@ -87,6 +90,9 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', response['data']['token']);
       this.openSnackBar();
       this.router.navigate(['/dashboard']);
+        } else {
+            console.log('wrong');
+              this.openSnackBarError();
         }
         // tslint:disable-next-line:no-unused-expression
         (error) => {
@@ -98,6 +104,10 @@ export class LoginComponent implements OnInit {
       );
 
   }
+// finish
+
+
+
 
   public socialSignIn(socialPlatform: string) {
     let socialPlatformProvider;

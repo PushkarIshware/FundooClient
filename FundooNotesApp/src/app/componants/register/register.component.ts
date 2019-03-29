@@ -37,7 +37,7 @@ user: RegisterModel = new RegisterModel();
     this.service.register(this.registerForm.value).subscribe(
       (response) => {console.log('succsess', response);
                     localStorage.setItem('token', response['token']);
-                     // this.router.navigate(['/']);
+                     this.router.navigate(['/']);
                     },
       (error) => {console.log('error', error);
       });

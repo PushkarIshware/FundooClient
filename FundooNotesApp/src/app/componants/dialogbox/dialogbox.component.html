@@ -32,6 +32,11 @@
 
       </button>
       <!-- <button mat-menu-item>Item 2</button> -->
+      <button mat-menu-item (click)='demo()'> Today is {{today | date}} 8 PM </button>
+      <!-- <button mat-menu-item > The time is {{today | date:'jmZ'}}</button> -->
+      <button mat-menu-item>d and t {{today | date:'short'}} </button>
+
+      <button mat-menu-item> Next Week :Monday, 8 AM </button>
     </mat-menu>
 
     <!-- person add -->
