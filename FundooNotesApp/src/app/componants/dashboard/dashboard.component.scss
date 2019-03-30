@@ -1,0 +1,161 @@
+.toolbar{
+    background-color: rgb(255, 255, 255);
+   display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  opacity: 0.75;
+}
+
+.fundooIcon{
+  height: 35px;
+  width:35px;
+ padding-right: 0px;
+ padding-left: 15px;
+ }
+
+ .dashboardTitle {
+   display: flex;
+  vertical-align: middle;
+  line-height: 49px;
+  padding-left: 15px;
+  // padding-right: 30px;
+}
+
+.searchToolBar {
+  display: flex;
+  margin: auto;
+  width: 50%;
+  padding-right: 10px;
+  padding-left: 30px;
+  // position: fixed;
+}
+.searchInputBar {
+  //padding-left: 200px; 
+  border-radius: 5px;
+  width: 585px;
+  border: 20px;
+  outline: 30px;
+  font-size: inherit;
+  justify-content: center;
+  // position: fixed;
+}
+.endToolBar{
+  padding-left: 40px;
+  padding-right: 10px;
+}
+.accountButton {
+  width: 30px;
+  height: 30px;
+  border: 2px solid;
+  border-radius: 30px;
+  font-size: x-large;
+
+}
+
+// side navigation bar
+
+.sidenavBar {
+  position: absolute;
+  min-width: 300px;
+  top: 75px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: white;
+}
+
+.sideNavList {
+  width: 300px;
+  //height: 98.6%;
+  height: 98.7%;
+  background-color: rgb(255, 255, 255);
+}
+
+// for each side menu option
+.sideNavListItems,
+.sideNavlistItemsColored {
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  width: 300px;
+  font-size: 15px;
+  padding: 8px;
+  background-color: #ffffff;
+  color: #5f6368;
+  align-items: baseline;
+  text-align: left;
+}
+
+.sideNavlistItemsColored {
+  background-color: #fcd876 !important;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.sideNavListItems .mat-icon,
+.sideNavlistItemsColored .mat-icon {
+  padding-left: 10px;
+  padding-right: 30px;
+}
+
+.sideNavListItems:hover {
+  background-color: #e6e6e6;
+}
+// End of side nav
+
+
+.sidenavContent {
+  background-color: rgb(255, 255, 255); // max-width: 600px;
+  max-width: -webkit-fill-available;
+  margin-left: 200px;
+}
+
+$mat-card-padding: 16px !default;
+$mat-card-border-radius: 4px !default;
+$mat-card-header-size: 20px !default;
+
+.profile_menu {
+  width: 250px;
+  // height: 120px;
+}
+
+.profile_menu1 {
+  width: 250px;
+  height: 250px;
+}
+
+.profile {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  width: 100px;
+  height: 100px;
+  //border: 1px solid;
+  border-radius: 150px;
+  //font-size: x-large;
+  padding-right: 10px;
+  }
+
+  .photo {
+  // padding-bottom: 10px;
+  // padding-top: 10px;
+  // padding-left: 10px;
+ 
+  // border-radius: 50px;
+  // padding-right: 10px;
+  // width: 30px;
+  // height: 30px;
+  width: 40px;
+  height: 40px;
+  //border: 1px solid;
+  border-radius: 30px;
+  font-size: x-large;
+  }
+
+  .accountButton {
+    width: 30px;
+    height: 30px;
+    //border: 1px solid;
+    border-radius: 30px;
+    font-size: x-large;
+   // padding-right: 2px;
+    
+    }

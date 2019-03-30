@@ -1,0 +1,103 @@
+
+<div fxLayout="row" fxLayoutAlign="space-around" >
+
+      
+<mat-card class="card-width"  (click)="showDiv()" *ngIf="flag===false" style="margin:2em;"  [class.mat-elevation-z8]="isActive">
+    <div fxLayout="row" fxLayoutAlign="space-around center" >
+        <input matInput placeholder="Write a note..." [style.fontSize.px]=13>
+
+        <button mat-icon-button matTooltip="Checkbox">
+        <mat-icon style="font-size: 20px" class="mat-18 changeColor">check_box</mat-icon ></button>
+        
+        <button mat-icon-button matTooltip="Brush">
+        <mat-icon style="font-size: 20px" class="mat-18 changeColor">brush</mat-icon></button>
+        
+        <button mat-icon-button matTooltip="Image">
+        <mat-icon style="font-size: 20px" class="mat-18 changeColor">crop_original</mat-icon></button>
+          <input type="hidden" name="user_id" value="">
+    </div>
+</mat-card>
+
+      <mat-card class="new-card" *ngIf="flag===true" style="margin:2em;"  [class.mat-elevation-z8]="!isActive" [ngStyle]="{'backgroundColor': color}">
+    <div fxLayout="column" fxLayoutAlign="space-around">
+        <div fxLayout="row" fxLayoutAlign="space-around center" >
+
+          <input matInput placeholder="Title.." [formControl]="title" [style.fontSize.px]=20 required>
+          
+          <button class="pinIcon" mat-icon-button matTooltip="Pin Note" (click)="pin()">
+                <ng-container *ngIf="pinValue===false">
+                <mat-icon style="font-size: 20px" class="mat-18 changeColor" svgIcon="unpinIcon"></mat-icon>
+                </ng-container>
+                <ng-container *ngIf="pinValue===true">
+                <mat-icon style="font-size: 20px" class="mat-18 changeColor" svgIcon="pinIcon"></mat-icon>
+                </ng-container>
+          </button>
+        </div>
+        <input matInput placeholder="Take a note..." [formControl]="description" [style.fontSize.px]=13 style="margin:0em; padding-top: 10px" required>
+        <div class="alignment">
+            
+            <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">add_alert</mat-icon>
+        </button>
+        <!-- new -->
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="remainder(note)">
+
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                </button>
+                <!-- <button mat-menu-item>Item 2</button> -->
+              </mat-menu>
+        <!-- till now  -->
+            
+            <button mat-icon-button matTooltip="Collaborator">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">person_add</mat-icon></button>
+                 
+            <button mat-icon-button matTooltip="Change color" [matMenuTriggerFor]="colorMenu">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">color_lens</mat-icon></button>
+                      
+            <button mat-icon-button matTooltip="Archive" (click)="archive()">
+            <ng-container *ngIf="pinValue===false">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon></ng-container>
+            <ng-container *ngIf="pinValue===true">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon></ng-container></button>
+                    
+            <button mat-icon-button matTooltip="New List">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">crop_original</mat-icon></button> 
+                                      
+            <button mat-icon-button matTooltip="Undo" [matMenuTriggerFor]="moreMenu">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">undo</mat-icon></button>
+                            
+            <button mat-icon-button matTooltip="Redo" [matMenuTriggerFor]="moreMenu">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">redo</mat-icon></button>
+            
+            <button mat-icon-button matTooltip="more" [matMenuTriggerFor]="moreMenu">
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">more_vert</mat-icon></button>
+
+            <button mat-button class="button-align" (click)="createNote()" >Close</button>
+
+        </div>
+            <mat-menu #colorMenu="matMenu"  class="colorMenu" [overlapTrigger]="false">
+            <ng-template matMenuContent let-note="note">
+            <div fxLayout="row wrap" fxLayoutAlign="endcenter" fxFlex="95">
+                <div *ngFor="let color of colorCode">
+                    <button mat-icon-button [ngStyle]="{'color': color.colorCode}" (click)="changeColor(color.colorCode)">
+                    <mat-icon  style="font-size: 50px"  class="colorIcons">fiber_manual_record</mat-icon></button>
+                </div>
+            </div>
+            </ng-template>
+            </mat-menu>
+                    <mat-menu #moreMenu="matMenu"  class="moreMenu" [overlapTrigger]="false">
+                            <!-- <button mat-menu-item [style.fontSize.px]=14 class="changeColor">Delete Note</button> -->
+                          <button mat-menu-item [style.fontSize.px]=14 class="changeColor">Add label</button>
+                          <button mat-menu-item [style.fontSize.px]=14 class="changeColor">Add drawing</button>
+                          <button mat-menu-item [style.fontSize.px]=14 class="changeColor">show checkboxes</button>
+                    </mat-menu>
+    </div>
+</mat-card>
+</div>
+<app-create-notes></app-create-notes>

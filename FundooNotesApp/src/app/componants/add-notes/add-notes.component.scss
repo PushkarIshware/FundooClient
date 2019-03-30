@@ -1,0 +1,49 @@
+.expansion-example{
+    width:600px;
+}
+.field-example{
+    width: 100%;
+}
+.menu-overflow-hidden {
+    overflow: hidden !important;
+  }
+.card-width{
+    width:600px;
+    height:18px;
+    
+}
+.new-card{
+    width:600px;
+    
+}
+$mat-card-padding: 18px !default;
+$mat-card-border-radius: 10px !default;
+$mat-card-header-size: 10px !default;
+
+
+.mat-card {
+
+  display: block;
+  position: relative;
+  padding: $mat-card-padding;
+  border-radius: $mat-card-border-radius;}
+  .mat-card-avatar {
+    height: $mat-card-header-size;
+    width: $mat-card-header-size;
+    border-radius: 50%;
+    flex-shrink: 0;
+  
+    // Makes `<img>` tags behave like `background-size: cover`. Not supported
+    // in IE, but we're using it as a progressive enhancement.
+    // object-fit: cover;
+  }
+  .changeColor{
+      color: grey;
+  }
+  .alignment{
+    padding-top: 5px;
+    padding-left: 1px;
+}
+ .button-align{
+     
+ }
