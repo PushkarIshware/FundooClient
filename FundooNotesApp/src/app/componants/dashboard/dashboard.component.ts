@@ -6,12 +6,16 @@ import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  baseUrl = environment.baseUrl;
+
 icon: any = 'view_stream';
   data: Object;
   Search: any;
@@ -57,7 +61,7 @@ notify() {
       'Authorization': localStorage.getItem('token')
     })
   };
-  this.http.get('http://127.0.0.1:8000/api/reminder', httpOptions).subscribe(
+  this.http.get(this.baseUrl + 'reminder', httpOptions).subscribe(
         (response) => {console.log('success', response);
       this.data = response;
       },
@@ -79,7 +83,7 @@ ShowLabels() {
       'Authorization': localStorage.getItem('token')
     })
   };
-  this.http.get('http://127.0.0.1:8000/api/showlabel', httpOptions).subscribe(
+  this.http.get(this.baseUrl + 'showlabel', httpOptions).subscribe(
         (response) => {console.log('success', response);
       this.DataLabels = response;
       },
@@ -95,7 +99,7 @@ deleteLabel(label) {
       'Authorization': localStorage.getItem('token')
     })
   };
-  this.http.delete('http://127.0.0.1:8000/api/deletelabel/' + label.id, httpOptions).subscribe(
+  this.http.delete(this.baseUrl + 'deletelabel/' + label.id, httpOptions).subscribe(
   (response) => {console.log('success', response);
   // this.DataLabels = response;
   // console.log('dataa', this.data);
@@ -112,7 +116,7 @@ getUrl() {
       // console.log('success get notes', response['data']);
       this.URLdata = response['data'];
       this.Unamedata = response['username'];
-      console.log(this.data);
+      // console.log(this.data);
   // this.uid = localStorage.getItem('user_id');
   },
     (error) => {console.log('error', error); }

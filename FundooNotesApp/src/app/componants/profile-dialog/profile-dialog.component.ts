@@ -15,6 +15,8 @@ import { ViewService } from 'src/app/services/viewservice/view.service';
   styleUrls: ['./profile-dialog.component.scss']
 })
 export class ProfileDialogComponent implements OnInit {
+  baseUrl = environment.baseUrl;
+
   profileForm: FormGroup;
 
   error: string;
@@ -86,7 +88,7 @@ export class ProfileDialogComponent implements OnInit {
       })
     };
     console.log('label adding functions', this.pic_data);
-    this.http.post('http://127.0.0.1:8000/api/RestProfile' , this.pic_data, httpOptions).subscribe(
+    this.http.post(this.baseUrl + 'RestProfile' , this.pic_data, httpOptions).subscribe(
     (response) => {console.log('success', response);
     this.usernameData = response['data'];
     this.view.changeMessagep(this.usernameData);

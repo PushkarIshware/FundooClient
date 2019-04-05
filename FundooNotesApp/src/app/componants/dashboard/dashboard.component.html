@@ -12,12 +12,10 @@
           </button>
         </div>
         <div class="endToolBar">
-              <button mat-icon-button>
+              <!-- <button mat-icon-button>
                 <mat-icon class="mat-18">refresh</mat-icon>
               </button>
-              <button mat-icon-button (click)="changeView()">
-                  <mat-icon class="mat-18">{{icon}}</mat-icon>
-                </button>
+              
               <button mat-icon-button >
                 <mat-icon class="mat-18">settings</mat-icon>
               </button>
@@ -26,7 +24,10 @@
               <button mat-icon-button>
                 <mat-icon class="mat-18">apps</mat-icon>
               </button>
- 
+  -->     
+  <button mat-icon-button (click)="changeView()">
+    <mat-icon class="mat-18">{{icon}}</mat-icon>
+  </button>
               <button mat-icon-button [matMenuTriggerFor]="menu1">
                   <mat-icon class="mat-18" (click)="notify()">notifications_none</mat-icon>
                 

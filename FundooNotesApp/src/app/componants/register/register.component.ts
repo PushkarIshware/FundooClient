@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 // import { HttpClient } from '@angular/common/http';
 // import { MatSnackBar } from '@angular/material';
@@ -16,7 +17,7 @@ import { RegisterModel } from 'src/app/model/Register.model';
 })
 @Injectable()
 export class RegisterComponent implements OnInit {
-  constructor(private service: UserService, private router: Router, private formBuilder: FormBuilder) { }
+  constructor(private snackBar: MatSnackBar, private service: UserService, private router: Router, private formBuilder: FormBuilder) { }
 user: RegisterModel = new RegisterModel();
 
   registerForm = this.formBuilder.group({
@@ -38,8 +39,10 @@ user: RegisterModel = new RegisterModel();
       (response) => {console.log('succsess', response);
                     localStorage.setItem('token', response['token']);
                      this.router.navigate(['/']);
+                     this.Activate_account();
                     },
       (error) => {console.log('error', error);
+      this.failed_message();
       });
   }
   getErrorMessageUsername() {
@@ -55,4 +58,18 @@ user: RegisterModel = new RegisterModel();
   getErrorMessageCPassword() {
     return this.password2.hasError('required') ? 'password should be at least 8 characters' : '';
   }
+
+
+  // popup messages
+  Activate_account() {
+    this.snackBar.open('Account activation link has been sent to your email...\nPlease Activate Your Account...', 'OK', {
+      duration: 5000
+    });
+  }
+
+  failed_message() {
+    this.snackBar.open('Something bad happened.', 'OK',
+    {duration: 3000});
+  }
+
 }
