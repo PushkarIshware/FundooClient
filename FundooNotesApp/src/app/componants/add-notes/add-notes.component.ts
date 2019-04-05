@@ -70,20 +70,23 @@ description = new FormControl(this.note.description, [Validators.required]);
     // console.log('called div');
     this.flag = ! this.flag;
   }
-  pin(note) {
+  // tslint:disable-next-line:member-ordering
+  pinVALUE: any = false;
+  // tslint:disable-next-line:member-ordering
+  archiveVALUE: any = false;
+  pin() {
     console.log('called pin');
-    this.pinValue = note.is_pinned;
-    console.log('before', this.pinValue);
-    this.pinValue = ! this.pinValue;
-    console.log(note.id, ' after', this.pinValue);
+    this.pinVALUE = ! this.pinVALUE;
+    console.log('clicked', this.pinVALUE);
   }
   // archive note
   archive() {
     console.log('called archive');
-    this.archiveValue = ! this.archiveValue;
-    console.log(this.archiveValue);
+    this.archiveVALUE = ! this.archiveVALUE;
+    console.log(this.archiveVALUE);
   }
 
+  // change color of note
   changeColor(color) {
     this.color = color;
   }
@@ -94,11 +97,11 @@ description = new FormControl(this.note.description, [Validators.required]);
     // let token = localStorage.getItem('token');
     console.log('close clicked');
     this.noteData = {
-      // 'id': this.id.value,
       'title': this.title.value,
       'description': this.description.value,
-      // 'is_pinned': this.pinValue ,
       'color': this.color,
+      'is_pinned': this.pinVALUE ,
+      'is_archived': this.archiveVALUE ,
       // 'reminder': this.date.value,
       // 'user': token
     };
@@ -132,7 +135,7 @@ description = new FormControl(this.note.description, [Validators.required]);
   }
 
   NoteAdded_failed() {
-    this.snackBar.open('Title and Description should not be empty.', 'OK', 
+    this.snackBar.open('Title and Description should not be empty.', 'OK',
     {duration: 3000});
   }
 

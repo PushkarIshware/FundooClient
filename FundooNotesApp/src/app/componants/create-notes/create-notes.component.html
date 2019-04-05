@@ -4,9 +4,13 @@
         <div *ngIf="note.is_archived === false && note.is_deleted === false">
           <div fxLayout="column" fxLayoutAlign="space-between start" >
                   <mat-card  class="card-width" [ngStyle]="{'backgroundColor': note.color}" [ngClass]="{'width': message=='column wrap'}">
-          <div fxLayout="column" >
+                    <!-- image url -->
+                    <div><img src="{{URLdata}}" class="imageNote"></div>
+                    <!-- end img url -->
+                    <div fxLayout="column" >
               <div fxLayout="row" fxLayoutAlign="space-between center" >
-     <div class="title" (click)="openDialog(note)" [style.fontSize.px]=21> {{note.title}}</div>
+                
+                <div class="title" (click)="openDialog(note)" [style.fontSize.px]=21> {{note.title}}</div>
      
      <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin(note)">
       <!-- <ng-container *ngIf="pinValue===false"> -->
@@ -20,8 +24,8 @@
      <div class="description">{{note.description}}</div> 
      <div class="id" >noteid-{{note.id}}</div>
      <!-- <div class="color">note color-{{note.color}}</div> -->
-     <div class="color">userID-{{note.user}}</div>
-     <div class="color">reminder-{{note.reminder}}</div>
+     <!-- <div class="color">userID-{{note.user}}</div> -->
+     <!-- <div class="color">reminder-{{note.reminder}}</div> -->
      <div class="color">
        <div *ngFor="let collab of DataCollaborator_show">
        <div *ngIf="note.id === collab.note_id">
@@ -49,93 +53,98 @@
      </div>
 
      <div class="alignment">
-            
+       <!-- collaborator start -->
+       <button mat-icon-button matTooltip="Add Collaborator" [matMenuTriggerFor]="menu5" >
+          <mat-icon style="font-size: 18px"  class="mat-18 changeColor">person_add
+          </mat-icon></button>      
+        <mat-menu #menu5="matMenu">
+            <div class="profile_menu1">
+                  <input matInput placeholder="collab_name name" [formControl]="collab_name" (click)="stopPropagation1($event)">
+                  <input type="submit" (click)="AddCollaborator(note)"> 
+            </div></mat-menu>
+        <!-- collaborator end -->
+
+            <!-- reminder start -->
             <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
-                    <mat-icon style="font-size: 20px"  class="mat-18 changeColor">add_alert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="remainder(note)">
+              <mat-icon style="font-size: 18px"  class="mat-18 changeColor">add_alert</mat-icon>
+            </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="remainder(note)">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  </button>
+                    <button mat-menu-item (click)='demo()'> Today is {{today | date}} 8 PM </button>
+                    <!-- <button mat-menu-item > The time is {{today | date:'jmZ'}}</button> -->
+                    <button mat-menu-item>d and t {{today | date:'short'}} </button>
+                    <button mat-menu-item> Next Week :Monday, 8 AM </button>
+                    </mat-menu>
+                    <!-- reminder end -->
 
-                          <mat-form-field>
-                            <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
+                    <!-- archive start -->
+                    <button mat-icon-button matTooltip="Archive" (click)="archiveNote(note)">
+                      <mat-icon style="font-size: 18px"  class="mat-18 changeColor">archive</mat-icon>
+                    </button>
+                    <!-- archive end -->
 
-                        </button>
-                        <button mat-menu-item (click)='demo()'> Today is {{today | date}} 8 PM </button>
-                        <!-- <button mat-menu-item > The time is {{today | date:'jmZ'}}</button> -->
-                        <button mat-menu-item>d and t {{today | date:'short'}} </button>
-
-                        <button mat-menu-item> Next Week :Monday, 8 AM </button>
-                      </mat-menu>
-                      <button mat-icon-button matTooltip="Archive" (click)="archiveNote(note)">
-                                            
-                        <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon>
-                </button>
-        
+                    <!-- delete start -->
                     <button mat-icon-button matTooltip="Delete" (click)="delete_note(note)">
-            <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
-              </mat-icon></button>
-                                                                                    <!-- "pin(note)" -->
-              
-
-              <!-- <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="Labels"  >
-                    <mat-icon style="font-size: 17px" class="mat-18 changeColor">label
-                      </mat-icon></button>
-                      <mat-menu #menu2="matMenu">
-                        <div class="profile_menu1">
-                          
-                              <input matInput placeholder="label name" [formControl]="addlabel" (click)="stopPropagation($event)">
-                              <input type="submit" (click)="CreateLabel(note)"> 
-                          
-                        </div> 
-                        
-                        </mat-menu> -->
-              
-
-                        <button mat-icon-button [matMenuTriggerFor]="menu3" matTooltip="Labels" (click)="show_labels_forMapping()"  >
-                            <mat-icon style="font-size: 17px" class="mat-18 changeColor">label
-                              </mat-icon></button>
-                              <mat-menu #menu3="matMenu" >
-                                <div class="profile_menu1">
-                                    
-                                    <div *ngFor="let label of DataLabels_show">
-                                        <!-- <div class="id" >label name-{{label.label_name}}</div> -->
-                                        <mat-checkbox (click)="set_labels(label,note.id)">{{label.label_name}}</mat-checkbox>
-                                        </div>
-                                </div> 
+                      <mat-icon style="font-size: 18px" class="mat-18 changeColor">delete
+                      </mat-icon>
+                    </button>
+                    <!-- delete end -->
+                    <!-- <button mat-icon-button [matMenuTriggerFor]="menu3" matTooltip="Labels" (click)="show_labels_forMapping()"  >
+                        <mat-icon style="font-size: 18px"  class="mat-18 changeColor">label
+                          </mat-icon></button>
+                          <mat-menu #menu3="matMenu" >
+                            <div class="profile_menu1">
                                 
-                                </mat-menu>    
-      <button mat-icon-button matTooltip="Add Label" [matMenuTriggerFor]="menu2" >
-      <mat-icon style="font-size: 20px" class="mat-18 changeColor">more_vert
+                            <div *ngFor="let label of DataLabels_show">
+                            <mat-checkbox (click)="set_labels(label,note.id)">{{label.label_name}}</mat-checkbox>
+                                    </div>
+                            </div>
+                            </mat-menu>     -->
+      <button mat-icon-button  matTooltip="More Options" [matMenuTriggerFor]="menu2" >
+      <mat-icon style="font-size: 18px"  class="mat-18 changeColor">more_vert
       </mat-icon>
     </button>      
     <mat-menu #menu2="matMenu">
         <div class="profile_menu1">
           
+
+            <button mat-icon-button [matMenuTriggerFor]="menu4" matTooltip="Add Labels" (click)="show_labels_forMapping()" (click)="stopPropagation($event)"  >
+                <mat-icon style="font-size: 18px"  class="mat-18 changeColor">add
+                  </mat-icon></button>
+
+                  <mat-menu #menu4="matMenu" >
+                      <div class="profile_menu1">
+
               <input matInput placeholder="label name" [formControl]="addlabel" (click)="stopPropagation($event)">
               <input type="submit" (click)="CreateLabel(note)"> 
-          
+                        
+            </div>
+          </mat-menu>
+              <!-- show labels -->
+              <button mat-icon-button [matMenuTriggerFor]="menu3" matTooltip="Labels" (click)="show_labels_forMapping()" (click)="stopPropagation($event)"  >
+                  <mat-icon style="font-size: 18px"  class="mat-18 changeColor">label
+                    </mat-icon></button>
+                    <mat-menu #menu3="matMenu" >
+                      <div class="profile_menu1">
+                          
+                      <div *ngFor="let label of DataLabels_show">
+                      <mat-checkbox (click)="set_labels(label,note.id)">{{label.label_name}}</mat-checkbox>
+                              </div>
+                      </div>
+                      </mat-menu> 
+                      <!-- show label end -->
+
         </div> 
         
         </mat-menu> 
                   
-<!-- for collab -->
-        <button mat-icon-button matTooltip="Add Collaborator" [matMenuTriggerFor]="menu4" >
-          <mat-icon style="font-size: 20px" class="mat-18 changeColor">person_add
-          </mat-icon>
-        </button>      
-        <mat-menu #menu4="matMenu">
-            <div class="profile_menu1">
-              
-                  <input matInput placeholder="collab_name name" [formControl]="collab_name" (click)="stopPropagation1($event)">
-                  <input type="submit" (click)="AddCollaborator(note)"> 
-              
-            </div> 
-            
-            </mat-menu>
-<!-- till now -->
+
       
     
     </div>

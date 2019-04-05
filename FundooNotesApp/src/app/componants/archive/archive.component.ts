@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-archive',
@@ -8,6 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./archive.component.scss']
 })
 export class ArchiveComponent implements OnInit {
+  baseUrl = environment.baseUrl;
+
   data: any;
   archivevalue: boolean;
   noteData: { 'id': any; 'is_archived': boolean; };
@@ -43,7 +46,7 @@ export class ArchiveComponent implements OnInit {
         'Authorization': localStorage.getItem('token')
       })
     };
-    this.http.post('http://127.0.0.1:8000/api/archive/' + note.id , this.noteData, httpOptions).subscribe(
+    this.http.post(this.baseUrl + 'archive/' + note.id , this.noteData, httpOptions).subscribe(
       (response) => {console.log('success', response);
       // this.data = response;
       // console.log('dataa', this.data);

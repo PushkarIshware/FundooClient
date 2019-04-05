@@ -35,7 +35,7 @@
         </div>
         <input matInput placeholder="Take a note..." [formControl]="description" [style.fontSize.px]=13 style="margin:0em; padding-top: 10px" required>
         <div class="alignment">
-            
+            <div fxLayout="row" fxLayoutAlign="start center">
             <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
             <mat-icon style="font-size: 20px" class="mat-18 changeColor">add_alert</mat-icon>
         </button>
@@ -66,7 +66,7 @@
             <ng-container *ngIf="pinValue===true">
             <mat-icon style="font-size: 20px" class="mat-18 changeColor">archive</mat-icon></ng-container></button>
                     
-            <button mat-icon-button matTooltip="New List">
+            <!-- <button mat-icon-button matTooltip="New List">
             <mat-icon style="font-size: 20px" class="mat-18 changeColor">crop_original</mat-icon></button> 
                                       
             <button mat-icon-button matTooltip="Undo" [matMenuTriggerFor]="moreMenu">
@@ -76,10 +76,11 @@
             <mat-icon style="font-size: 20px" class="mat-18 changeColor">redo</mat-icon></button>
             
             <button mat-icon-button matTooltip="more" [matMenuTriggerFor]="moreMenu">
-            <mat-icon style="font-size: 20px" class="mat-18 changeColor">more_vert</mat-icon></button>
-
+            <mat-icon style="font-size: 20px" class="mat-18 changeColor">more_vert</mat-icon></button> -->
+            <div fxLayout="row" fxLayoutAlign="end center" >
             <button mat-button class="button-align" (click)="createNote()" >Close</button>
-
+        </div>    
+        </div>
         </div>
             <mat-menu #colorMenu="matMenu"  class="colorMenu" [overlapTrigger]="false">
             <ng-template matMenuContent let-note="note">

@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from 'src/app/services/UserServices/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dialogbox',
@@ -13,6 +14,8 @@ import { UserService } from 'src/app/services/UserServices/user.service';
   styleUrls: ['./dialogbox.component.scss']
 })
 export class DialogboxComponent implements OnInit {
+  baseUrl = environment.baseUrl;
+
   today: number = Date.now();
   pinnedIconSrc = '../../assets/Icons/pinIcon.svg';
   unpinnedIconSrc = '../../assets/Icons/unpinIcon.svg';
@@ -107,7 +110,7 @@ date = new FormControl(this.data.date);
         })
       };
         // this.service.update(this.noteData).subscribe(
-        this.http.post('http://127.0.0.1:8000/api/updatenote/' + this.data.id , this.noteData, httpOptions).subscribe(
+        this.http.post(this.baseUrl + 'updatenote/' + this.data.id , this.noteData, httpOptions).subscribe(
         (response) => {console.log('success', response);
         },
         (error) => {console.log('error', error); }
