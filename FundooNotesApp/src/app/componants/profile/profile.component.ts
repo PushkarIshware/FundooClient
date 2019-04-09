@@ -3,7 +3,10 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
+
+import { environment } from 'src/environments/environment.prod';
+
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { ProfileModel } from 'src/app/model/Profile.model';
 // import { start } from 'repl';

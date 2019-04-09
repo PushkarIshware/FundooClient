@@ -6,8 +6,8 @@ import { FormControl } from '@angular/forms';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from 'src/app/services/UserServices/user.service';
-import { environment } from 'src/environments/environment';
-
+// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-dialogbox',
   templateUrl: './dialogbox.component.html',

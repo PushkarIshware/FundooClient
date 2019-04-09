@@ -5,7 +5,7 @@
           <div fxLayout="column" fxLayoutAlign="space-between start" >
                   <mat-card  class="card-width" [ngStyle]="{'backgroundColor': note.color}" [ngClass]="{'width': message=='column wrap'}">
                     <!-- image url -->
-                    <div><img src="{{URLdata}}" class="imageNote"></div>
+                    <!-- <div><img src="{{URLdata}}" class="imageNote"></div> -->
                     <!-- end img url -->
                     <div fxLayout="column" >
               <div fxLayout="row" fxLayoutAlign="space-between center" >
@@ -22,21 +22,20 @@
     </button>
   </div>
      <div class="description">{{note.description}}</div> 
-     <div class="id" >noteid-{{note.id}}</div>
+     <!-- <div class="id" >noteid-{{note.id}}</div> -->
      <!-- <div class="color">note color-{{note.color}}</div> -->
      <!-- <div class="color">userID-{{note.user}}</div> -->
      <!-- <div class="color">reminder-{{note.reminder}}</div> -->
-     <div class="color">
-       <div *ngFor="let collab of DataCollaborator_show">
-       <div *ngIf="note.id === collab.note_id">
-          
+     
+
+     
+      <div class="color">
+          <div *ngIf="note.reminder != null">
        <mat-chip >
-          coll-{{collab.uname}}
-          <mat-icon matChipRemove (click)="RemoveCollab(collab)">cancel</mat-icon>
+          {{note.reminder | date:'medium'}}
+          <mat-icon matChipRemove (click)="abc()">cancel</mat-icon>
         </mat-chip>
-        
-      </div>
-      </div>
+    </div>
       </div>
      <div>
       <mat-chip-list>
@@ -51,6 +50,15 @@
         
       </mat-chip-list>
      </div>
+      <!-- fab button -->
+      <div fxLayout="row" >
+          <div *ngFor="let collab of DataCollaborator_show">
+            <div *ngIf="note.id === collab.note_id">
+          <div class="example-button-row">
+            <button matTooltip="{{collab.uname}}" mat-mini-fab (click)="RemoveCollab(collab)" [ngStyle]="{'backgroundColor': note.color}">{{collab.uname.slice(0, 1).toUpperCase( )}}</button>
+            </div></div>
+            </div></div>
+          <!-- fab end -->
 
      <div class="alignment">
        <!-- collaborator start -->
@@ -59,7 +67,7 @@
           </mat-icon></button>      
         <mat-menu #menu5="matMenu">
             <div class="profile_menu1">
-                  <input matInput placeholder="collab_name name" [formControl]="collab_name" (click)="stopPropagation1($event)">
+                  <input matInput placeholder="collaborator name" [formControl]="collab_name" (click)="stopPropagation1($event)">
                   <input type="submit" (click)="AddCollaborator(note)"> 
             </div></mat-menu>
         <!-- collaborator end -->

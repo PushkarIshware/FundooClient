@@ -14,8 +14,9 @@ import { TrashComponent } from '../trash/trash.component';
 import { MatSnackBar } from '@angular/material';
 import { toDate } from '@angular/common/src/i18n/format_date';
 
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
 
+import { environment } from 'src/environments/environment.prod';
 // import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-create-notes',
@@ -409,7 +410,7 @@ showCollaborators() {
         'Authorization': localStorage.getItem('token')
       })
     };
-    this.http.get(this.baseUrl + 'api/sc', httpOptions).subscribe(
+    this.http.get(this.baseUrl + 'sc', httpOptions).subscribe(
           (response) => {console.log('success', response);
         this.DataCollaborator_show = response;
         console.log(this.DataCollaborator_show, 'this is from backend');
@@ -444,6 +445,10 @@ demo() {
   now1.setMinutes(0);
   now1.setSeconds(0);
   console.log(now1);
+}
+
+RemCollab(collab) {
+  console.log('remove called', collab.uname);
 }
 
 // THIS is New Componant for dialog block

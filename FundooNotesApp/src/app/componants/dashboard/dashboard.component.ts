@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { environment } from 'src/environments/environment';
-
+// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

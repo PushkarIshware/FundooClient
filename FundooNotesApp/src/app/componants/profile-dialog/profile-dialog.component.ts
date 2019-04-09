@@ -3,7 +3,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router, NavigationExtras } from '@angular/router';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { ProfileModel } from 'src/app/model/Profile.model';
 import { ImageCroppedEvent } from 'ngx-image-cropper';

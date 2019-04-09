@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-trash',
@@ -8,7 +10,8 @@ import { UserService } from 'src/app/services/UserServices/user.service';
 })
 export class TrashComponent implements OnInit {
   data: any;
-  constructor(private service: UserService) { }
+  constructor(private service: UserService,  private http: HttpClient) { }
+  baseUrl = environment.baseUrl;
 
   ngOnInit() {
     this.getNoteData();
@@ -23,5 +26,20 @@ export class TrashComponent implements OnInit {
       (error) => {console.log('error', error); }
       );
   }
-
+  DeleteForever(note) {
+    console.log(note.id);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.delete(this.baseUrl + 'deleteforever/' + note.id, httpOptions).subscribe(
+    (response) => {console.log('success', response);
+    // this.rem_label_success();
+    },
+    (error) => {console.log('error', error);
+    // this.rem_label_failed();
+  }
+  );
+  }
 }
