@@ -39,25 +39,25 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
 
-    (window as any).fbAsyncInit = function() {
-      FB.init({
-        appId      : '2375513825801070',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v3.1'
-      });
-      FB.AppEvents.logPageView();
-    };
+    // (window as any).fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : '2375513825801070',
+    //     cookie     : true,
+    //     xfbml      : true,
+    //     version    : 'v3.1'
+    //   });
+    //   FB.AppEvents.logPageView();
+    // };
 
-    (function(d, s, id) {
-       // tslint:disable-next-line:prefer-const
-       let js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;
-      }
-       js = d.createElement(s); js.id = id;
-       js.src = 'https://connect.facebook.net/en_US/sdk.js';
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
+    // (function(d, s, id) {
+    //    // tslint:disable-next-line:prefer-const
+    //    let js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) {return;
+    //   }
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = 'https://connect.facebook.net/en_US/sdk.js';
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //  }(document, 'script', 'facebook-jssdk'));
 
   }
   // tslint:disable-next-line:member-ordering
@@ -138,36 +138,36 @@ export class LoginComponent implements OnInit {
     //     // ...
     //   }
     // );
-    FB.login((response) => {
-              console.log('submitLogin', response);
-              if (response.authResponse) {
-                // login success
-                // login success code here
-                // redirect to home page
-                console.log('uid------', response.authResponse.userID);
-                this.me(response.authResponse.userID, response.authResponse.accessToken);
-                // console.log('uid------', response.authResponse.);
+  //   FB.login((response) => {
+  //             console.log('submitLogin', response);
+  //             if (response.authResponse) {
+  //               // login success
+  //               // login success code here
+  //               // redirect to home page
+  //               console.log('uid------', response.authResponse.userID);
+  //               this.me(response.authResponse.userID, response.authResponse.accessToken);
+  //               // console.log('uid------', response.authResponse.);
 
-               } else {
-               console.log('User login failed');
-             }
-  });
+  //              } else {
+  //              console.log('User login failed');
+  //            }
+  // });
   }
 
-  me(userId, accessToken) {
-    FB.api(
-        // tslint:disable-next-line:max-line-length
-        '/' + userId + '?fields=id,name,first_name,picture.width(150).height(150),age_range,friends,email',
-        (result) => {
-          console.log('result===', accessToken);
-            console.log('result===', result);
-            console.log('result===', result['first_name']);
-            console.log('result===', result['id']);
-            console.log('result===', result['picture']['data']['url']);
-            // if (result && !result.error) {
-            // }
-});
-  }
+//   me(userId, accessToken) {
+//     FB.api(
+//         // tslint:disable-next-line:max-line-length
+//         '/' + userId + '?fields=id,name,first_name,picture.width(150).height(150),age_range,friends,email',
+//         (result) => {
+//           console.log('result===', accessToken);
+//             console.log('result===', result);
+//             console.log('result===', result['first_name']);
+//             console.log('result===', result['id']);
+//             console.log('result===', result['picture']['data']['url']);
+//             // if (result && !result.error) {
+//             // }
+// });
+//   }
 
   gitLOG() {
     console.log('git called');
