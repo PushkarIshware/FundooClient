@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@auth0/angular-jwt": "^2.1.0",
+    "@types/facebook-js-sdk": "^3.2.1",
     "amazing-time-picker": "^1.8.0",
     "angular-6-social-login": "^1.1.1",
     "angular-froala-wysiwyg": "^2.9.3",
