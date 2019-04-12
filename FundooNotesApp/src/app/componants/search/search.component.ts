@@ -11,7 +11,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 })
 export class SearchComponent implements OnInit {
   data: any;
-Search: any;
+  Search: any;
 
   constructor(private http: HttpClient, private ser: SearchService,
     private service: UserService) { }
@@ -24,11 +24,10 @@ Search: any;
   }
   getNoteData() {
     this.service.getNotes().subscribe(
-      (response) => {console.log('success get notes', response);
-  this.data = response;
-    // this.uid = localStorage.getItem('user_id');
-    },
-      (error) => {console.log('error', error); }
-      );
+      (response) => {
+        this.data = response;
+      },
+      (error) => { }
+    );
   }
 }

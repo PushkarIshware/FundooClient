@@ -1,128 +1,107 @@
 <mat-toolbar class="toolbar">
   <button mat-icon-button class="material-icons" (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <img class="fundooIcon" src="../../../assets/fundoo.png">
-    <div class="dashboardTitle">{{headerName}}</div>
-    <div class="searchToolBar">
-          <input class="searchInputBar" type="text" placeholder="search" [(ngModel)]="Search"
-          (keyup)="lookFor()" (click)="openSearch()" >
-          <button mat-icon-button>
-            <mat-icon class="mat-18">search</mat-icon>
-          </button>
-        </div>
-        <div class="endToolBar">
-              <!-- <button mat-icon-button>
-                <mat-icon class="mat-18">refresh</mat-icon>
-              </button>
-              
-              <button mat-icon-button >
-                <mat-icon class="mat-18">settings</mat-icon>
-              </button>
-            </div>
-            <div class="endToolBar">
-              <button mat-icon-button>
-                <mat-icon class="mat-18">apps</mat-icon>
-              </button>
-  -->     
-  <button mat-icon-button (click)="changeView()">
-    <mat-icon class="mat-18">{{icon}}</mat-icon>
+    <mat-icon>menu</mat-icon>
   </button>
-              <button mat-icon-button [matMenuTriggerFor]="menu1">
-                  <mat-icon class="mat-18" (click)="notify()">notifications_none</mat-icon>
-                
-                </button>
-                <mat-menu #menu1="matMenu">
-                    <div class="profile_menu1">
-                      upcoming events
-                      <div *ngFor="let note of data"><br>
-                          <div class="id" >noteid-{{note.id}}</div>
-                          <div class="id" >note Title-{{note.title}}</div>
-                          <div class="color">reminder-{{note.reminder }}</div>
-                      </div>
-                    </div> 
-                    </mat-menu> 
+  <img class="fundooIcon" src="../../../assets/fundoo.png">
+  <div class="dashboardTitle">{{headerName}}</div>
+  <div class="searchToolBar">
+    <input class="searchInputBar" type="text" placeholder="search" [(ngModel)]="Search" (keyup)="lookFor()" (click)="openSearch()">
+    <button mat-icon-button>
+      <mat-icon class="mat-18">search</mat-icon>
+    </button>
+  </div>
+  <div class="endToolBar">
 
-            </div>
-            <div [matMenuTriggerFor]="menu" class="account" >
-              <!-- <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/{{profile}} " height="30" width="30"  /> -->
-              <!-- <div class="photo"> -->
-                
-              <img src="{{URLdata}}"  class="accountButton">
-            
-            <!-- </div> -->
-              </div>
-            <mat-menu #menu="matMenu">
-              <div class="profile_menu">
-                User Informations
-                <div (click)="openDialog()">
-                  <!-- <img src="https://s3.ap-south-1.amazonaws.com/bucketprofile/{{profile}} " class="profile"> -->
-                  <img src="{{URLdata}} " class="profile">
+    <button mat-icon-button (click)="changeView()">
+      <mat-icon class="mat-18">{{icon}}</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu1">
+      <mat-icon class="mat-18" (click)="notify()">notifications_none</mat-icon>
 
-                  <div>Welcome {{Unamedata}}</div>
-                  
-                  </div>
-                </div> 
-                <button mat-menu-item type="submit" name="submit" (click)="logout()">logout</button>
-               
-                <!-- <button mat-menu-item type="submit" name="submit" routerLink="/profile">Profile</button> -->
-              
-              </mat-menu> 
+    </button>
+    <mat-menu #menu1="matMenu">
+      <div class="profile_menu1">
+        upcoming events
+        <div *ngFor="let note of data"><br>
+          <div class="id">noteid-{{note.id}}</div>
+          <div class="id">note Title-{{note.title}}</div>
+          <div class="color">reminder-{{note.reminder }}</div>
+        </div>
+      </div>
+    </mat-menu>
+
+  </div>
+  <div [matMenuTriggerFor]="menu" class="account">
+
+    <img src="{{URLdata}}" class="accountButton">
+
+
+  </div>
+  <mat-menu #menu="matMenu">
+    <div class="profile_menu">
+      User Informations
+      <div (click)="openDialog()">
+        <img src="{{URLdata}} " class="profile">
+
+        <div>Welcome {{Unamedata}}</div>
+
+      </div>
+    </div>
+    <button mat-menu-item type="submit" name="submit" (click)="logout()">logout</button>
+
+
+  </mat-menu>
 </mat-toolbar>
 <mat-divider>
 
 </mat-divider>
 <mat-sidenav-container class="sidenavBar">
-<mat-sidenav #sidenav mode="side" opened="true" style="min-width:50px;" class="sideNav">
-<mat-nav-list class="sideNavList">       
-<div>
-  <button mat-button [routerLink]="['addnotes']" (click)="headerName='fundooNotes'" [ngClass]="{'sideNavListItems': headerName!='Fundoo Notes', 'sideNavlistItemsColored': headerName=='Fundoo Notes'}">
-    <mat-icon>lightbulb_outline</mat-icon> Notes
-  </button>
-</div>
+  <mat-sidenav #sidenav mode="side" opened="true" style="min-width:50px;" class="sideNav">
+    <mat-nav-list class="sideNavList">
+      <div>
+        <button mat-button [routerLink]="['addnotes']" (click)="headerName='fundooNotes'" [ngClass]="{'sideNavListItems': headerName!='Fundoo Notes', 'sideNavlistItemsColored': headerName=='Fundoo Notes'}">
+          <mat-icon>lightbulb_outline</mat-icon> Notes
+        </button>
+      </div>
 
-<div>
-  <button mat-button [routerLink]="['reminder']" (click)="headerName='Reminders'" [ngClass]="{'sideNavListItems': headerName!='Reminders', 'sideNavlistItemsColored': headerName=='Reminders'}">
-    <mat-icon>notifications_none</mat-icon> Reminders
-  </button>
-</div>
-<mat-divider></mat-divider>
-<div>
-  Add labels
-  <button class="sideNavListItems" (click)="ShowLabels()" mat-button>
-    <mat-icon>edit</mat-icon>Edit Labels
-  </button>
-  
-  <div *ngFor="let label of DataLabels">
-  <!-- <div class="id" >label name-{{label.label_name}}</div> -->
-  <button mat-button >
-      <mat-icon>label_outline</mat-icon> {{label.label_name}}
-      <mat-icon matRemove (click)="deleteLabel(label)">cancel</mat-icon>
-    </button>
-    
-  <!-- <mat-checkbox>{{label.label_name}}</mat-checkbox> -->
-  </div>
-</div>
-<mat-divider></mat-divider>
-<div>
-  <button mat-button [routerLink]="['archive']" (click)="headerName='Archive'" [ngClass]="{'sideNavListItems': headerName!='Archive', 'sideNavlistItemsColored': headerName=='Archive'}">
-    <mat-icon>archive</mat-icon> Archive
-  </button>
-</div>
+      <div>
+        <button mat-button [routerLink]="['reminder']" (click)="headerName='Reminders'" [ngClass]="{'sideNavListItems': headerName!='Reminders', 'sideNavlistItemsColored': headerName=='Reminders'}">
+          <mat-icon>notifications_none</mat-icon> Reminders
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        Add labels
+        <button class="sideNavListItems" (click)="ShowLabels()" mat-button>
+          <mat-icon>edit</mat-icon>Edit Labels
+        </button>
 
-<div>
-  <button mat-button [routerLink]="['trash']" (click)="headerName='Trash'" [ngClass]="{'sideNavListItems': headerName!='Trash', 'sideNavlistItemsColored': headerName=='Trash'}">
-    <mat-icon>delete</mat-icon> Trash
-  </button>
-</div>     
-</mat-nav-list> 
-</mat-sidenav>
-<mat-sidenav-content class="sideNavContent">
+        <div *ngFor="let label of DataLabels">
+          <button mat-button>
+            <mat-icon>label_outline</mat-icon> {{label.label_name}}
+            <mat-icon matRemove (click)="deleteLabel(label)">cancel</mat-icon>
+          </button>
 
-  <!-- <h1>this is where we have to add notes functionality</h1> -->
-  <!-- <app-add-notes></app-add-notes>
-  <app-create-notes ></app-create-notes> -->
-  <router-outlet></router-outlet>
-  
-</mat-sidenav-content>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <button mat-button [routerLink]="['archive']" (click)="headerName='Archive'" [ngClass]="{'sideNavListItems': headerName!='Archive', 'sideNavlistItemsColored': headerName=='Archive'}">
+          <mat-icon>archive</mat-icon> Archive
+        </button>
+      </div>
+
+      <div>
+        <button mat-button [routerLink]="['trash']" (click)="headerName='Trash'" [ngClass]="{'sideNavListItems': headerName!='Trash', 'sideNavlistItemsColored': headerName=='Trash'}">
+          <mat-icon>delete</mat-icon> Trash
+        </button>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="sideNavContent">
+
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
 </mat-sidenav-container>

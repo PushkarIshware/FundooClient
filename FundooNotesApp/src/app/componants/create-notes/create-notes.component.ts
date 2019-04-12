@@ -13,11 +13,9 @@ import { SearchComponent } from '../search/search.component';
 import { TrashComponent } from '../trash/trash.component';
 import { MatSnackBar } from '@angular/material';
 import { toDate } from '@angular/common/src/i18n/format_date';
+import { HttpService } from 'src/app/services/http/http.service';
+import { environment } from 'src/environments/environment';
 
-// import { environment } from 'src/environments/environment';
-
-import { environment } from 'src/environments/environment.prod';
-// import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-create-notes',
   templateUrl: './create-notes.component.html',
@@ -91,7 +89,7 @@ export class CreateNotesComponent implements OnInit {
   URLdata: any;
   Unamedata: any;
 
-  constructor(private snackBar: MatSnackBar, private view: ViewService, private http: HttpClient,
+  constructor(private httpservice: HttpService, private snackBar: MatSnackBar, private view: ViewService, private http: HttpClient,
     private service: UserService, public dialog: MatDialog, private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer) {
 
@@ -113,75 +111,54 @@ export class CreateNotesComponent implements OnInit {
   message: any;
 
   ngOnInit() {
-    // show all notes
     this.getNoteData();
 
-    // show mapped labels of given notes
     this.ShowLabels();
 
-    // show collaborator name of given notes
     this.showCollaborators();
     this.view.currentMessage.subscribe(message => this.message = message);
 
-    // url
     this.getUrl();
   }
 
-  // getting data from database calling service method.
-
-  // show all notes
   getNoteData() {
     this.service.getNotes().subscribe(
       (response) => {
         this.data = response;
-        console.log(this.data);
     },
-      (error) => {console.log('error', error); }
+      (error) => { }
       );
   }
 
-// Methods for all
-
-// set reminder to note
 remainder(note) {
   this.noteData = {
     'id': note.id,
-    // 'reminder': this.date.value.toLocaleDateString(),
     'reminder': this.date.value,
 };
-console.log(this.noteData);
-  // sending token to backend
    const httpOptions = {
     headers: new HttpHeaders({
       'Authorization': localStorage.getItem('token')
     })
   };
   this.http.post(this.baseUrl + 'set_reminder/' + note.id , this.noteData, httpOptions).subscribe(
-    (response) => {console.log('success', response);
+    (response) => {
     this.remind_success();
     },
-    (error) => {console.log('error', error);
+    (error) => {
     this.remind_failed();
   }
   );
 }
 
-// show mapped labels of given notes
 ShowLabels() {
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-  this.http.get(this.baseUrl + 'getmaplabels', httpOptions).subscribe(
-        (response) => {
-      this.DataLabels_map = response;
-      },
-        (error) => {console.log('error', error);
-      });
+  this.httpservice.ShowLabels().subscribe(
+    (response) => {
+          this.DataLabels_map = response;
+          },
+            (error) => {
+          });
 }
 
-// set archive value note
 archiveNote(note) {
   this.archivevalue = note.is_archived;
   this.archivevalue = ! this.archivevalue;
@@ -190,173 +167,106 @@ archiveNote(note) {
     'is_archived': this.archivevalue,
     'archive_time': this.myDate,
   };
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-  console.log(this.noteData, '----------');
-  this.http.post(this.baseUrl + 'archive/' + note.id , this.noteData, httpOptions).subscribe(
+  this.httpservice.archiveNote(this.noteData, note.id).subscribe(
     (response) => {
-      this.archive_success();
-      console.log('success', response);
-    },
-    (error) => {console.log('error', error);
-    this.archive_failed();
-    }
-  );
+          this.archive_success();
+        },
+        (error) => {
+        this.archive_failed();
+        });
 }
 
-// set pin value true/false
 pin(note) {
-  console.log('called pin');
   this.pinValue = note.is_pinned;
-  console.log('before', this.pinValue);
   this.pinValue = ! this.pinValue;
-  console.log(note.id, ' after', this.pinValue);
 
   this.noteData = {
     'id': note.id,
     'is_pinned': this.pinValue,
 };
-
-const httpOptions = {
-  headers: new HttpHeaders({
-
-    'Authorization': localStorage.getItem('token')
-  })
-};
-this.http.post(this.baseUrl + 'pinunpin/' + note.id , this.noteData, httpOptions).subscribe(
-  (response) => {console.log('success', response);
+this.httpservice.pin(this.noteData, note.id).subscribe(
+  (response) => {
 
   },
-  (error) => {console.log('error', error); }
+  (error) => { }
 );
 }
 
 changeColor(color) {
   this.color = color;
-  console.log(this.color, this.id);
 }
 
 getcolorid(card) {
  this.id = card.id;
-console.log(this.id);
 }
 
-// set delete value true/false
 delete_note(note) {
-  console.log('delete 1 fun call', note.id);
   this.deletevalue = true;
-  console.log(this.deletevalue);
   this.noteData = {
     'id': note.id,
     'is_deleted': this.deletevalue,
     'deleted_time': this.myDate,
 };
-console.log(this.noteData);
-const httpOptions = {
-  headers: new HttpHeaders({
-
-    'Authorization': localStorage.getItem('token')
-  })
-};
-  this.http.post(this.baseUrl + 'deletenote/' + note.id , this.noteData, httpOptions).subscribe(
-  (response) => {console.log('success', response);
+this.httpservice.delete_note(this.noteData, note.id).subscribe(
+  (response) => {
   this.delete_success();
   },
-  (error) => {console.log('error', error);
+  (error) => {
   this.delete_failed();
 }
 );
 }
 
-// create new label from note
 CreateLabel(card) {
   this.labelData = {
     'id': card.id,
     'label_name': this.addlabel.value,
   };
-  const httpOptions = {
-    headers: new HttpHeaders({
-
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-  console.log('label adding functions', this.labelData);
-  this.http.post(this.baseUrl + 'createlabel' , this.labelData, httpOptions).subscribe(
-  (response) => {console.log('success', response);
+  this.httpservice.CreateLabel(this.labelData).subscribe(
+    (response) => {
   this.CreateDataLabels = response;
   this.new_label_success();
   },
-  (error) => {console.log('error', error);
+  (error) => {
   this.new_label_failed();
 }
-);
-
-
+  );
 }
 stopPropagation(event) {
   event.stopPropagation();
-  // console.log("Clicked!");
   }
 
   stopPropagation1(event) {
     event.stopPropagation();
-    // console.log("Clicked!");
     }
 
-// show all labels for mapping to given note
 show_labels_forMapping() {
-  console.log('show');
-  {
-    console.log('showing labels');
-    const httpOptions = {
-      headers: new HttpHeaders({
-
-        // 'Authorization': localStorage.getItem('user_id');
-        'Authorization': localStorage.getItem('token')
-      })
-    };
-    this.http.get(this.baseUrl + 'showlabel', httpOptions).subscribe(
-          (response) => {console.log('success', response);
-        this.DataLabels_show = response;
-        },
-          (error) => {console.log('error', error);
-        });
-  }
+    this.httpservice.showLabelsMapping().subscribe(
+      (response) => {
+      this.DataLabels_show = response;
+      },
+        (error) => {
+      });
 }
 
-// set given label to that note
 set_labels(label, id) {
-    console.log('label name', label.label_name, id);
 
     this.setLabels = {
       'id': id,
       'label_id': label.id,
       'label_name': label.label_name,
     };
-    console.log(this.setLabels);
-    const httpOptions = {
-      headers: new HttpHeaders({
-
-        'Authorization': localStorage.getItem('token')
-      })
-    };
-
-    this.http.post(this.baseUrl + 'maplabel' , this.setLabels, httpOptions).subscribe(
-    (response) => {console.log('success', response);
+    this.httpservice.setLabels(this.setLabels).subscribe(
+      (response) => {
     this.map_label_success();
     },
-    (error) => {console.log('error', error);
+    (error) => {
     this.map_label_failed();
   }
-  );
+    );
   }
 
-// remove given mapped label from note
 RemoveLabel(label) {
-  console.log('remove label called', label);
   const httpOptions = {
     headers: new HttpHeaders({
 
@@ -364,46 +274,39 @@ RemoveLabel(label) {
     })
   };
   this.http.delete(this.baseUrl + 'removemaplabel/' + label.id, httpOptions).subscribe(
-  (response) => {console.log('success', response);
+  (response) => {
   this.rem_label_success();
   },
-  (error) => {console.log('error', error);
+  (error) => {
   this.rem_label_failed();
 }
 );
 }
 
-// add collaborator to that note
 AddCollaborator(note) {
-  console.log('add collab called', note.id, this.collab_name.value);
   this.collab_data = {
     'id': note.id,
     'new_username': this.collab_name.value
   };
-  console.log(this.collab_data);
   const httpOptions = {
     headers: new HttpHeaders({
 
       'Authorization': localStorage.getItem('token')
     })
   };
-  console.log('label adding functions', this.collab_data);
   this.http.post(this.baseUrl + 'addcollaborator' , this.collab_data, httpOptions).subscribe(
-  (response) => {console.log('success', response);
+  (response) => {
   this.addCollab = response;
   this.collaborator_success();
   },
-  (error) => {console.log('error', error);
+  (error) => {
   this.collaborator_failed();
  }
 );
 }
 
-// show all collaborator
 showCollaborators() {
-  console.log('show collab');
   {
-    console.log('showing collab');
     const httpOptions = {
       headers: new HttpHeaders({
 
@@ -411,18 +314,15 @@ showCollaborators() {
       })
     };
     this.http.get(this.baseUrl + 'sc', httpOptions).subscribe(
-          (response) => {console.log('success', response);
+          (response) => {
         this.DataCollaborator_show = response;
-        console.log(this.DataCollaborator_show, 'this is from backend');
         },
-          (error) => {console.log('error', error);
+          (error) => {
         });
   }
 }
 
-// Remove Collaborators
 RemoveCollab(collab) {
-  console.log('remove called', collab.uname, collab.note_id);
   const httpOptions = {
     headers: new HttpHeaders({
 
@@ -430,10 +330,10 @@ RemoveCollab(collab) {
     })
   };
   this.http.delete(this.baseUrl + 'removemcollaborator/' + collab.note_id, httpOptions).subscribe(
-  (response) => {console.log('success', response);
+  (response) => {
   this.rem_collab_success();
   },
-  (error) => {console.log('error', error);
+  (error) => {
   this.rem_collab_failed();
  }
 );
@@ -444,14 +344,11 @@ demo() {
   now1.setHours(8);
   now1.setMinutes(0);
   now1.setSeconds(0);
-  console.log(now1);
 }
 
 RemCollab(collab) {
-  console.log('remove called', collab.uname);
 }
 
-// THIS is New Componant for dialog block
 
 openDialog(card): void {
   const dialogRef = this.dialog.open(DialogboxComponent,
@@ -466,12 +363,9 @@ openDialog(card): void {
    }
   }
   );
-  console.log(card.id);
   dialogRef.afterClosed().subscribe(result => {
-    console.log('The dialog was closed');
   });
 }
-// snackbars for message display
 remind_success() {
   this.snackBar.open('Reminder set successfully.', 'OK',
   {duration: 3000});
@@ -542,13 +436,10 @@ getUrl() {
     (response) => {
       // tslint:disable-next-line:forin
 
-      // console.log('success get notes', response['data']);
       this.URLdata = response['data'];
       this.Unamedata = response['username'];
-      // console.log(this.data);
-  // this.uid = localStorage.getItem('user_id');
   },
-    (error) => {console.log('error', error); }
+    (error) => {}
     );
 }
 }

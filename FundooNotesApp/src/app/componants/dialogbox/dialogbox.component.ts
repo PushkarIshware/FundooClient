@@ -1,13 +1,11 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatIconRegistry } from '@angular/material';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-// import { NoteService } from 'src/app/services/notes/note.service';
 import { FormControl } from '@angular/forms';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from 'src/app/services/UserServices/user.service';
-// import { environment } from 'src/environments/environment';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-dialogbox',
   templateUrl: './dialogbox.component.html',
@@ -37,91 +35,76 @@ export class DialogboxComponent implements OnInit {
   notificationIcon = '../../assets/Icons/notification.svg';
   flag = false;
   isActive = false;
-  // pinValue = false;
-  // archivevalue = false;
+
   noteData: any;
 
   user = localStorage.getItem('token');
-  // delete = localStorage.removeItem('token');
 
-title = new FormControl(this.data.title);
-description = new FormControl(this.data.description);
+  title = new FormControl(this.data.title);
+  description = new FormControl(this.data.description);
 
-date = new FormControl(this.data.date);
+  date = new FormControl(this.data.date);
 
-// color1 = this.note.color;
-    constructor(private http: HttpClient, public dialogRef: MatDialogRef<DashboardComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any, private service: UserService,
-      private matIconRegistry: MatIconRegistry,
-      private domSanitizer: DomSanitizer
-      ) {
-        this.matIconRegistry.addSvgIcon('unpinIcon',
-          this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/Icons/unpinIcon.svg'),
-        ); }
-    ngOnInit() {
-    }
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
-    showDiv() {
-      // console.log('called div');
-      this.flag = ! this.flag;
-    }
-    pin() {
-      console.log('called pin');
-      this.data.pinValue = ! this.data.pinValue ;
-      console.log(this.data.pinValue );
-    }
-    // archive note
-    archive() {
-      console.log('called archive');
-      this.data.archivevalue = ! this.data.archivevalue;
-      console.log(this.data.archivevalue);
-    }
+  constructor(private http: HttpClient, public dialogRef: MatDialogRef<DashboardComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private service: UserService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon('unpinIcon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/Icons/unpinIcon.svg'),
+    );
+  }
+  ngOnInit() {
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  showDiv() {
+    this.flag = !this.flag;
+  }
+  pin() {
+    this.data.pinValue = !this.data.pinValue;
+  }
+  // archive note
+  archive() {
+    this.data.archivevalue = !this.data.archivevalue;
+  }
 
-    delete() {
-      this.data.is_deleted = ! this.data.is_deleted;
-    }
+  delete() {
+    this.data.is_deleted = !this.data.is_deleted;
+  }
 
-    changeColor(color) {
-      this.data.color = color;
-    }
-    // tslint:disable-next-line:member-ordering
+  changeColor(color) {
+    this.data.color = color;
+  }
+  // tslint:disable-next-line:member-ordering
 
-    updateNotes() {
-      console.log('close clicked');
-      console.log('printingh tile and descri', this.title.value , ' ', this.description.value);
-      this.noteData = {
-        'id': this.data.id,
-        'title': this.title.value,
-        'description': this.description.value,
-        // 'is_pinned': this.data.pinValue,
-        'color': this.data.color,
-        'reminder': this.date.value.toLocaleDateString(),
-        // 'is_archived': this.data.archivevalue,
-        // 'delete': this.data.is_deleted,
-        // 'user': token
-      };
-       console.log(this.noteData);
+  updateNotes() {
+    this.noteData = {
+      'id': this.data.id,
+      'title': this.title.value,
+      'description': this.description.value,
+      'color': this.data.color,
+      'reminder': this.date.value.toLocaleDateString(),
 
-       const httpOptions = {
-        headers: new HttpHeaders({
-          'Authorization': localStorage.getItem('token')
-        })
-      };
-        // this.service.update(this.noteData).subscribe(
-        this.http.post(this.baseUrl + 'updatenote/' + this.data.id , this.noteData, httpOptions).subscribe(
-        (response) => {console.log('success', response);
-        },
-        (error) => {console.log('error', error); }
-      );
-    }
+    };
 
-    demo() {
-      const now1 = new Date();
-      now1.setHours(8);
-      now1.setMinutes(0);
-      now1.setSeconds(0);
-      console.log(now1);
-    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.post(this.baseUrl + 'updatenote/' + this.data.id, this.noteData, httpOptions).subscribe(
+      (response) => {
+      },
+      (error) => { }
+    );
+  }
+
+  demo() {
+    const now1 = new Date();
+    now1.setHours(8);
+    now1.setMinutes(0);
+    now1.setSeconds(0);
+  }
 }

@@ -1,55 +1,56 @@
 <html>
-    <body>
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <mat-card class="example-card">
-    <mat-card-header class="example-header">
-      
-      <mat-card-title class="example-name-main">Fundoo</mat-card-title>
-      <mat-card-subtitle class="example-name">Register</mat-card-subtitle>
-    
-    </mat-card-header>
-        
-            <div class="example-container">
-            <mat-form-field appearance="outline">
-            <mat-label class="example-label">Username</mat-label>
-            <input type="text" formControlName="username" matInput placeholder="Username" required>
-            
-            <mat-error *ngIf="username.invalid">{{getErrorMessageUsername()}}</mat-error>
-          </mat-form-field>
 
-            <mat-form-field appearance="outline">
-            <mat-label class="example-label">Email</mat-label>
-            <input type="email" formControlName="email" matInput placeholder="Email" required>
-            
-            <mat-error *ngIf="email.invalid">{{getErrorMessageEmail()}}</mat-error>
-          </mat-form-field>
+<body>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-card class="example-card">
+      <mat-card-header class="example-header">
 
-            <mat-form-field appearance="outline">
-            <mat-label class="example-label">Password</mat-label>
-            <input type="password" formControlName="password1" matInput placeholder="Password" required>
-            
-            <mat-error *ngIf="password1.invalid">{{getErrorMessagePassword()}}</mat-error>
-  
-          </mat-form-field>
+        <mat-card-title class="example-name-main">Fundoo</mat-card-title>
+        <mat-card-subtitle class="example-name">Register</mat-card-subtitle>
 
-            <mat-form-field appearance="outline">
-            <mat-label class="example-label">Confirm Password</mat-label>
-            <input type="password" formControlName="password2" matInput placeholder="Confirm Password" required>
-            
-            <mat-error *ngIf="password2.invalid">{{getErrorMessageCPassword()}}</mat-error>
-  
-          </mat-form-field>
-            
-        
-    <mat-card-actions class="example-button">
-      <!-- <button mat-button class="name-link" routerLink="/login">Forgot Password ?</button> -->
-      <button mat-button class="name-link" routerLink="/">Login instead</button>
-      <!-- <button mat-button class="name-link">Register</button> -->
-      <button mat-button aria-label="Show an example snack-bar" [disabled]="!registerForm.valid" mat-raised-button class="button-colour">Sign Up</button>
-    </mat-card-actions>
-    </div>
-  </mat-card>
+      </mat-card-header>
 
-</form>
+      <div class="example-container">
+        <mat-form-field appearance="outline">
+          <mat-label class="example-label">Username</mat-label>
+          <input type="text" formControlName="username" matInput placeholder="Username" required>
+
+          <mat-error *ngIf="username.invalid">{{getErrorMessageUsername()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="example-label">Email</mat-label>
+          <input type="email" formControlName="email" matInput placeholder="Email" required>
+
+          <mat-error *ngIf="email.invalid">{{getErrorMessageEmail()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="example-label">Password</mat-label>
+          <input type="password" formControlName="password1" matInput placeholder="Password" required>
+
+          <mat-error *ngIf="password1.invalid">{{getErrorMessagePassword()}}</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="example-label">Confirm Password</mat-label>
+          <input type="password" formControlName="password2" matInput placeholder="Confirm Password" required>
+
+          <mat-error *ngIf="password2.invalid">{{getErrorMessageCPassword()}}</mat-error>
+
+        </mat-form-field>
+
+
+        <mat-card-actions class="example-button">
+          <button mat-button class="name-link" routerLink="/">Login instead</button>
+          <button mat-button aria-label="Show an example snack-bar" [disabled]="!registerForm.valid" mat-raised-button
+            class="button-colour">Sign Up</button>
+        </mat-card-actions>
+      </div>
+    </mat-card>
+
+  </form>
 </body>
-  </html>
+
+</html>

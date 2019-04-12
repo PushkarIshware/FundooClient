@@ -1,11 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
-// import { HttpClient } from '@angular/common/http';
-// import { MatSnackBar } from '@angular/material';
-// import { environment } from 'src/environments/environment';
-
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { RegisterModel } from 'src/app/model/Register.model';
@@ -18,7 +13,7 @@ import { RegisterModel } from 'src/app/model/Register.model';
 @Injectable()
 export class RegisterComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, private service: UserService, private router: Router, private formBuilder: FormBuilder) { }
-user: RegisterModel = new RegisterModel();
+  user: RegisterModel = new RegisterModel();
 
   registerForm = this.formBuilder.group({
     username: [this.user.username, [Validators.required]],
@@ -34,15 +29,14 @@ user: RegisterModel = new RegisterModel();
   ngOnInit() {
   }
   onSubmit() {
-    console.log(this.registerForm.value);
     this.service.register(this.registerForm.value).subscribe(
-      (response) => {console.log('succsess', response);
-                    localStorage.setItem('token', response['token']);
-                     this.router.navigate(['/']);
-                     this.Activate_account();
-                    },
-      (error) => {console.log('error', error);
-      this.failed_message();
+      (response) => {
+        localStorage.setItem('token', response['token']);
+        this.router.navigate(['/']);
+        this.Activate_account();
+      },
+      (error) => {
+        this.failed_message();
       });
   }
   getErrorMessageUsername() {
@@ -69,7 +63,7 @@ user: RegisterModel = new RegisterModel();
 
   failed_message() {
     this.snackBar.open('Something bad happened.', 'OK',
-    {duration: 3000});
+      { duration: 3000 });
   }
 
 }

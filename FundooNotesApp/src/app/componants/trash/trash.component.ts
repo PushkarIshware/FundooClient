@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-trash',
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class TrashComponent implements OnInit {
   data: any;
-  constructor(private service: UserService,  private http: HttpClient) { }
+  constructor(private service: UserService, private http: HttpClient) { }
   baseUrl = environment.baseUrl;
 
   ngOnInit() {
@@ -19,27 +19,23 @@ export class TrashComponent implements OnInit {
   }
   getNoteData() {
     this.service.getNotes().subscribe(
-      (response) => {console.log('success get notes', response);
-      this.data = response;
-    // this.uid = localStorage.getItem('user_id');
-    },
-      (error) => {console.log('error', error); }
-      );
+      (response) => {
+        this.data = response;
+      },
+      (error) => { }
+    );
   }
   DeleteForever(note) {
-    console.log(note.id);
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': localStorage.getItem('token')
       })
     };
     this.http.delete(this.baseUrl + 'deleteforever/' + note.id, httpOptions).subscribe(
-    (response) => {console.log('success', response);
-    // this.rem_label_success();
-    },
-    (error) => {console.log('error', error);
-    // this.rem_label_failed();
-  }
-  );
+      (response) => {
+      },
+      (error) => {
+      }
+    );
   }
 }

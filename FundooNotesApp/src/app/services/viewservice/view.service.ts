@@ -18,6 +18,5 @@ export class ViewService {
 
   changeMessagep(profile: any) {
     this.messageSourcep.next(profile);
-    console.log('services', this.messageSourcep);
   }
 }

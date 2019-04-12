@@ -23,14 +23,9 @@ export class MenubarComponent implements OnInit {
     { name: 'gray', colorCode: '#e7e9ec' }
   ];
   notificationIcon = '../../assets/Icons/notification.svg';
-  // noteData: any;
   constructor(private snackBar: MatSnackBar, private service: UserService, private formBuilder: FormBuilder) { }
   ngOnInit() {
   }
   createNote() {
-    // this.noteData = {
-    //   title: this.note.title,
-    //   description: this.note.description,
-    }
-    // console.log(this.noteData);
   }
+}

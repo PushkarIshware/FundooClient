@@ -18,7 +18,6 @@
   vertical-align: middle;
   line-height: 49px;
   padding-left: 15px;
-  // padding-right: 30px;
 }
 
 .searchToolBar {
@@ -27,17 +26,14 @@
   width: 50%;
   padding-right: 10px;
   padding-left: 30px;
-  // position: fixed;
 }
 .searchInputBar {
-  //padding-left: 200px; 
   border-radius: 5px;
   width: 585px;
   border: 20px;
   outline: 30px;
   font-size: inherit;
   justify-content: center;
-  // position: fixed;
 }
 .endToolBar{
   padding-left: 40px;
@@ -52,7 +48,6 @@
 
 }
 
-// side navigation bar
 
 .sidenavBar {
   position: absolute;
@@ -66,12 +61,10 @@
 
 .sideNavList {
   width: 300px;
-  //height: 98.6%;
   height: 98.7%;
   background-color: rgb(255, 255, 255);
 }
 
-// for each side menu option
 .sideNavListItems,
 .sideNavlistItemsColored {
   border-top-right-radius: 100px;
@@ -99,11 +92,10 @@
 .sideNavListItems:hover {
   background-color: #e6e6e6;
 }
-// End of side nav
 
 
 .sidenavContent {
-  background-color: rgb(255, 255, 255); // max-width: 600px;
+  background-color: rgb(255, 255, 255); 
   max-width: -webkit-fill-available;
   margin-left: 200px;
 }
@@ -114,7 +106,6 @@ $mat-card-header-size: 20px !default;
 
 .profile_menu {
   width: 250px;
-  // height: 120px;
 }
 
 .profile_menu1 {
@@ -128,24 +119,14 @@ $mat-card-header-size: 20px !default;
   padding-left: 10px;
   width: 100px;
   height: 100px;
-  //border: 1px solid;
   border-radius: 150px;
-  //font-size: x-large;
   padding-right: 10px;
   }
 
   .photo {
-  // padding-bottom: 10px;
-  // padding-top: 10px;
-  // padding-left: 10px;
- 
-  // border-radius: 50px;
-  // padding-right: 10px;
-  // width: 30px;
-  // height: 30px;
+
   width: 40px;
   height: 40px;
-  //border: 1px solid;
   border-radius: 30px;
   font-size: x-large;
   }
@@ -153,9 +134,7 @@ $mat-card-header-size: 20px !default;
   .accountButton {
     width: 30px;
     height: 30px;
-    //border: 1px solid;
     border-radius: 30px;
     font-size: x-large;
-   // padding-right: 2px;
     
     }

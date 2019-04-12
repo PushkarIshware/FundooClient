@@ -2,10 +2,6 @@
 
   body { 
     font-family: Roboto, Arial, sans-serif;
-    //background-color: aqua;
-    // width: 400px;
-    // padding-left: 420px;
-    // padding-right: 200px;
     padding-top: 50px;
     padding-left: 450px;
     padding-bottom: 150px;
@@ -19,7 +15,6 @@
   }
   
   .example-card{
-    //background-color: rgba(207, 196, 196, 0.993);
     width: 300px;
   }
   
@@ -29,21 +24,12 @@
 
   .example-name {
     padding-left: 105px;
-    // padding-top: 5px;
     color:#1a73e8;
-      //display: flex;
-    //   justify-content: center;
-    //   width: 300px;
       font-size: 15px;
     }
     .example-name-main{
-        // padding-left: 5px;
-        // padding-right: 20px;
-        //align-items: center;
-        //align-content: center;
         padding-left: 90px;
       color:#000000;
-        //display: flex;
         width: 300px;
         font-size: 25px;
       }

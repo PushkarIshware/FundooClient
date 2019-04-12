@@ -1,104 +1,80 @@
- 
-<div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center" >
+<div fxLayout="row wrap" fxFlex="90" fxLayoutAlign="center center">
   <div *ngFor="let note of data">
-        <div *ngIf="note.reminder != null  ">
-          <div fxLayout="column" fxLayoutAlign="space-between start" >
-                  <mat-card class="card-width" [ngStyle]="{'backgroundColor': note.color}"  >
-          <div fxLayout="column" >
-              <!-- (click)="openDialog(note)"  after title for open dialog box-->
-     <div class="title" [style.fontSize.px]=21> {{note.title}}</div>
-     <div class="description">{{note.description}}</div> 
-     <!-- <div class="id" >noteid-{{note.id}}</div> 
-     <div class="color">note color-{{note.color}}</div>
-     <div class="color">userID-{{note.user_id}}</div>  -->
-     <!-- <div class="color">reminder-{{note.reminder}}</div>  -->
-     <!-- <div class="color"> -->
-     <!-- <div *ngIf="note.reminder != null"> -->
-      <div>  
-        <mat-chip-list>
-      <mat-chip >
-           {{note.reminder | date:'medium'}}
-           <mat-icon matChipRemove (click)="abc()">cancel</mat-icon>
-         </mat-chip>
-        </mat-chip-list>
-        </div>
-        <!-- fab button -->
-        <div fxLayout="row">
-      <div *ngFor="let collab of DataCollaborator_show">
-          <div *ngIf="note.id === collab.note_id">
-        <div class="example-button-row">
-          <button matTooltip="{{collab.uname}}" mat-mini-fab (click)="RemoveCollab(collab)" [ngStyle]="{'backgroundColor': note.color}">{{collab.uname.slice(0, 1).toUpperCase( )}}</button>
-          </div></div>
-          </div>
-          </div>
-        <!-- fab end -->
-  
-     <!-- </div> -->
-    <!-- </div> -->
-     <div class="alignment">
-<!-- collaborator start -->
-<button mat-icon-button matTooltip="Add Collaborator" [matMenuTriggerFor]="menu5" >
-    <mat-icon style="font-size: 18px"  class="mat-18 changeColor">person_add
-    </mat-icon></button>      
-  <mat-menu #menu5="matMenu">
-      <div class="profile_menu1">
-            <input matInput placeholder="collaborator name" [formControl]="collab_name" (click)="stopPropagation1($event)">
-            <input type="submit" (click)="AddCollaborator(note)"> 
-      </div></mat-menu>
-  <!-- collaborator end -->
-<!-- reminder start -->
-<button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
-    <mat-icon style="font-size: 18px"  class="mat-18 changeColor">add_alert</mat-icon>
-  </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="remainder(note)">
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        </button>
-          </mat-menu>
-          <!-- reminder end -->
-           <!-- color -->
-           <button mat-icon-button matTooltip="Change color" [matMenuTriggerFor]="colorMenu" (click)="note_id(note.id)">
-              <mat-icon style="font-size: 20px" class="mat-18 changeColor">color_lens</mat-icon></button>
-             
-              <mat-menu #colorMenu="matMenu"  class="colorMenu" [overlapTrigger]="false">
-              <ng-template matMenuContent let-note="note">
-              <div fxLayout="row wrap" fxLayoutAlign="end center" fxFlex="90">
-              <div *ngFor="let color of colorCode">                                
-              <button mat-icon-button [ngStyle]="{'color': color.colorCode}" (click)="changeColor(color.colorCode,note)">                            
-              <mat-icon  style="font-size: 40px"  class="colorIcons">fiber_manual_record</mat-icon>                                 
-              </button>                               
+    <div *ngIf="note.reminder != null && note.is_deleted === false">
+      <div fxLayout="column" fxLayoutAlign="space-between start">
+        <mat-card class="card-width" [ngStyle]="{'backgroundColor': note.color}">
+          <div fxLayout="column">
+            <div class="title" [style.fontSize.px]=21> {{note.title}}</div>
+            <div class="description">{{note.description}}</div>
+            <div>
+              <mat-chip-list>
+                <mat-chip>
+                  {{note.reminder | date:'medium'}}
+                  <mat-icon matChipRemove (click)="abc()">cancel</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+            <div fxLayout="row">
+              <div *ngFor="let collab of DataCollaborator_show">
+                <div *ngIf="note.id === collab.note_id">
+                  <div class="example-button-row">
+                    <button matTooltip="{{collab.uname}}" mat-mini-fab (click)="RemoveCollab(collab)" [ngStyle]="{'backgroundColor': note.color}">{{collab.uname.slice(0,
+                      1).toUpperCase( )}}</button>
+                  </div>
+                </div>
               </div>
-              </div>
-              </ng-template>                          
+            </div>
+
+            <div class="alignment">
+              <button mat-icon-button matTooltip="Add Collaborator" [matMenuTriggerFor]="menu5">
+                <mat-icon style="font-size: 18px" class="mat-18 changeColor">person_add
+                </mat-icon>
+              </button>
+              <mat-menu #menu5="matMenu">
+                <div class="profile_menu1">
+                  <input matInput placeholder="collaborator name" [formControl]="collab_name" (click)="stopPropagation1($event)">
+                  <input type="submit" (click)="AddCollaborator(note)">
+                </div>
               </mat-menu>
-          <!-- end color -->
-          <button mat-icon-button matTooltip="Archive" (click)="archiveNote(note)">
-              <mat-icon style="font-size: 17px" class="mat-18 changeColor">archive
-                </mat-icon></button>
-        <button mat-icon-button matTooltip="Delete" (click)="delete_note(note)">
-            <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
-              </mat-icon></button>
 
-              <!-- <button class="pinIcon" mat-icon-button matTooltip="Pin/Unpin Note" (click)="pin(note)">
-                <ng-container *ngIf="pinValue===false">
-                    <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="unpinIcon"></mat-icon>
-                </ng-container>
-                <ng-container *ngIf="pinValue===true">
-                    <mat-icon style="font-size: 17px" class="mat-18 changeColor" svgIcon="pinIcon"></mat-icon>
-                </ng-container>
-              </button> -->
-
-              
-             
-              </div>
-<!-- <app-menubar></app-menubar> -->
-</div>
-</mat-card>
-</div>
-</div>
-</div>
+              <button mat-icon-button matTooltip="Remind me" [matMenuTriggerFor]="menu">
+                <mat-icon style="font-size: 18px" class="mat-18 changeColor">add_alert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="remainder(note)">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [formControl]="date" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </button>
+              </mat-menu>
+              <button mat-icon-button matTooltip="Change color" [matMenuTriggerFor]="colorMenu" (click)="note_id(note.id)">
+                <mat-icon style="font-size: 20px" class="mat-18 changeColor">color_lens</mat-icon>
+              </button>
+              <mat-menu #colorMenu="matMenu" class="colorMenu" [overlapTrigger]="false">
+                <ng-template matMenuContent let-note="note">
+                  <div fxLayout="row wrap" fxLayoutAlign="end center" fxFlex="90">
+                    <div *ngFor="let color of colorCode">
+                      <button mat-icon-button [ngStyle]="{'color': color.colorCode}" (click)="changeColor(color.colorCode,note)">
+                        <mat-icon style="font-size: 40px" class="colorIcons">fiber_manual_record</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+              </mat-menu>
+              <button mat-icon-button matTooltip="Archive" (click)="archiveNote(note)">
+                <mat-icon style="font-size: 17px" class="mat-18 changeColor">archive
+                </mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Delete" (click)="delete_note(note)">
+                <mat-icon style="font-size: 17px" class="mat-18 changeColor">delete
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

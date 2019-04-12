@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/UserServices/user.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -35,8 +35,7 @@ export class ReminderComponent implements OnInit {
   addCollab: Object;
   DataCollaborator_show: Object;
   noteDataDate: {
-  'id': any;
-    // 'reminder': this.date.value.toLocaleDateString(),
+    'id': any;
     'reminder': any;
   };
   noteDataColor: { 'id': any; 'color': any; };
@@ -52,165 +51,131 @@ export class ReminderComponent implements OnInit {
   }
   getNoteData() {
     this.service.getNotes().subscribe(
-      (response) => {console.log('success get notes', response);
-      this.data = response;
-    // this.uid = localStorage.getItem('user_id');
-    },
-      (error) => {console.log('error', error); }
-      );
+      (response) => {
+        this.data = response;
+      },
+      (error) => { }
+    );
   }
   stopPropagation1(event) {
     event.stopPropagation();
-    // console.log("Clicked!");
-    }
-  // set delete value true/false
-delete_note(note) {
-  console.log('delete 1 fun call', note.id);
-  this.deletevalue = true;
-  console.log(this.deletevalue);
-  this.noteData = {
-    'id': note.id,
-    'is_deleted': this.deletevalue,
-    'deleted_time': this.myDate,
-};
-console.log(this.noteData);
-const httpOptions = {
-  headers: new HttpHeaders({
-
-    'Authorization': localStorage.getItem('token')
-  })
-};
-  this.http.post(this.baseUrl + 'deletenote/' + note.id , this.noteData, httpOptions).subscribe(
-  (response) => {console.log('success', response);
-  // this.delete_success();
-  },
-  (error) => {console.log('error', error);
-  // this.delete_failed();
-}
-);
-}
-
-// set archive value note
-archiveNote(note) {
-  this.archivevalue = note.is_archived;
-  this.archivevalue = ! this.archivevalue;
-  this.noteDataArch = {
-    'id': note.id,
-    'is_archived': this.archivevalue,
-    'archive_time': this.myDate,
-  };
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-  console.log(this.noteDataArch, '----------');
-  this.http.post(this.baseUrl + 'archive/' + note.id , this.noteDataArch, httpOptions).subscribe(
-    (response) => {
-      // this.archive_success();
-      console.log('success', response);
-    },
-    (error) => {console.log('error', error);
-    // this.archive_failed();
-    }
-  );
-}
-// add collaborator to that note
-AddCollaborator(note) {
-  console.log('add collab called', note.id, this.collab_name.value);
-  this.collab_data = {
-    'id': note.id,
-    'new_username': this.collab_name.value
-  };
-  console.log(this.collab_data);
-  const httpOptions = {
-    headers: new HttpHeaders({
-
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-  console.log('label adding functions', this.collab_data);
-  this.http.post(this.baseUrl + 'addcollaborator' , this.collab_data, httpOptions).subscribe(
-  (response) => {console.log('success', response);
-  this.addCollab = response;
-  // this.collaborator_success();
-  },
-  (error) => {console.log('error', error);
-  // this.collaborator_failed();
- }
-);
-}
-// show all collaborator
-showCollaborators() {
-  console.log('show collab');
-  {
-    console.log('showing collab');
+  }
+  delete_note(note) {
+    this.deletevalue = true;
+    this.noteData = {
+      'id': note.id,
+      'is_deleted': this.deletevalue,
+      'deleted_time': this.myDate,
+    };
     const httpOptions = {
       headers: new HttpHeaders({
 
         'Authorization': localStorage.getItem('token')
       })
     };
-    this.http.get(this.baseUrl + 'sc', httpOptions).subscribe(
-          (response) => {console.log('success', response);
-        this.DataCollaborator_show = response;
-        console.log(this.DataCollaborator_show, 'this is from backend');
+    this.http.post(this.baseUrl + 'deletenote/' + note.id, this.noteData, httpOptions).subscribe(
+      (response) => {
+      },
+      (error) => {
+      }
+    );
+  }
+
+  archiveNote(note) {
+    this.archivevalue = note.is_archived;
+    this.archivevalue = !this.archivevalue;
+    this.noteDataArch = {
+      'id': note.id,
+      'is_archived': this.archivevalue,
+      'archive_time': this.myDate,
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.post(this.baseUrl + 'archive/' + note.id, this.noteDataArch, httpOptions).subscribe(
+      (response) => {
+      },
+      (error) => {
+      }
+    );
+  }
+  AddCollaborator(note) {
+    this.collab_data = {
+      'id': note.id,
+      'new_username': this.collab_name.value
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.post(this.baseUrl + 'addcollaborator', this.collab_data, httpOptions).subscribe(
+      (response) => {
+        this.addCollab = response;
+      },
+      (error) => {
+      }
+    );
+  }
+  showCollaborators() {
+    {
+      const httpOptions = {
+        headers: new HttpHeaders({
+
+          'Authorization': localStorage.getItem('token')
+        })
+      };
+      this.http.get(this.baseUrl + 'sc', httpOptions).subscribe(
+        (response) => {
+          this.DataCollaborator_show = response;
         },
-          (error) => {console.log('error', error);
+        (error) => {
         });
+    }
   }
-}
-// set reminder to note
-remainder(note) {
-  this.noteDataDate = {
-    'id': note.id,
-    // 'reminder': this.date.value.toLocaleDateString(),
-    'reminder': this.date.value,
-};
-console.log(this.noteDataDate);
-  // sending token to backend
-   const httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-  this.http.post(this.baseUrl + 'set_reminder/' + note.id , this.noteDataDate, httpOptions).subscribe(
-    (response) => {console.log('success', response);
-    // this.remind_success();
-    },
-    (error) => {console.log('error', error);
-    // this.remind_failed();
+  remainder(note) {
+    this.noteDataDate = {
+      'id': note.id,
+      'reminder': this.date.value,
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.post(this.baseUrl + 'set_reminder/' + note.id, this.noteDataDate, httpOptions).subscribe(
+      (response) => {
+      },
+      (error) => {
+      }
+    );
   }
-  );
-}
 
-note_id(noteId) {
-  this.noteId = noteId;
-  console.log(noteId);
-}
+  note_id(noteId) {
+    this.noteId = noteId;
+  }
 
-changeColor(color, note) {
-  this.data.color = color;
-  console.log(this.data.color);
-  console.log('close clicked');
-  this.noteDataColor = {
-    'id': this.noteId,
-    'color': this.data.color,
-  };
-   console.log(this.noteDataColor);
+  changeColor(color, note) {
+    this.data.color = color;
+    this.noteDataColor = {
+      'id': this.noteId,
+      'color': this.data.color,
+    };
 
-   const httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': localStorage.getItem('token')
-    })
-  };
-    // this.service.update(this.noteData).subscribe(
-    this.http.post(this.baseUrl + 'changecolor/' + this.noteId , this.noteDataColor, httpOptions).subscribe(
-    (response) => {console.log('success', response);
-    },
-    (error) => {console.log('error', error); }
-  );
-}
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': localStorage.getItem('token')
+      })
+    };
+    this.http.post(this.baseUrl + 'changecolor/' + this.noteId, this.noteDataColor, httpOptions).subscribe(
+      (response) => {
+      },
+      (error) => { }
+    );
+  }
 }
 
 
